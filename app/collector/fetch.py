@@ -3,6 +3,7 @@ import json
 from .base import Source
 from .html import fetch_html
 from .rss import fetch_rss
+from .sitemap import fetch_sitemap
 
 
 def load_sources(config_path: str) -> list[Source]:
@@ -27,6 +28,8 @@ def fetch_all(config_path: str) -> list:
             items = fetch_rss(src)
         elif src.type == "html":
             items = fetch_html(src)
+        elif src.type == "sitemap":
+            items = fetch_sitemap(src)
         else:
             print(f"  [跳过] 未知类型: {src.type}")
             items = []

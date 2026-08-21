@@ -1,10 +1,11 @@
 {
   "keywords": [
     "450MHz", "450 MHz", "LTE450", "450M",
-    "wireless private network", "private LTE", "private 5G", "专网",
-    "power distribution", "配电", "电力", "utility",
+    "wireless private network", "private LTE", "private 5G", "private networks",
+    "专网", "电力专网", "配电", "电力", "智能电网",
+    "utility", "grid", "energy",
     "spectrum", "频谱", "ANATEL",
-    "smart grid", "智能电网"
+    "critical communications", "mission critical"
   ],
   "sources": [
     {
@@ -16,28 +17,43 @@
       "enabled": true
     },
     {
-      "id": "nokia_press",
-      "name": "Nokia Press Releases",
-      "type": "html",
-      "url": "https://www.nokia.com/press-releases/",
+      "id": "nokia_newsroom",
+      "name": "Nokia Newsroom",
+      "type": "sitemap",
+      "url": "https://www.nokia.com/newsroom/sitemap.xml",
       "country": "global",
-      "enabled": true
+      "enabled": true,
+      "options": {
+        "max_items": 15,
+        "enrich_titles": 5,
+        "noise_patterns": [
+          "managers-transactions", "own-shares", "share-buyback", "shares-",
+          "financial-report", "financial-information", "media-library",
+          "notification-under-chapter", "stock-exchange", "transactions-",
+          "fi-fi", "de-de", "sv-se"
+        ]
+      }
     },
     {
       "id": "ericsson_press",
       "name": "Ericsson Newsroom",
-      "type": "html",
-      "url": "https://www.ericsson.com/en/press-releases",
+      "type": "rss",
+      "url": "https://www.ericsson.com/en/newsroom/latest-news/feed?typeFilters=1,2,3,4&disableLocationDetect=true",
       "country": "global",
       "enabled": true
     },
     {
       "id": "zte_news",
-      "name": "ZTE News",
+      "name": "ZTE 新闻中心",
       "type": "html",
       "url": "https://www.zte.com.cn/china/about/news/",
       "country": "global",
-      "enabled": true
+      "enabled": true,
+      "options": {
+        "url_contains": "/about/news/",
+        "url_ends_with": ".html",
+        "max_items": 20
+      }
     },
     {
       "id": "ubba",
