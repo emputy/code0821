@@ -1,0 +1,51 @@
+{
+  "keywords": [
+    "450MHz", "450 MHz", "LTE450", "450M",
+    "wireless private network", "private LTE", "private 5G", "专网",
+    "power distribution", "配电", "电力", "utility",
+    "spectrum", "频谱", "ANATEL",
+    "smart grid", "智能电网"
+  ],
+  "sources": [
+    {
+      "id": "alliance_450",
+      "name": "450 MHz Alliance",
+      "type": "rss",
+      "url": "https://450alliance.org/feed/",
+      "country": "global",
+      "enabled": true
+    },
+    {
+      "id": "nokia_press",
+      "name": "Nokia Press Releases",
+      "type": "html",
+      "url": "https://www.nokia.com/press-releases/",
+      "country": "global",
+      "enabled": true
+    },
+    {
+      "id": "ericsson_press",
+      "name": "Ericsson Newsroom",
+      "type": "html",
+      "url": "https://www.ericsson.com/en/press-releases",
+      "country": "global",
+      "enabled": true
+    },
+    {
+      "id": "zte_news",
+      "name": "ZTE News",
+      "type": "html",
+      "url": "https://www.zte.com.cn/china/about/news/",
+      "country": "global",
+      "enabled": true
+    },
+    {
+      "id": "ubba",
+      "name": "Utility Broadband Alliance",
+      "type": "rss",
+      "url": "https://utilitybroadbandalliance.org/feed/",
+      "country": "global",
+      "enabled": true
+    }
+  ]
+}
