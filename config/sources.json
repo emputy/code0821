@@ -41,9 +41,9 @@
     },
     {
       "id": "ubba",
-      "name": "Utility Broadband Alliance",
+      "name": "Utility Broadband Alliance (UBBA)",
       "type": "rss",
-      "url": "https://utilitybroadbandalliance.org/feed/",
+      "url": "https://www.ubba.com/feed/",
       "country": "global",
       "enabled": true
     }
