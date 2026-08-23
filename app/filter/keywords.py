@@ -7,14 +7,15 @@ def load_keywords(config_path: str) -> list[str]:
     return data.get("keywords", [])
 
 
-def filter_items(items, keywords: list[str]):
-    """保留标题或摘要命中任一关键词的内容（不区分大小写）。"""
-    if not keywords:
-        return items
+def filter_items(items, keywords: list[str], entity_re=None):
+    """保留命中领域关键词或跟踪实体（重点客户/国家）的内容。"""
     kws = [k.lower() for k in keywords]
     kept = []
     for it in items:
         text = f"{it.title} {it.summary}".lower()
         if any(k in text for k in kws):
+            kept.append(it)
+            continue
+        if entity_re and entity_re.search(text):
             kept.append(it)
     return kept

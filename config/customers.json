@@ -1,0 +1,65 @@
+{
+  "note": "重点国家客户清单（按频谱拓展进展分 5 个阶段）",
+  "stages": [
+    {
+      "stage": 1,
+      "name": "频谱洞察与意愿激发",
+      "customers": [
+        {"region": "中东中亚", "country": "阿曼", "country_en": "Oman", "utility": "NEDC"},
+        {"region": "中东中亚", "country": "巴基斯坦", "country_en": "Pakistan", "utility": "PITC"},
+        {"region": "欧洲", "country": "罗马尼亚", "country_en": "Romania", "utility": "PPC/Delgaz"},
+        {"region": "欧洲", "country": "希腊", "country_en": "Greece", "utility": "PPC"},
+        {"region": "欧洲", "country": "法国", "country_en": "France", "utility": "EDF"},
+        {"region": "北部非洲", "country": "刚果金", "country_en": "DR Congo", "utility": "SNEL"},
+        {"region": "北部非洲", "country": "埃塞俄比亚", "country_en": "Ethiopia", "utility": "EEU"},
+        {"region": "北部非洲", "country": "阿尔及利亚", "country_en": "Algeria", "utility": "Sonelgaz"},
+        {"region": "北部非洲", "country": "摩洛哥", "country_en": "Morocco", "utility": "ONEE"},
+        {"region": "北部非洲", "country": "喀麦隆", "country_en": "Cameroon", "utility": "ENEO"},
+        {"region": "北部非洲", "country": "埃及", "country_en": "Egypt", "utility": "EEHC"},
+        {"region": "南部非洲", "country": "尼日利亚", "country_en": "Nigeria", "utility": ""},
+        {"region": "拉美", "country": "智利", "country_en": "Chile", "utility": "CGE"}
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "频谱与意愿明确",
+      "customers": [
+        {"region": "南部非洲", "country": "安哥拉", "country_en": "Angola", "utility": "ENDE"},
+        {"region": "南部非洲", "country": "肯尼亚", "country_en": "Kenya", "utility": "KPLC"},
+        {"region": "北部非洲", "country": "布基纳法索", "country_en": "Burkina Faso", "utility": "Sonabel"},
+        {"region": "北部非洲", "country": "马里", "country_en": "Mali", "utility": "EDM"},
+        {"region": "北部非洲", "country": "科特迪瓦", "country_en": "Cote d'Ivoire", "utility": "Cl-energies"},
+        {"region": "拉美", "country": "阿根廷", "country_en": "Argentina", "utility": "Edenor"}
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "POC 测试已完成或进行中",
+      "customers": [
+        {"region": "中东中亚", "country": "阿联酋", "country_en": "UAE", "utility": "DEWA"},
+        {"region": "亚太", "country": "泰国", "country_en": "Thailand", "utility": "PEA, MEA"},
+        {"region": "拉美", "country": "厄瓜多尔", "country_en": "Ecuador", "utility": "CNEL"},
+        {"region": "拉美", "country": "哥伦比亚", "country_en": "Colombia", "utility": "EPM"}
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "频谱申请",
+      "customers": [
+        {"region": "亚太", "country": "印尼", "country_en": "Indonesia", "utility": "PLN"},
+        {"region": "欧洲", "country": "斯洛伐克", "country_en": "Slovakia", "utility": "Energotel"},
+        {"region": "南部非洲", "country": "莫桑比克", "country_en": "Mozambique", "utility": "EDM"},
+        {"region": "北部非洲", "country": "几内亚", "country_en": "Guinea", "utility": "EDG"}
+      ]
+    },
+    {
+      "stage": 5,
+      "name": "已获取频谱",
+      "customers": [
+        {"region": "中东中亚", "country": "伊拉克", "country_en": "Iraq", "utility": "MoE"},
+        {"region": "亚太", "country": "马来西亚", "country_en": "Malaysia", "utility": "TNB"},
+        {"region": "南部非洲", "country": "南非", "country_en": "South Africa", "utility": "Eskom"}
+      ]
+    }
+  ]
+}
