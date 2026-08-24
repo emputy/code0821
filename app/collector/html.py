@@ -16,6 +16,48 @@ _MONTH_RE = re.compile(
 )
 
 
+def _extract_page_date(soup) -> str:
+    """从文章页提取发布时间（meta 标签或 time 元素）。"""
+    selectors = [
+        {"property": "article:published_time"},
+        {"name": "date"},
+        {"itemprop": "datePublished"},
+        {"name": "pubdate"},
+        {"property": "og:published_time"},
+    ]
+    for sel in selectors:
+        m = soup.find("meta", attrs=sel)
+        if m and m.get("content"):
+            d = str(m["content"]).strip()
+            mm = re.search(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})", d)
+            if mm:
+                return f"{mm.group(1)}-{int(mm.group(2)):02d}-{int(mm.group(3)):02d}"
+    t = soup.find("time")
+    if t:
+        d = t.get("datetime") or t.get_text()
+        mm = re.search(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})", d)
+        if mm:
+            return f"{mm.group(1)}-{int(mm.group(2)):02d}-{int(mm.group(3)):02d}"
+    return ""
+
+
+def _fill_article_dates(items) -> list:
+    """打开没有发布日期的文章页，提取发布时间。"""
+    for it in items:
+        if it.published:
+            continue
+        try:
+            resp = requests.get(it.url, timeout=15, headers=HEADERS)
+            if resp.status_code == 200:
+                soup = BeautifulSoup(resp.text, "lxml")
+                d = _extract_page_date(soup)
+                if d:
+                    it.published = d
+        except Exception:
+            pass
+    return items
+
+
 def _find_date(text: str) -> str:
     """从文本里找日期，返回 YYYY-MM-DD；找不到返回空串。"""
     if not text:
@@ -90,4 +132,4 @@ def fetch_html(source) -> list[FetchedItem]:
         ))
         if len(items) >= max_items:
             break
-    return items
+    return _fill_article_dates(items)

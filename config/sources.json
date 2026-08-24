@@ -44,7 +44,7 @@
       "options": {
         "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"],
         "max_items": 15,
-        "enrich_titles": 5,
+        "enrich_titles": 15,
         "noise_patterns": [
           "managers-transactions", "own-shares", "share-buyback", "shares-",
           "financial-report", "financial-information", "media-library",
