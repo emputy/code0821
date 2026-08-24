@@ -91,7 +91,10 @@
       "url": "https://www.gov.br/anatel/pt-br",
       "country": "brazil",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["espectro", "frequências", "leilão", "450 MHz", "redes privadas", "telecomunicações"],
+        "max_items": 20
+      }
     },
     {
       "id": "icasa_southafrica",
@@ -102,7 +105,10 @@
       "url": "https://www.icasa.org.za/",
       "country": "south-africa",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency"],
+        "max_items": 20
+      }
     },
     {
       "id": "mcmc_malaysia",
@@ -113,7 +119,10 @@
       "url": "https://www.mcmc.gov.my/",
       "country": "malaysia",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["spektrum", "lesen", "peruntukan", "auction", "frequency"],
+        "max_items": 20
+      }
     },
     {
       "id": "kominfo_indonesia",
@@ -124,7 +133,10 @@
       "url": "https://www.kominfo.go.id/",
       "country": "indonesia",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["spektrum", "frekuensi", "lisensi", "izin", "telekomunikasi", "jaringan"],
+        "max_items": 20
+      }
     },
     {
       "id": "nbtc_thailand",
@@ -135,7 +147,10 @@
       "url": "https://www.nbtc.go.th/",
       "country": "thailand",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["คลื่นความถี่", "สเปกตรัม", "ใบอนุญาต", "ประมูล", "โทรคมนาคม"],
+        "max_items": 20
+      }
     },
     {
       "id": "tdra_uae",
@@ -146,7 +161,10 @@
       "url": "https://tdra.gov.ae/",
       "country": "uae",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["التردد", "الترددات", "الطيف", "الترخيص", "شبكة خاصة", "الاتصالات"],
+        "max_items": 20
+      }
     },
     {
       "id": "arcep_france",
@@ -157,7 +175,10 @@
       "url": "https://www.arcep.fr/actualites.html",
       "country": "france",
       "enabled": true,
-      "options": { "max_items": 20 }
+      "options": {
+        "extra_keywords": ["fréquences", "spectre", "autorisation", "appel à candidatures", "450 MHz", "réseau privé"],
+        "max_items": 20
+      }
     },
     {
       "id": "rcr_wireless",
