@@ -2,9 +2,11 @@ from datetime import datetime, timedelta
 
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
-    QCheckBox, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit,
-    QMessageBox, QPushButton, QSpinBox, QVBoxLayout, QWidget,
+    QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
+    QSpinBox, QVBoxLayout, QWidget,
 )
+
+from qfluentwidgets import PrimaryPushButton, SwitchButton
 
 from app.gui.settings_store import load_settings, save_settings
 from app.gui.workers import TestKeyWorker
@@ -12,6 +14,7 @@ from app.gui.workers import TestKeyWorker
 
 class SettingsPage(QWidget):
     settings_changed = Signal()
+    theme_changed = Signal()
     run_collect = Signal()
 
     def __init__(self, parent=None):
@@ -37,10 +40,14 @@ class SettingsPage(QWidget):
         self.lbl_test_result = QLabel("")
         form.addRow("", self.lbl_test_result)
 
-        self.chk_ai = QCheckBox("启用 AI 功能（关闭后工作页面不显示「分析信息数据」按钮）")
+        self.sw_dark = SwitchButton("深色模式")
+        self.sw_dark.checkedChanged.connect(self._on_dark_toggled)
+        form.addRow("外观：", self.sw_dark)
+
+        self.chk_ai = SwitchButton("启用 AI 功能（关闭后工作页面不显示「分析信息数据」按钮）")
         form.addRow("", self.chk_ai)
 
-        self.chk_translate = QCheckBox("启用原文翻译（原文 → 中文）")
+        self.chk_translate = SwitchButton("启用原文翻译（原文 → 中文）")
         form.addRow("", self.chk_translate)
 
         self.cmb_model = QComboBox()
@@ -60,11 +67,11 @@ class SettingsPage(QWidget):
         lay.addLayout(form)
 
         btns = QHBoxLayout()
-        btn_test = QPushButton("测试连接")
+        btn_test = PrimaryPushButton("测试连接")
         btn_test.clicked.connect(self.test_connection)
-        btn_save = QPushButton("保存设置")
+        btn_save = PrimaryPushButton("保存设置")
         btn_save.clicked.connect(self.save)
-        btn_run = QPushButton("立即采集一次")
+        btn_run = PrimaryPushButton("立即采集一次")
         btn_run.clicked.connect(self.run_collect.emit)
         btns.addWidget(btn_test)
         btns.addWidget(btn_save)
@@ -72,9 +79,16 @@ class SettingsPage(QWidget):
         lay.addLayout(btns)
         lay.addStretch(1)
 
+    def _on_dark_toggled(self, checked):
+        s = load_settings()
+        s["dark_theme"] = bool(checked)
+        save_settings(s)
+        self.theme_changed.emit()
+
     def load_from_settings(self):
         s = load_settings()
         self.edt_key.setText(s.get("api_key", ""))
+        self.sw_dark.setChecked(bool(s.get("dark_theme", True)))
         self.chk_ai.setChecked(bool(s.get("ai_enabled")))
         self.chk_translate.setChecked(bool(s.get("translate_enabled", True)))
         self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))

@@ -6,9 +6,11 @@ from PySide6.QtCore import QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QComboBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QLineEdit,
-    QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget,
-    QTextEdit, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
+    QMessageBox, QTableWidget, QTableWidgetItem, QTabWidget, QTextEdit,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
+
+from qfluentwidgets import PrimaryPushButton
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, load_customers
@@ -43,7 +45,7 @@ class SourcesPage(QWidget):
         w = QWidget()
         lay = QVBoxLayout(w)
         tb = QHBoxLayout()
-        self.btn_collect = QPushButton("立即抓取")
+        self.btn_collect = PrimaryPushButton("立即抓取")
         self.btn_collect.clicked.connect(self.collect_requested.emit)
         tb.addWidget(self.btn_collect)
         self.lbl_progress = QLabel("")
@@ -136,7 +138,7 @@ class SourcesPage(QWidget):
         form.addRow("国家：", self.edt_country)
         lay.addLayout(form)
 
-        btn_add = QPushButton("添加数据源")
+        btn_add = PrimaryPushButton("添加数据源")
         btn_add.clicked.connect(self.add_source)
         lay.addWidget(btn_add)
         return w

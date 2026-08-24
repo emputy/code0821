@@ -3,8 +3,10 @@ import sqlite3
 from pathlib import Path
 
 from PySide6.QtWidgets import (
-    QHBoxLayout, QLabel, QMessageBox, QPushButton, QTextBrowser, QVBoxLayout, QWidget,
+    QHBoxLayout, QLabel, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
 )
+
+from qfluentwidgets import PrimaryPushButton
 
 from app.collector.fetch import load_sources
 from app.gui.settings_store import load_settings
@@ -33,11 +35,11 @@ class WorkPage(QWidget):
         lay.addWidget(self.chat, 1)
 
         btns = QHBoxLayout()
-        self.btn_raw = QPushButton("数据汇总")
+        self.btn_raw = PrimaryPushButton("数据汇总")
         self.btn_raw.clicked.connect(self.show_raw)
-        self.btn_analyze = QPushButton("分析信息数据")
+        self.btn_analyze = PrimaryPushButton("分析信息数据")
         self.btn_analyze.clicked.connect(self.analyze)
-        self.btn_export = QPushButton("导出内容")
+        self.btn_export = PrimaryPushButton("导出内容")
         self.btn_export.clicked.connect(self.export)
         btns.addWidget(self.btn_raw)
         btns.addWidget(self.btn_analyze)

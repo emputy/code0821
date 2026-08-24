@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import (
-    QHBoxLayout, QListWidget, QMainWindow, QMessageBox, QStackedWidget, QWidget,
-)
+from PySide6.QtWidgets import QApplication, QMessageBox
+
+from qfluentwidgets import FluentIcon, FluentWindow, Theme, setTheme
 
 from app.gui.settings_page import SettingsPage
 from app.gui.settings_store import load_settings, save_settings
@@ -19,43 +19,33 @@ CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"
 
 
-class MainWindow(QMainWindow):
+class MainWindow(FluentWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("无线专网情报监测系统")
-        self.resize(1250, 780)
+        self.resize(1280, 800)
         self.collect_worker = None
 
-        self.nav = QListWidget()
-        self.nav.addItems(["工作页面", "可视化", "AI 设置", "数据源"])
-        self.nav.setFixedWidth(140)
-        self.nav.setStyleSheet("QListWidget::item{padding:10px;}")
-        self.nav.currentRowChanged.connect(self._switch)
+        s0 = load_settings()
+        setTheme(Theme.DARK if s0.get("dark_theme", True) else Theme.LIGHT)
 
-        self.stack = QStackedWidget()
         self.work_page = WorkPage()
         self.viz_page = VizPage()
         self.settings_page = SettingsPage()
         self.sources_page = SourcesPage()
-        for p in (self.work_page, self.viz_page, self.settings_page, self.sources_page):
-            self.stack.addWidget(p)
 
-        central = QWidget()
-        lay = QHBoxLayout(central)
-        lay.setContentsMargins(0, 0, 0, 0)
-        lay.setSpacing(0)
-        lay.addWidget(self.nav)
-        lay.addWidget(self.stack, 1)
-        self.setCentralWidget(central)
+        self.addSubInterface(self.work_page, FluentIcon.HOME, "工作页面")
+        self.addSubInterface(self.viz_page, FluentIcon.LIBRARY, "可视化")
+        self.addSubInterface(self.settings_page, FluentIcon.ROBOT, "AI 设置")
+        self.addSubInterface(self.sources_page, FluentIcon.CLOUD, "数据源")
+        self.navigationInterface.expand(useAni=False)
+        self.navigationInterface.currentItemChanged.connect(self._on_nav_changed)
 
-        # 模块间联动
         self.settings_page.settings_changed.connect(self.work_page.refresh_buttons)
+        self.settings_page.theme_changed.connect(self._apply_theme)
         self.settings_page.run_collect.connect(self.start_collect)
         self.sources_page.collect_requested.connect(self.start_collect)
 
-        self.nav.setCurrentRow(0)
-
-        # 定时检查（每分钟一次）
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._check_schedule)
         self.timer.start(60000)
@@ -63,17 +53,19 @@ class MainWindow(QMainWindow):
 
         self.statusBar().showMessage("就绪")
 
-    def _switch(self, row):
-        self.stack.setCurrentIndex(row)
-        if row == 1:
+    def _on_nav_changed(self, item):
+        if item and item.text() == "可视化":
             self.viz_page.refresh()
 
-    # ---------- 采集 ----------
+    def _apply_theme(self):
+        s = load_settings()
+        setTheme(Theme.DARK if s.get("dark_theme", True) else Theme.LIGHT)
+
     def start_collect(self):
         if self.collect_worker and self.collect_worker.isRunning():
             QMessageBox.information(self, "采集", "采集正在进行中，请稍候")
             return
-        self.statusBar().showMessage("正在采集最新数据……（约 5-8 分钟）")
+        self.statusBar().showMessage("正在采集最新数据……（约 10-15 分钟）")
         self.collect_worker = CollectWorker(str(CONFIG), str(CUSTOMERS), str(DB), self)
         self.collect_worker.log.connect(self.sources_page.append_log)
         self.collect_worker.done.connect(self._collect_done)
@@ -93,7 +85,6 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("采集失败：" + str(msg)[:80])
         QMessageBox.warning(self, "采集失败", str(msg))
 
-    # ---------- 定时 ----------
     def _check_schedule(self):
         s = load_settings()
         last = s.get("last_run_at", "")
@@ -111,7 +102,6 @@ class MainWindow(QMainWindow):
 
 
 def run():
-    from PySide6.QtWidgets import QApplication
     app = QApplication([])
     win = MainWindow()
     win.show()
