@@ -24,20 +24,30 @@ META_SELECTORS = [
 ]
 
 
+def _valid_date(y, m, d) -> bool:
+    """校验年月日是否合法：月 1-12、日 1-31、年 2020-2035。"""
+    try:
+        y, m, d = int(y), int(m), int(d)
+        return 2020 <= y <= 2035 and 1 <= m <= 12 and 1 <= d <= 31
+    except Exception:
+        return False
+
+
 def normalize(raw: str) -> str:
-    """把日期字符串归一化为 YYYY-MM-DD；无法识别返回空串。"""
+    """把日期字符串归一化为 YYYY-MM-DD；无法识别或非法返回空串。"""
     if not raw:
         return ""
     m = _ISO_RE.search(raw)
     if m:
         try:
-            return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+            if _valid_date(m.group(1), m.group(2), m.group(3)):
+                return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
         except Exception:
             return ""
     m = _TEXT_RE.search(raw)
     if m:
         mon = _MONTHS.get(m.group(2).lower()[:3])
-        if mon:
+        if mon and _valid_date(m.group(3), mon, m.group(1)):
             return f"{m.group(3)}-{mon:02d}-{int(m.group(1)):02d}"
     return ""
 
@@ -54,15 +64,13 @@ def from_url(url: str) -> str:
 
 
 def _first_date(text: str) -> str:
-    """按出现顺序找文本里第一个 2020-2029 的日期（数字或英文月名格式）。"""
+    """按出现顺序找文本里第一个合法的 2020-2035 日期（数字或英文月名格式）。"""
     for m in _ISO_RE.finditer(text):
-        try:
+        if _valid_date(m.group(1), m.group(2), m.group(3)):
             return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
-        except Exception:
-            continue
     for m in _TEXT_RE.finditer(text):
         mon = _MONTHS.get(m.group(2).lower()[:3])
-        if mon:
+        if mon and _valid_date(m.group(3), mon, m.group(1)):
             return f"{m.group(3)}-{mon:02d}-{int(m.group(1)):02d}"
     return ""
 
