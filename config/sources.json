@@ -81,6 +81,114 @@
         "url_ends_with": ".html",
         "max_items": 20
       }
+    },
+    {
+      "id": "anatel_brazil",
+      "name": "ANATEL Brazil",
+      "name_cn": "巴西 ANATEL（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.gov.br/anatel/pt-br",
+      "country": "brazil",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "icasa_southafrica",
+      "name": "ICASA South Africa",
+      "name_cn": "南非 ICASA（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.icasa.org.za/",
+      "country": "south-africa",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "mcmc_malaysia",
+      "name": "MCMC Malaysia",
+      "name_cn": "马来西亚 MCMC（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.mcmc.gov.my/",
+      "country": "malaysia",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "kominfo_indonesia",
+      "name": "Kominfo Indonesia",
+      "name_cn": "印尼 Kominfo（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.kominfo.go.id/",
+      "country": "indonesia",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "nbtc_thailand",
+      "name": "NBTC Thailand",
+      "name_cn": "泰国 NBTC（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.nbtc.go.th/",
+      "country": "thailand",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "tdra_uae",
+      "name": "TDRA UAE",
+      "name_cn": "阿联酋 TDRA（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://tdra.gov.ae/",
+      "country": "uae",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "arcep_france",
+      "name": "ARCEP France",
+      "name_cn": "法国 ARCEP（频谱监管）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.arcep.fr/actualites.html",
+      "country": "france",
+      "enabled": true,
+      "options": { "max_items": 20 }
+    },
+    {
+      "id": "rcr_wireless",
+      "name": "RCR Wireless",
+      "name_cn": "RCR Wireless（行业媒体）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://rcrwireless.com/feed",
+      "country": "global",
+      "enabled": true
+    },
+    {
+      "id": "light_reading",
+      "name": "Light Reading",
+      "name_cn": "Light Reading（行业媒体）",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.lightreading.com/",
+      "country": "global",
+      "enabled": true,
+      "options": { "max_items": 25 }
+    },
+    {
+      "id": "utility_dive",
+      "name": "Utility Dive",
+      "name_cn": "Utility Dive（行业媒体）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://www.utilitydive.com/feeds/news/",
+      "country": "global",
+      "enabled": true
     }
   ]
 }
