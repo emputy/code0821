@@ -91,6 +91,10 @@ class SourcesPage(QWidget):
         self.chk_relevant.setChecked(True)
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
         tb.addWidget(self.chk_relevant)
+        self.chk_dated = QCheckBox("只看有发布日期")
+        self.chk_dated.setChecked(False)
+        self.chk_dated.toggled.connect(lambda _: self.refresh_items())
+        tb.addWidget(self.chk_dated)
         lay.addLayout(tb)
 
         tb2 = QHBoxLayout()
@@ -237,7 +241,10 @@ class SourcesPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        if self.chk_dated.isChecked():
+            rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
+        else:
+            rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         self.all_rows = []
         for row in rows:
             t = row[5][:10] if row[5] else "—"

@@ -51,6 +51,10 @@ class WorkPage(QWidget):
         self.dt_end.setDate(QDate.currentDate())
         self.dt_end.dateChanged.connect(lambda _: self.show_raw())
         row.addWidget(self.dt_end)
+        self.chk_dated = QCheckBox("只看有发布日期")
+        self.chk_dated.setChecked(False)
+        self.chk_dated.toggled.connect(lambda _: self.show_raw())
+        row.addWidget(self.chk_dated)
         row.addStretch(1)
         lay.addLayout(row)
 
@@ -119,7 +123,10 @@ class WorkPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        if self.chk_dated.isChecked():
+            rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
+        else:
+            rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         mode = "相关" if self.chk_filter.isChecked() else "全部原始"
         self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
@@ -147,7 +154,10 @@ class WorkPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        if self.chk_dated.isChecked():
+            rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
+        else:
+            rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         if not rows:
             self._bubble("", "当前时间范围内没有可分析的数据（可调整时间范围或取消『只看相关』）。")
             return
