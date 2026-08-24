@@ -2,8 +2,9 @@ import html as html_mod
 import sqlite3
 from pathlib import Path
 
+from PySide6.QtCore import QDate
 from PySide6.QtWidgets import (
-    QCheckBox, QHBoxLayout, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
+    QCheckBox, QDateEdit, QHBoxLayout, QLabel, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
 )
 
 from qfluentwidgets import CardWidget, PushButton, SubtitleLabel
@@ -36,6 +37,22 @@ class WorkPage(QWidget):
         lay.setContentsMargins(20, 20, 20, 20)
         lay.setSpacing(12)
         lay.addWidget(SubtitleLabel("工作页面"))
+
+        row = QHBoxLayout()
+        row.addWidget(QLabel("时间范围:"))
+        self.dt_start = QDateEdit()
+        self.dt_start.setCalendarPopup(True)
+        self.dt_start.setDate(QDate(2026, 1, 1))
+        self.dt_start.dateChanged.connect(lambda _: self.show_raw())
+        row.addWidget(self.dt_start)
+        row.addWidget(QLabel("至"))
+        self.dt_end = QDateEdit()
+        self.dt_end.setCalendarPopup(True)
+        self.dt_end.setDate(QDate.currentDate())
+        self.dt_end.dateChanged.connect(lambda _: self.show_raw())
+        row.addWidget(self.dt_end)
+        row.addStretch(1)
+        lay.addLayout(row)
 
         card = CardWidget()
         card_lay = QVBoxLayout(card)
@@ -100,6 +117,9 @@ class WorkPage(QWidget):
             return
         if self.chk_filter.isChecked():
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
+        start_s = self.dt_start.date().toString("yyyy-MM-dd")
+        end_s = self.dt_end.date().toString("yyyy-MM-dd")
+        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         mode = "相关" if self.chk_filter.isChecked() else "全部原始"
         self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
@@ -124,8 +144,11 @@ class WorkPage(QWidget):
         rows = self._load_rows()
         if self.chk_filter.isChecked():
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
+        start_s = self.dt_start.date().toString("yyyy-MM-dd")
+        end_s = self.dt_end.date().toString("yyyy-MM-dd")
+        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
         if not rows:
-            self._bubble("", "当前没有相关数据可分析（可取消『只看相关』后重试）。")
+            self._bubble("", "当前时间范围内没有可分析的数据（可调整时间范围或取消『只看相关』）。")
             return
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         lines = []

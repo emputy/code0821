@@ -2,10 +2,10 @@ import json
 import sqlite3
 from pathlib import Path
 
-from PySide6.QtCore import QUrl, Signal
+from PySide6.QtCore import QDate, QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
-    QCheckBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QMessageBox,
+    QCheckBox, QDateEdit, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QMessageBox,
     QStackedWidget, QTableWidget, QTableWidgetItem, QTextEdit, QTreeWidget,
     QTreeWidgetItem, QVBoxLayout, QWidget,
 )
@@ -92,6 +92,24 @@ class SourcesPage(QWidget):
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
         tb.addWidget(self.chk_relevant)
         lay.addLayout(tb)
+
+        tb2 = QHBoxLayout()
+        tb2.addWidget(QLabel("时间范围:"))
+        self.dt_start = QDateEdit()
+        self.dt_start.setCalendarPopup(True)
+        self.dt_start.setDate(QDate(2026, 1, 1))
+        self.dt_start.setFixedWidth(110)
+        self.dt_start.dateChanged.connect(lambda _: self.refresh_items())
+        tb2.addWidget(self.dt_start)
+        tb2.addWidget(QLabel("至"))
+        self.dt_end = QDateEdit()
+        self.dt_end.setCalendarPopup(True)
+        self.dt_end.setDate(QDate.currentDate())
+        self.dt_end.setFixedWidth(110)
+        self.dt_end.dateChanged.connect(lambda _: self.refresh_items())
+        tb2.addWidget(self.dt_end)
+        tb2.addStretch(1)
+        lay.addLayout(tb2)
 
         self.table = TableWidget(self)
         self.table.setColumnCount(6)
@@ -217,6 +235,9 @@ class SourcesPage(QWidget):
             rows = []
         if self.chk_relevant.isChecked():
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
+        start_s = self.dt_start.date().toString("yyyy-MM-dd")
+        end_s = self.dt_end.date().toString("yyyy-MM-dd")
+        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
         self.all_rows = []
         for row in rows:
             t, src, title, url = row[8], row[2], row[3], row[4]
