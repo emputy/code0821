@@ -53,8 +53,26 @@ def from_url(url: str) -> str:
     return ""
 
 
+def _first_date(text: str) -> str:
+    """按出现顺序找文本里第一个 2020-2029 的日期（数字或英文月名格式）。"""
+    for m in _ISO_RE.finditer(text):
+        try:
+            return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+        except Exception:
+            continue
+    for m in _TEXT_RE.finditer(text):
+        mon = _MONTHS.get(m.group(2).lower()[:3])
+        if mon:
+            return f"{m.group(3)}-{mon:02d}-{int(m.group(1)):02d}"
+    return ""
+
+
 def from_soup(soup) -> str:
-    """从文章页 BeautifulSoup 提取发布日期：meta / time / JSON-LD。"""
+    """从文章页 BeautifulSoup 提取发布日期。
+
+    优先级：meta 标签 -> <time> 元素 -> JSON-LD -> 标题(h1/h2)附近文本 -> 正文开头文本。
+    监管机构页面常把日期写成正文文本（如 "20 AUG 2026"），因此最后两项很关键。
+    """
     for sel in META_SELECTORS:
         m = soup.find("meta", attrs=sel)
         if m and m.get("content"):
@@ -73,4 +91,22 @@ def from_soup(soup) -> str:
             d = normalize(m.group(1))
             if d:
                 return d
+    # 标题（h1/h2）附近文本：向上最多 3 层找日期
+    for tag in soup.find_all(["h1", "h2"]):
+        node = tag.parent
+        for _ in range(3):
+            if node is None:
+                break
+            txt = " ".join(node.get_text(" ", strip=True).split())[:1500]
+            d = _first_date(txt)
+            if d:
+                return d
+            node = node.parent
+    # 正文可见文本开头：排除脚本/样式后扫前 4000 字符
+    for bad in soup.find_all(["script", "style", "noscript"]):
+        bad.decompose()
+    txt = " ".join(soup.get_text(" ", strip=True).split())
+    d = _first_date(txt[:4000])
+    if d:
+        return d
     return ""
