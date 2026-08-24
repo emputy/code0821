@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from .base import FetchedItem
+from .dates import from_soup, normalize
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
 
@@ -15,22 +16,31 @@ DEFAULT_NOISE = [
 ]
 
 
-def _fetch_sitemap_urls(url: str) -> list[str]:
+def _fetch_sitemap_entries(url: str) -> list[tuple[str, str]]:
+    """抓取站点地图，返回 [(url, lastmod), ...]，lastmod 为空串表示没有。"""
     resp = requests.get(url, timeout=30, headers=HEADERS)
     resp.raise_for_status()
-    urls = re.findall(r"<loc>([^<]+)</loc>", resp.text)
+    text = resp.text
+    entries = []
+    for block in re.findall(r"<url>(.*?)</url>", text, re.S):
+        loc = re.search(r"<loc>([^<]+)</loc>", block)
+        last = re.search(r"<lastmod>([^<]+)</lastmod>", block)
+        if loc:
+            lastmod = normalize(last.group(1).strip()) if last else ""
+            entries.append((loc.group(1), lastmod))
+    if not entries:  # 无 <url> 块（索引或简单 sitemap），退化为直接找 loc
+        entries = [(u, "") for u in re.findall(r"<loc>([^<]+)</loc>", text)]
     # 如果是 sitemap 索引（内含多个子 sitemap），逐个取回合并
-    sub = [u for u in urls if u.lower().endswith((".xml", ".xml.gz"))]
-    if sub and len(sub) > len(urls) * 0.5:
+    sub = [u for u, _ in entries if u.lower().endswith((".xml", ".xml.gz"))]
+    if sub and len(sub) > len(entries) * 0.5:
         merged = []
         for u in sub[:20]:
             try:
-                r = requests.get(u, timeout=30, headers=HEADERS)
-                merged.extend(re.findall(r"<loc>([^<]+)</loc>", r.text))
+                merged.extend(_fetch_sitemap_entries(u))
             except Exception:
                 continue
         return merged
-    return urls
+    return entries
 
 
 def _guess_title(url: str) -> str:
@@ -42,7 +52,7 @@ def _guess_title(url: str) -> str:
 
 
 def _enrich_titles(items: list, n: int) -> list:
-    """抓取前 n 篇文章页面的真实标题。"""
+    """抓取前 n 篇文章页面的真实标题和发布日期。"""
     if n <= 0:
         return items
     for it in items[:n]:
@@ -55,15 +65,10 @@ def _enrich_titles(items: list, n: int) -> list:
                     title = " ".join(t.string.split())
                     if len(title) > 10:
                         it.title = title
-                meta = (
-                    soup.find("meta", attrs={"property": "article:published_time"})
-                    or soup.find("meta", attrs={"name": "date"})
-                    or soup.find("time")
-                )
-                if meta:
-                    d = meta.get("content") or meta.get("datetime") or ""
+                if not it.published:
+                    d = from_soup(soup)
                     if d:
-                        it.published = d[:10]
+                        it.published = d
         except Exception:
             pass
     return items
@@ -78,7 +83,7 @@ def fetch_sitemap(source) -> list[FetchedItem]:
     enrich = int(opts.get("enrich_titles", 5))
 
     try:
-        urls = _fetch_sitemap_urls(source.url)
+        entries = _fetch_sitemap_entries(source.url)
     except Exception as e:
         print(f"  [SITEMAP 错误] {source.name}: {e}")
         return []
@@ -86,7 +91,7 @@ def fetch_sitemap(source) -> list[FetchedItem]:
     noise_re = re.compile("|".join(noise), re.I)
     article_urls = []
     seen = set()
-    for u in urls:
+    for u, lastmod in entries:
         if u in seen:
             continue
         seen.add(u)
@@ -96,18 +101,19 @@ def fetch_sitemap(source) -> list[FetchedItem]:
             continue
         if u.rstrip("/").endswith(("/newsroom", "/newsroom/")):
             continue
-        article_urls.append(u)
+        article_urls.append((u, lastmod))
 
     # 站点地图通常按新到旧排列，取前 max_items 条
     article_urls = article_urls[:max_items]
 
     items = []
-    for u in article_urls:
+    for u, lastmod in article_urls:
         items.append(FetchedItem(
             source_id=source.id,
             source_name=source.name,
             title=_guess_title(u),
             url=u,
+            published=lastmod,
             country=source.country,
         ))
     items = _enrich_titles(items, enrich)

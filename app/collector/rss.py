@@ -30,12 +30,21 @@ def fetch_rss(source) -> list[FetchedItem]:
 
     items = []
     for entry in feed.entries[:50]:
+        published = ""
+        parsed = entry.get("published_parsed") or entry.get("updated_parsed")
+        if parsed:
+            try:
+                published = datetime(*parsed[:6]).strftime("%Y-%m-%d")
+            except Exception:
+                published = ""
+        if not published:
+            published = _norm_date(entry.get("published", "") or entry.get("updated", ""))
         items.append(FetchedItem(
             source_id=source.id,
             source_name=source.name,
             title=entry.get("title", "").strip(),
             url=entry.get("link", ""),
-            published=_norm_date(entry.get("published", "")),
+            published=published,
             summary=entry.get("summary", ""),
             country=source.country,
         ))

@@ -5,10 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 
 from .base import FetchedItem
+from .dates import from_soup, from_url
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
 
-_DATE_RE = re.compile(r"(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})")
+_DATE_RE = re.compile(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})")
 _MONTHS = {"jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
            "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12}
 _MONTH_RE = re.compile(
@@ -16,29 +17,12 @@ _MONTH_RE = re.compile(
 )
 
 
-def _extract_page_date(soup) -> str:
-    """从文章页提取发布时间（meta 标签或 time 元素）。"""
-    selectors = [
-        {"property": "article:published_time"},
-        {"name": "date"},
-        {"itemprop": "datePublished"},
-        {"name": "pubdate"},
-        {"property": "og:published_time"},
-    ]
-    for sel in selectors:
-        m = soup.find("meta", attrs=sel)
-        if m and m.get("content"):
-            d = str(m["content"]).strip()
-            mm = re.search(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})", d)
-            if mm:
-                return f"{mm.group(1)}-{int(mm.group(2)):02d}-{int(mm.group(3)):02d}"
-    t = soup.find("time")
-    if t:
-        d = t.get("datetime") or t.get_text()
-        mm = re.search(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})", d)
-        if mm:
-            return f"{mm.group(1)}-{int(mm.group(2)):02d}-{int(mm.group(3)):02d}"
-    return ""
+def _extract_page_date(soup, url: str = "") -> str:
+    """从文章页提取发布时间：meta / time / JSON-LD，回退到 URL 里的日期。"""
+    d = from_soup(soup)
+    if d:
+        return d
+    return from_url(url)
 
 
 def _fill_article_dates(items) -> list:
@@ -47,12 +31,14 @@ def _fill_article_dates(items) -> list:
         if it.published:
             continue
         try:
-            resp = requests.get(it.url, timeout=15, headers=HEADERS)
-            if resp.status_code == 200:
-                soup = BeautifulSoup(resp.text, "lxml")
-                d = _extract_page_date(soup)
-                if d:
-                    it.published = d
+            d = from_url(it.url)
+            if not d:
+                resp = requests.get(it.url, timeout=15, headers=HEADERS)
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.text, "lxml")
+                    d = _extract_page_date(soup, it.url)
+            if d:
+                it.published = d
         except Exception:
             pass
     return items
@@ -121,7 +107,7 @@ def fetch_html(source) -> list[FetchedItem]:
             continue
         seen.add(full)
         context = a.parent.get_text()[:200] if a.parent else ""
-        published = _find_date(context) or _find_date(text)
+        published = _find_date(context) or _find_date(text) or from_url(full)
         items.append(FetchedItem(
             source_id=source.id,
             source_name=source.name,
