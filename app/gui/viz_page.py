@@ -7,9 +7,28 @@ from PySide6.QtCharts import (
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
-from PySide6.QtWidgets import QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QStackedWidget, QVBoxLayout, QWidget
 
-from qfluentwidgets import SegmentedWidget
+from qfluentwidgets import PushButton, SegmentedWidget
+
+
+class ZoomChartView(QChartView):
+    """支持滚轮缩放 / 拖拽框选放大 / 双击重置的图表视图。"""
+
+    def __init__(self, chart, parent=None):
+        super().__init__(chart, parent)
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setRubberBand(QChartView.RectangleRubberBand)
+        self.setMinimumHeight(380)
+
+    def wheelEvent(self, event):
+        factor = 1.15 if event.angleDelta().y() > 0 else 1 / 1.15
+        self.chart().zoom(factor)
+        event.accept()
+
+    def mouseDoubleClickEvent(self, event):
+        self.chart().zoomReset()
+        event.accept()
 
 from app.collector.fetch import load_sources
 from app.filter.entities import (
@@ -37,11 +56,37 @@ class VizPage(QWidget):
         lay.setContentsMargins(20, 20, 20, 20)
         lay.setSpacing(12)
         lay.addWidget(self.pivot)
+
+        toolbar = QHBoxLayout()
+        btn_zin = PushButton("放大")
+        btn_zin.clicked.connect(lambda: self._zoom_current(1.2))
+        btn_zout = PushButton("缩小")
+        btn_zout.clicked.connect(lambda: self._zoom_current(1 / 1.2))
+        btn_reset = PushButton("重置")
+        btn_reset.clicked.connect(self._zoom_reset)
+        toolbar.addWidget(btn_zin)
+        toolbar.addWidget(btn_zout)
+        toolbar.addWidget(btn_reset)
+        toolbar.addStretch(1)
+        hint = QLabel("滚轮缩放 / 拖拽框选放大 / 双击重置")
+        toolbar.addWidget(hint)
+        lay.addLayout(toolbar)
+
         lay.addWidget(self.stack, 1)
         self.customers = load_customers(str(CUSTOMERS))
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
         self.refresh()
+
+    def _zoom_current(self, factor):
+        w = self.stack.currentWidget()
+        if isinstance(w, ZoomChartView):
+            w.chart().zoom(factor)
+
+    def _zoom_reset(self):
+        w = self.stack.currentWidget()
+        if isinstance(w, ZoomChartView):
+            w.chart().zoomReset()
 
     def _relevant_rows(self):
         try:
@@ -87,9 +132,7 @@ class VizPage(QWidget):
         chart.addAxis(ay, Qt.AlignLeft)
         series.attachAxis(ay)
         chart.legend().hide()
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
+        return ZoomChartView(chart)
 
     def _chart_stage(self):
         customers = load_customers(str(CUSTOMERS))
@@ -141,9 +184,7 @@ class VizPage(QWidget):
         chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
+        return ZoomChartView(chart)
 
     def _chart_stage_pie(self):
         rows = self._relevant_rows()
@@ -177,6 +218,4 @@ class VizPage(QWidget):
         chart.setTitle("情报分布（客户阶段 / 来源）")
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
+        return ZoomChartView(chart)
