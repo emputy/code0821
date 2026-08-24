@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import CardWidget, ComboBox, FluentTableWidget, LineEdit, PrimaryPushButton
+from qfluentwidgets import CardWidget, ComboBox, LineEdit, PrimaryPushButton, TableWidget
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
@@ -84,7 +84,7 @@ class SourcesPage(QWidget):
         tb.addWidget(self.chk_relevant)
         lay.addLayout(tb)
 
-        self.table = FluentTableWidget(self)
+        self.table = TableWidget(self)
         self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(["时间", "来源", "阶段", "国家", "标题", "链接"])
         self.table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)
@@ -135,7 +135,7 @@ class SourcesPage(QWidget):
         lay = QVBoxLayout(w)
         lay.setContentsMargins(16, 16, 16, 16)
         lay.setSpacing(12)
-        self.src_table = FluentTableWidget(self)
+        self.src_table = TableWidget(self)
         self.src_table.setColumnCount(5)
         self.src_table.setHorizontalHeaderLabels(["分类", "名称", "类型", "URL", "启用"])
         self.src_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
