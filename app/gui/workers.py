@@ -17,7 +17,7 @@ class CollectWorker(QThread):
         self.db = db
 
     def run(self):
-        from app.collector.fetch import fetch_all
+        from app.collector.fetch import fetch_all, load_sources
         from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
         from app.filter.keywords import filter_items, load_keywords
         from app.storage.database import Database
@@ -31,7 +31,12 @@ class CollectWorker(QThread):
                 cust = load_customers(self.customers)
                 terms = build_entity_terms(cust)
                 matcher = build_entity_matcher(terms)
-                items = filter_items(items, keywords, matcher)
+                src_kw = {}
+                for s in load_sources(self.config):
+                    extras = (s.options or {}).get("extra_keywords", [])
+                    if extras:
+                        src_kw[s.id] = extras
+                items = filter_items(items, keywords, matcher, src_kw)
                 db = Database(self.db)
                 added = db.save(items)
                 total, _ = db.summary()

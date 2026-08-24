@@ -42,6 +42,7 @@
       "country": "global",
       "enabled": true,
       "options": {
+        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"],
         "max_items": 15,
         "enrich_titles": 5,
         "noise_patterns": [
@@ -60,7 +61,10 @@
       "type": "rss",
       "url": "https://www.ericsson.com/en/newsroom/latest-news/feed?typeFilters=1,2,3,4&disableLocationDetect=true",
       "country": "global",
-      "enabled": true
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"]
+      }
     },
     {
       "id": "zte_news",
@@ -72,6 +76,7 @@
       "country": "global",
       "enabled": true,
       "options": {
+        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"],
         "url_contains": "/about/news/",
         "url_ends_with": ".html",
         "max_items": 20
