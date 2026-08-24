@@ -137,10 +137,8 @@ class WorkPage(QWidget):
             src, title, url, summary = row[2], row[3], row[4], row[6]
             if row[5]:
                 time_str = "发布：" + row[5][:10]
-            elif row[8]:
-                time_str = "抓取：" + row[8][:10] + "（未注明发布日期）"
             else:
-                time_str = "时间：—"
+                time_str = ""
             body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(time_str)}<br/><b>{html_mod.escape(title)}</b>"
             if url.startswith("http"):
                 body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
@@ -214,9 +212,12 @@ class WorkPage(QWidget):
             doc.add_heading("无线专网情报汇总", 0)
             for row in rows:
                 src, title, url = row[2], row[3], row[4]
-                pub = row[5][:10] if row[5] else ("抓取 " + row[8][:10] if row[8] else "未注明")
+                pub = row[5][:10] if row[5] else ""
                 doc.add_heading(title, level=2)
-                doc.add_paragraph(f"来源：{src}  时间：{pub}  链接：{url}")
+                if pub:
+                    doc.add_paragraph(f"来源：{src}  发布：{pub}  链接：{url}")
+                else:
+                    doc.add_paragraph(f"来源：{src}  链接：{url}")
             word_path = EXPORTS / f"intel_{stamp}.docx"
             doc.save(str(word_path))
         except Exception as e:
@@ -233,9 +234,12 @@ class WorkPage(QWidget):
             story = [Paragraph("无线专网情报汇总", styles["Title"])]
             for row in rows[:100]:
                 src, title, url = row[2], row[3], row[4]
-                pub = row[5][:10] if row[5] else ("抓取 " + row[8][:10] if row[8] else "未注明")
+                pub = row[5][:10] if row[5] else ""
                 story.append(Paragraph(escape(title), styles["Heading2"]))
-                story.append(Paragraph(f"来源：{escape(src)}  时间：{escape(pub)}  链接：{escape(url)}", styles["BodyText"]))
+                if pub:
+                    story.append(Paragraph(f"来源：{escape(src)}  发布：{escape(pub)}  链接：{escape(url)}", styles["BodyText"]))
+                else:
+                    story.append(Paragraph(f"来源：{escape(src)}  链接：{escape(url)}", styles["BodyText"]))
                 story.append(Spacer(1, 8))
             doc.build(story)
         except Exception as e:

@@ -251,12 +251,7 @@ class SourcesPage(QWidget):
             rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         self.all_rows = []
         for row in rows:
-            if row[5]:
-                t = "发布 " + row[5][:10]
-            elif row[8]:
-                t = "抓取 " + row[8][:10]
-            else:
-                t = "—"
+            t = row[5][:10] if row[5] else "—"
             src, title, url = row[2], row[3], row[4]
             stage, country = self._match_item(title, src)
             self.all_rows.append({
