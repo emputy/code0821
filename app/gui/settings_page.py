@@ -14,7 +14,6 @@ from app.gui.workers import TestKeyWorker
 
 class SettingsPage(QWidget):
     settings_changed = Signal()
-    theme_changed = Signal()
     run_collect = Signal()
 
     def __init__(self, parent=None):
@@ -41,10 +40,6 @@ class SettingsPage(QWidget):
 
         self.lbl_test_result = QLabel("")
         form.addRow("", self.lbl_test_result)
-
-        self.sw_dark = SwitchButton("深色模式")
-        self.sw_dark.checkedChanged.connect(self._on_dark_toggled)
-        form.addRow("外观：", self.sw_dark)
 
         self.chk_ai = SwitchButton("启用 AI 功能（关闭后工作页面不显示「分析信息数据」按钮）")
         form.addRow("", self.chk_ai)
@@ -81,16 +76,9 @@ class SettingsPage(QWidget):
         lay.addLayout(btns)
         lay.addStretch(1)
 
-    def _on_dark_toggled(self, checked):
-        s = load_settings()
-        s["dark_theme"] = bool(checked)
-        save_settings(s)
-        self.theme_changed.emit()
-
     def load_from_settings(self):
         s = load_settings()
         self.edt_key.setText(s.get("api_key", ""))
-        self.sw_dark.setChecked(bool(s.get("dark_theme", True)))
         self.chk_ai.setChecked(bool(s.get("ai_enabled")))
         self.chk_translate.setChecked(bool(s.get("translate_enabled", True)))
         self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))

@@ -26,8 +26,7 @@ class MainWindow(FluentWindow):
         self.resize(1280, 800)
         self.collect_worker = None
 
-        s0 = load_settings()
-        setTheme(Theme.DARK if s0.get("dark_theme", True) else Theme.LIGHT)
+        setTheme(Theme.LIGHT)
 
         self.work_page = WorkPage()
         self.viz_page = VizPage()
@@ -46,7 +45,6 @@ class MainWindow(FluentWindow):
         self.stackedWidget.currentChanged.connect(self._on_page_changed)
 
         self.settings_page.settings_changed.connect(self.work_page.refresh_buttons)
-        self.settings_page.theme_changed.connect(self._apply_theme)
         self.settings_page.run_collect.connect(self.start_collect)
         self.sources_page.collect_requested.connect(self.start_collect)
 
@@ -58,10 +56,6 @@ class MainWindow(FluentWindow):
     def _on_page_changed(self, index):
         if self.stackedWidget.currentWidget() is self.viz_page:
             self.viz_page.refresh()
-
-    def _apply_theme(self):
-        s = load_settings()
-        setTheme(Theme.DARK if s.get("dark_theme", True) else Theme.LIGHT)
 
     def start_collect(self):
         if self.collect_worker and self.collect_worker.isRunning():

@@ -9,7 +9,6 @@ DEFAULTS = {
     "translate_enabled": True,
     "model": "deepseek-chat",
     "schedule_interval_days": 14,
-    "dark_theme": False,
     "last_run_at": "",
 }
 

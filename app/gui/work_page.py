@@ -63,7 +63,7 @@ class WorkPage(QWidget):
 
     def refresh_buttons(self):
         s = load_settings()
-        self.btn_analyze.setVisible(bool(s.get("ai_enabled") and s.get("api_key")))
+        self.btn_analyze.setVisible(bool(s.get("ai_enabled")))
 
     def _bubble(self, title, body_html, _color=None):
         """不自定义配色，交给主题渲染；用结构（粗体+分隔线）组织内容。"""
@@ -110,8 +110,11 @@ class WorkPage(QWidget):
     def analyze(self):
         """分析信息数据：调用 AI 生成总结分析。"""
         s = load_settings()
-        if not (s.get("ai_enabled") and s.get("api_key")):
-            self._bubble("", "AI 功能未启用或未配置 API Key，请到「AI 设置」模块配置。")
+        if not s.get("ai_enabled"):
+            self._bubble("", "AI 功能未启用，请到「AI 设置」模块开启。")
+            return
+        if not s.get("api_key"):
+            self._bubble("", "尚未配置 API Key，请到「AI 设置」模块填写后重试。")
             return
         rows = self._load_rows()
         if not rows:
