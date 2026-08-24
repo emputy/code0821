@@ -8,6 +8,31 @@ from .base import FetchedItem
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
 
+_DATE_RE = re.compile(r"(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})")
+_MONTHS = {"jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+           "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12}
+_MONTH_RE = re.compile(
+    r"(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+(20\d{2})", re.I
+)
+
+
+def _find_date(text: str) -> str:
+    """从文本里找日期，返回 YYYY-MM-DD；找不到返回空串。"""
+    if not text:
+        return ""
+    m = _DATE_RE.search(text)
+    if m:
+        try:
+            return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+        except Exception:
+            return ""
+    m = _MONTH_RE.search(text)
+    if m:
+        mon = _MONTHS.get(m.group(2).lower()[:3])
+        if mon:
+            return f"{m.group(3)}-{mon:02d}-{int(m.group(1)):02d}"
+    return ""
+
 # 常见的导航/非文章链接特征，抓取时排除
 NAV_HINTS = re.compile(
     r"(/about-us|/contact|/careers|/investor|/login|/register|/terms|/privacy|"
@@ -53,11 +78,14 @@ def fetch_html(source) -> list[FetchedItem]:
         if full in seen:
             continue
         seen.add(full)
+        context = a.parent.get_text()[:200] if a.parent else ""
+        published = _find_date(context) or _find_date(text)
         items.append(FetchedItem(
             source_id=source.id,
             source_name=source.name,
             title=text,
             url=full,
+            published=published,
             country=source.country,
         ))
         if len(items) >= max_items:

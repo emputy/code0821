@@ -119,12 +119,13 @@ class WorkPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
+        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         mode = "相关" if self.chk_filter.isChecked() else "全部原始"
         self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
         for row in rows[:100]:
-            fetched, src, title, url, summary = row[8], row[2], row[3], row[4], row[6]
+            fetched = row[5][:10] if row[5] else "—"
+            src, title, url, summary = row[2], row[3], row[4], row[6]
             body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(fetched)}<br/><b>{html_mod.escape(title)}</b>"
             if url.startswith("http"):
                 body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
@@ -146,7 +147,7 @@ class WorkPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
+        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         if not rows:
             self._bubble("", "当前时间范围内没有可分析的数据（可调整时间范围或取消『只看相关』）。")
             return

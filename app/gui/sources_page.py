@@ -237,10 +237,11 @@ class SourcesPage(QWidget):
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        rows = [r for r in rows if start_s <= (r[5] or r[8])[:10] <= end_s]
+        rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
         self.all_rows = []
         for row in rows:
-            t, src, title, url = row[8], row[2], row[3], row[4]
+            t = row[5][:10] if row[5] else "—"
+            src, title, url = row[2], row[3], row[4]
             stage, country = self._match_item(title, src)
             self.all_rows.append({
                 "time": t, "source": src, "stage": stage,

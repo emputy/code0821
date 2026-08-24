@@ -55,6 +55,15 @@ def _enrich_titles(items: list, n: int) -> list:
                     title = " ".join(t.string.split())
                     if len(title) > 10:
                         it.title = title
+                meta = (
+                    soup.find("meta", attrs={"property": "article:published_time"})
+                    or soup.find("meta", attrs={"name": "date"})
+                    or soup.find("time")
+                )
+                if meta:
+                    d = meta.get("content") or meta.get("datetime") or ""
+                    if d:
+                        it.published = d[:10]
         except Exception:
             pass
     return items
