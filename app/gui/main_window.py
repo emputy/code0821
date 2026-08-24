@@ -33,6 +33,10 @@ class MainWindow(FluentWindow):
         self.viz_page = VizPage()
         self.settings_page = SettingsPage()
         self.sources_page = SourcesPage()
+        self.work_page.setObjectName("workPage")
+        self.viz_page.setObjectName("vizPage")
+        self.settings_page.setObjectName("settingsPage")
+        self.sources_page.setObjectName("sourcesPage")
 
         self.addSubInterface(self.work_page, FluentIcon.HOME, "工作页面")
         self.addSubInterface(self.viz_page, FluentIcon.LIBRARY, "可视化")
