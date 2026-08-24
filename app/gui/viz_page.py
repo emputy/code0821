@@ -7,7 +7,9 @@ from PySide6.QtCharts import (
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
-from PySide6.QtWidgets import QTabWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QStackedWidget, QVBoxLayout, QWidget
+
+from qfluentwidgets import SegmentedWidget
 
 from app.collector.fetch import load_sources
 from app.filter.entities import (
@@ -24,15 +26,19 @@ CUSTOMERS = BASE_DIR / "config" / "customers.json"
 class VizPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.tabs = QTabWidget()
-        self.tabs.setStyleSheet(
-            "QTabWidget::pane{border:1px solid rgba(255,255,255,0.12);border-radius:8px;}"
-            "QTabBar::tab{background:transparent;padding:8px 16px;}"
-            "QTabBar::tab:selected{background:rgba(255,255,255,0.12);border-radius:6px;}"
-        )
+        self.pivot = SegmentedWidget(self)
+        self.stack = QStackedWidget(self)
+        self.pivot.addItem("k0", "客户阶段全景", lambda: self.stack.setCurrentIndex(0))
+        self.pivot.addItem("k1", "地区分布", lambda: self.stack.setCurrentIndex(1))
+        self.pivot.addItem("k2", "来源分类分布", lambda: self.stack.setCurrentIndex(2))
+        self.pivot.addItem("k3", "情报来源分布", lambda: self.stack.setCurrentIndex(3))
+        self.pivot.addItem("k4", "时间趋势", lambda: self.stack.setCurrentIndex(4))
+        self.pivot.addItem("k5", "情报阶段分布", lambda: self.stack.setCurrentIndex(5))
         lay = QVBoxLayout(self)
-        lay.setContentsMargins(16, 16, 16, 16)
-        lay.addWidget(self.tabs)
+        lay.setContentsMargins(20, 20, 20, 20)
+        lay.setSpacing(12)
+        lay.addWidget(self.pivot)
+        lay.addWidget(self.stack, 1)
         self.customers = load_customers(str(CUSTOMERS))
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
@@ -50,13 +56,17 @@ class VizPage(QWidget):
         return filter_db_rows(rows, self.entity_re, self.source_cats)
 
     def refresh(self):
-        self.tabs.clear()
-        self.tabs.addTab(self._chart_stage(), "客户阶段全景")
-        self.tabs.addTab(self._chart_region(), "地区分布")
-        self.tabs.addTab(self._chart_category(), "来源分类分布")
-        self.tabs.addTab(self._chart_source(), "情报来源分布")
-        self.tabs.addTab(self._chart_time(), "时间趋势")
-        self.tabs.addTab(self._chart_stage_pie(), "情报阶段分布")
+        charts = [
+            self._chart_stage(), self._chart_region(), self._chart_category(),
+            self._chart_source(), self._chart_time(), self._chart_stage_pie(),
+        ]
+        while self.stack.count() > 0:
+            w = self.stack.widget(0)
+            self.stack.removeWidget(w)
+            w.deleteLater()
+        for c in charts:
+            self.stack.addWidget(c)
+        self.stack.setCurrentIndex(0)
 
     @staticmethod
     def _bar_chart(categories, values, title, color):

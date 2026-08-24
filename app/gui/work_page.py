@@ -3,10 +3,10 @@ import sqlite3
 from pathlib import Path
 
 from PySide6.QtWidgets import (
-    QCheckBox, QHBoxLayout, QLabel, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
+    QCheckBox, QHBoxLayout, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import PrimaryPushButton
+from qfluentwidgets import CardWidget, PrimaryPushButton, SubtitleLabel
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
@@ -33,20 +33,17 @@ class WorkPage(QWidget):
 
     def _build_ui(self):
         lay = QVBoxLayout(self)
-        lay.setContentsMargins(16, 16, 16, 16)
+        lay.setContentsMargins(20, 20, 20, 20)
         lay.setSpacing(12)
-        title = QLabel("工作页面")
-        title.setStyleSheet("font-size:18px;font-weight:bold;")
-        lay.addWidget(title)
+        lay.addWidget(SubtitleLabel("工作页面"))
 
+        card = CardWidget()
+        card_lay = QVBoxLayout(card)
+        card_lay.setContentsMargins(16, 16, 16, 16)
         self.chat = QTextBrowser()
         self.chat.setOpenExternalLinks(True)
-        self.chat.setStyleSheet(
-            "QTextBrowser{background:rgba(255,255,255,0.05);"
-            "border:1px solid rgba(255,255,255,0.15);border-radius:12px;"
-            "padding:8px;font-size:13px;}"
-        )
-        lay.addWidget(self.chat, 1)
+        card_lay.addWidget(self.chat)
+        lay.addWidget(card, 1)
 
         btns = QHBoxLayout()
         self.chk_filter = QCheckBox("只看相关（关键词实时过滤）")
@@ -68,13 +65,13 @@ class WorkPage(QWidget):
         s = load_settings()
         self.btn_analyze.setVisible(bool(s.get("ai_enabled") and s.get("api_key")))
 
-    def _bubble(self, title, body_html, color):
-        h = (f'<div style="background:{color};color:#1a1a1a;'
-             f'border:1px solid rgba(255,255,255,0.30);border-radius:8px;'
-             f'padding:10px 12px;margin:6px 0;">')
+    def _bubble(self, title, body_html, _color=None):
+        """不自定义配色，交给主题渲染；用结构（粗体+分隔线）组织内容。"""
+        h = ""
         if title:
-            h += f"<b>{html_mod.escape(title)}</b><br/>"
-        h += body_html + "</div>"
+            h += f"<div style='font-weight:600;margin-top:12px;'>{html_mod.escape(title)}</div>"
+        h += f"<div style='margin:4px 0 10px 0;'>{body_html}</div>"
+        h += "<hr style='border:none;border-top:1px solid rgba(128,128,128,0.3);'>"
         self.chat.append(h)
 
     def _load_rows(self):
@@ -94,44 +91,44 @@ class WorkPage(QWidget):
         self.chat.clear()
         rows = self._load_rows()
         if not rows:
-            self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。", "#fff3cd")
+            self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。")
             return
         if self.chk_filter.isChecked():
             rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         mode = "相关" if self.chk_filter.isChecked() else "全部原始"
-        self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：", "#f0f0f0")
-        for row in rows[:80]:
+        self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
+        for row in rows[:100]:
             fetched, src, title, url, summary = row[8], row[2], row[3], row[4], row[6]
             body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(fetched)}<br/><b>{html_mod.escape(title)}</b>"
             if url.startswith("http"):
                 body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
             if summary:
-                body += f"<br/>摘要：{html_mod.escape(summary)}"
-            self._bubble("", body, "#e8f4fd")
+                body += f"<br/>{html_mod.escape(summary)}"
+            self._bubble("", body)
 
     def analyze(self):
         """分析信息数据：调用 AI 生成总结分析。"""
         s = load_settings()
         if not (s.get("ai_enabled") and s.get("api_key")):
-            self._bubble("", "AI 功能未启用或未配置 API Key，请到「AI 设置」模块配置。", "#ffd9d9")
+            self._bubble("", "AI 功能未启用或未配置 API Key，请到「AI 设置」模块配置。")
             return
         rows = self._load_rows()
         if not rows:
-            self._bubble("", "数据库暂无数据。", "#fff3cd")
+            self._bubble("", "数据库暂无数据。")
             return
         lines = []
-        for t, src, title, url, summary in rows[:30]:
-            lines.append(f"- [{src}] {title} ({url})")
+        for row in rows[:30]:
+            lines.append(f"- [{row[2]}] {row[3]} ({row[4]})")
         text = "\n".join(lines)
         messages = [
             {"role": "system", "content": "你是电力行业无线专网情报分析师。请对以下情报进行总结和分析，指出与电力无线专网、450MHz、频谱动态、客户进展相关的要点。"},
             {"role": "user", "content": text},
         ]
-        self._bubble("", "正在生成分析，请稍候……", "#f0f0f0")
+        self._bubble("", "正在生成分析，请稍候……")
         self.worker = DeepSeekWorker(s["api_key"], s.get("model", "deepseek-chat"), messages, self)
-        self.worker.done.connect(lambda c: self._bubble("分析结果", c.replace("\n", "<br/>"), "#eafaf1"))
-        self.worker.failed.connect(lambda e: self._bubble("分析失败", html_mod.escape(str(e)), "#ffd9d9"))
+        self.worker.done.connect(lambda c: self._bubble("分析结果", c.replace("\n", "<br/>")))
+        self.worker.failed.connect(lambda e: self._bubble("分析失败", html_mod.escape(str(e))))
         self.worker.start()
 
     def export(self):
@@ -150,11 +147,10 @@ class WorkPage(QWidget):
             from docx import Document
             doc = Document()
             doc.add_heading("无线专网情报汇总", 0)
-            for t, src, title, url, summary in rows:
+            for row in rows:
+                src, title, url = row[2], row[3], row[4]
                 doc.add_heading(title, level=2)
-                doc.add_paragraph(f"来源：{src}　时间：{t}\n链接：{url}")
-                if summary:
-                    doc.add_paragraph(summary)
+                doc.add_paragraph(f"来源：{src} 链接：{url}")
             word_path = EXPORTS / f"intel_{stamp}.docx"
             doc.save(str(word_path))
         except Exception as e:
@@ -169,11 +165,10 @@ class WorkPage(QWidget):
             doc = SimpleDocTemplate(str(pdf_path), pagesize=A4)
             styles = getSampleStyleSheet()
             story = [Paragraph("无线专网情报汇总", styles["Title"])]
-            for t, src, title, url, summary in rows[:100]:
+            for row in rows[:100]:
+                src, title, url = row[2], row[3], row[4]
                 story.append(Paragraph(escape(title), styles["Heading2"]))
-                story.append(Paragraph(f"来源：{escape(src)}　时间：{escape(t)}<br/>链接：{escape(url)}", styles["BodyText"]))
-                if summary:
-                    story.append(Paragraph(escape(summary), styles["BodyText"]))
+                story.append(Paragraph(f"来源：{escape(src)} 链接：{escape(url)}", styles["BodyText"]))
                 story.append(Spacer(1, 8))
             doc.build(story)
         except Exception as e:
@@ -181,11 +176,11 @@ class WorkPage(QWidget):
 
         msgs = []
         if word_path:
-            msgs.append(f"✅ Word：{word_path}")
+            msgs.append(f"Word：{word_path}")
         else:
-            msgs.append("❌ Word 导出失败：" + html_mod.escape(word_err))
+            msgs.append("Word 导出失败：" + html_mod.escape(word_err))
         if pdf_path:
-            msgs.append(f"✅ PDF：{pdf_path}")
+            msgs.append(f"PDF：{pdf_path}")
         else:
-            msgs.append("❌ PDF 导出失败：" + html_mod.escape(pdf_err))
-        self._bubble("导出完成", "<br/>".join(msgs), "#eafaf1")
+            msgs.append("PDF 导出失败：" + html_mod.escape(pdf_err))
+        self._bubble("导出完成", "<br/>".join(msgs))

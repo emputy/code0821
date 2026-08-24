@@ -5,12 +5,12 @@ from pathlib import Path
 from PySide6.QtCore import QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
-    QCheckBox, QComboBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QLineEdit,
-    QMessageBox, QTableWidget, QTableWidgetItem, QTabWidget, QTextEdit,
-    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
+    QCheckBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QMessageBox,
+    QStackedWidget, QTableWidget, QTableWidgetItem, QTextEdit, QTreeWidget,
+    QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import CardWidget, ComboBox, LineEdit, PrimaryPushButton, TableWidget
+from qfluentwidgets import CardWidget, ComboBox, LineEdit, PrimaryPushButton, SegmentedWidget, TableWidget
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
@@ -33,12 +33,20 @@ class SourcesPage(QWidget):
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
         self.all_rows = []
 
-        tabs = QTabWidget()
-        tabs.addTab(self._build_list_tab(), "情报列表")
-        tabs.addTab(self._build_customers_tab(), "客户全景")
-        tabs.addTab(self._build_sources_tab(), "数据源管理")
+        self.pivot = SegmentedWidget(self)
+        self.stack = QStackedWidget(self)
+        self.pivot.addItem("k1", "情报列表", lambda: self.stack.setCurrentIndex(0))
+        self.pivot.addItem("k2", "客户全景", lambda: self.stack.setCurrentIndex(1))
+        self.pivot.addItem("k3", "数据源管理", lambda: self.stack.setCurrentIndex(2))
+        self.stack.addWidget(self._build_list_tab())
+        self.stack.addWidget(self._build_customers_tab())
+        self.stack.addWidget(self._build_sources_tab())
+        self.stack.setCurrentIndex(0)
         lay = QVBoxLayout(self)
-        lay.addWidget(tabs)
+        lay.setContentsMargins(20, 20, 20, 20)
+        lay.setSpacing(12)
+        lay.addWidget(self.pivot)
+        lay.addWidget(self.stack, 1)
 
         self.refresh_items()
         self.refresh_sources_table()
