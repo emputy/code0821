@@ -84,8 +84,7 @@ class VizPage(QWidget):
         ay = QCategoryAxis()
         ay.setStartValue(-0.5)
         for i, cat in enumerate(categories):
-            short = cat if len(cat) <= 12 else cat[:11] + "…"
-            ay.append(short, i + 0.5)
+            ay.append(cat, i + 0.5)
         ay.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
         chart.addAxis(ay, Qt.AlignLeft)
         series.attachAxis(ay)
@@ -98,6 +97,8 @@ class VizPage(QWidget):
         chart.legend().hide()
         view = QChartView(chart)
         view.setRenderHint(QPainter.Antialiasing)
+        # 分类多时给足高度，每行至少 30px，防止标签挤在一起
+        view.setMinimumHeight(max(400, len(categories) * 30))
         return view
 
     def _chart_stage(self):
