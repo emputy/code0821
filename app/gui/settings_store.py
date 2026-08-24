@@ -6,7 +6,6 @@ SETTINGS_PATH = Path(__file__).resolve().parent.parent.parent / "config" / "sett
 DEFAULTS = {
     "api_key": "",
     "ai_enabled": False,
-    "translate_enabled": True,
     "model": "deepseek-v4-flash",
     "schedule_interval_days": 14,
     "schedule_start": "",

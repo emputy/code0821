@@ -46,9 +46,6 @@ class SettingsPage(QWidget):
         self.chk_ai.checkedChanged.connect(self._on_ai_toggled)
         form.addRow("", self.chk_ai)
 
-        self.chk_translate = SwitchButton("启用原文翻译（原文 → 中文）")
-        self.chk_translate.checkedChanged.connect(self._on_translate_toggled)
-        form.addRow("", self.chk_translate)
 
         self.cmb_model = ComboBox()
         self.cmb_model.addItems(["deepseek-v4-flash", "deepseek-v4-pro"])
@@ -103,20 +100,12 @@ class SettingsPage(QWidget):
         save_settings(s)
         self.settings_changed.emit()
 
-    def _on_translate_toggled(self, checked):
-        s = load_settings()
-        s["translate_enabled"] = bool(checked)
-        save_settings(s)
-
     def load_from_settings(self):
         s = load_settings()
         self.edt_key.setText(s.get("api_key", ""))
         self.chk_ai.blockSignals(True)
         self.chk_ai.setChecked(bool(s.get("ai_enabled")))
         self.chk_ai.blockSignals(False)
-        self.chk_translate.blockSignals(True)
-        self.chk_translate.setChecked(bool(s.get("translate_enabled", True)))
-        self.chk_translate.blockSignals(False)
         self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))
         self.spin_days.setValue(int(s.get("schedule_interval_days", 14)))
         start = s.get("schedule_start", "")
@@ -146,7 +135,6 @@ class SettingsPage(QWidget):
         s = load_settings()
         s["api_key"] = self.edt_key.text().strip()
         s["ai_enabled"] = self.chk_ai.isChecked()
-        s["translate_enabled"] = self.chk_translate.isChecked()
         s["model"] = self.cmb_model.currentText()
         s["schedule_interval_days"] = self.spin_days.value()
         s["schedule_start"] = self.dt_schedule_start.dateTime().toString("yyyy-MM-dd HH:mm")
