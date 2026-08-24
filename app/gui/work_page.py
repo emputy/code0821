@@ -42,6 +42,11 @@ class WorkPage(QWidget):
         card_lay.setContentsMargins(16, 16, 16, 16)
         self.chat = QTextBrowser()
         self.chat.setOpenExternalLinks(True)
+        self.chat.document().setDefaultStyleSheet(
+            "table{border-collapse:collapse;margin:8px 0;}"
+            "td,th{border:1px solid #999999;padding:4px 8px;}"
+            "th{font-weight:bold;}"
+        )
         card_lay.addWidget(self.chat)
         lay.addWidget(card, 1)
 
@@ -117,22 +122,34 @@ class WorkPage(QWidget):
             self._bubble("", "尚未配置 API Key，请到「AI 设置」模块填写后重试。")
             return
         rows = self._load_rows()
+        if self.chk_filter.isChecked():
+            rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         if not rows:
-            self._bubble("", "数据库暂无数据。")
+            self._bubble("", "当前没有相关数据可分析（可取消『只看相关』后重试）。")
             return
+        cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         lines = []
         for row in rows[:30]:
-            lines.append(f"- [{row[2]}] {row[3]} ({row[4]})")
+            src_cn = cn_map.get(row[2], row[2])
+            lines.append(f"- [{src_cn}] {row[3]} | {row[4]}")
         text = "\n".join(lines)
         messages = [
-            {"role": "system", "content": "你是电力行业无线专网情报分析师。请对以下情报进行总结和分析，指出与电力无线专网、450MHz、频谱动态、客户进展相关的要点。"},
+            {"role": "system", "content": "你是电力行业无线专网情报分析师。基于下面提供的情报条目（每条含来源/标题/链接），产出一份简洁专业的中文情报简报。要求：1) 只基于实际提供的情报，不臆造不扩展；2) 结构为：核心要点 → 逐条分析（引用对应条目） → 趋势研判 → 行动建议；3) 明确标注与电力无线专网、450MHz、频谱、客户进展的直接关联程度；4) 篇幅精炼，可用 Markdown 表格对比。"},
             {"role": "user", "content": text},
         ]
-        self._bubble("", "正在生成分析，请稍候……")
+        self._bubble("", "正在生成分析（基于相关条目），请稍候……")
         self.worker = DeepSeekWorker(s["api_key"], s.get("model", "deepseek-chat"), messages, self)
-        self.worker.done.connect(lambda c: self._bubble("分析结果", c.replace("\n", "<br/>")))
+        self.worker.done.connect(self._show_analysis)
         self.worker.failed.connect(lambda e: self._bubble("分析失败", html_mod.escape(str(e))))
         self.worker.start()
+
+    def _show_analysis(self, content):
+        try:
+            import markdown
+            html = markdown.markdown(content, extensions=["tables"])
+        except Exception:
+            html = content.replace("\n", "<br/>")
+        self._bubble("分析结果", html)
 
     def export(self):
         """导出 PDF / Word。"""
