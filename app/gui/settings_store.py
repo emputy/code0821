@@ -9,6 +9,8 @@ DEFAULTS = {
     "translate_enabled": True,
     "model": "deepseek-v4-flash",
     "schedule_interval_days": 14,
+    "schedule_start": "",
+    "custom_keywords": [],
     "last_run_at": "",
 }
 

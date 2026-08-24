@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-from PySide6.QtCore import Signal
+from PySide6.QtCore import QDateTime, Signal
 from PySide6.QtWidgets import (
-    QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
-    QSpinBox, QVBoxLayout, QWidget,
+    QDateTimeEdit, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
+    QPlainTextEdit, QSpinBox, QVBoxLayout, QWidget,
 )
 
 from qfluentwidgets import ComboBox, LineEdit, PushButton, SwitchButton
@@ -60,10 +60,25 @@ class SettingsPage(QWidget):
         self.spin_days.setSuffix(" 天")
         form.addRow("定时采集间隔：", self.spin_days)
 
+        self.dt_schedule_start = QDateTimeEdit()
+        self.dt_schedule_start.setCalendarPopup(True)
+        self.dt_schedule_start.setDateTime(QDateTime.currentDateTime())
+        form.addRow("定时开始时间：", self.dt_schedule_start)
+
         self.lbl_last = QLabel("")
         self.lbl_next = QLabel("")
         form.addRow("上次运行：", self.lbl_last)
         form.addRow("下次运行：", self.lbl_next)
+
+        self.edt_keywords = QPlainTextEdit()
+        self.edt_keywords.setPlaceholderText("每行一个关键词（固定数据源采集后二次筛选用），如：
+450MHz
+DEWA
+巴西
+ANATEL
+频谱")
+        self.edt_keywords.setFixedHeight(120)
+        form.addRow("自定义筛选关键词：", self.edt_keywords)
 
         lay.addLayout(form)
 
@@ -108,6 +123,14 @@ class SettingsPage(QWidget):
         self.chk_translate.blockSignals(False)
         self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))
         self.spin_days.setValue(int(s.get("schedule_interval_days", 14)))
+        start = s.get("schedule_start", "")
+        if start:
+            try:
+                self.dt_schedule_start.setDateTime(QDateTime.fromString(start, "yyyy-MM-dd HH:mm"))
+            except Exception:
+                pass
+        kws = s.get("custom_keywords", [])
+        self.edt_keywords.setPlainText("\n".join(kws))
         self._update_schedule_labels(s)
 
     def _update_schedule_labels(self, s=None):
@@ -130,6 +153,8 @@ class SettingsPage(QWidget):
         s["translate_enabled"] = self.chk_translate.isChecked()
         s["model"] = self.cmb_model.currentText()
         s["schedule_interval_days"] = self.spin_days.value()
+        s["schedule_start"] = self.dt_schedule_start.dateTime().toString("yyyy-MM-dd HH:mm")
+        s["custom_keywords"] = [k.strip() for k in self.edt_keywords.toPlainText().splitlines() if k.strip()]
         save_settings(s)
         self._update_schedule_labels(s)
         self.settings_changed.emit()

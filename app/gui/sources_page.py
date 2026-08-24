@@ -245,6 +245,10 @@ class SourcesPage(QWidget):
             rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
         else:
             rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        from app.gui.settings_store import load_settings as _ls
+        custom = [k.lower() for k in _ls().get("custom_keywords", []) if k.strip()]
+        if custom:
+            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         self.all_rows = []
         for row in rows:
             t = row[5][:10] if row[5] else "—"

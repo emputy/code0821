@@ -127,6 +127,9 @@ class WorkPage(QWidget):
             rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
         else:
             rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        custom = [k.lower() for k in load_settings().get("custom_keywords", []) if k.strip()]
+        if custom:
+            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         mode = "相关" if self.chk_filter.isChecked() else "全部原始"
         self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
@@ -158,8 +161,11 @@ class WorkPage(QWidget):
             rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
         else:
             rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        custom = [k.lower() for k in load_settings().get("custom_keywords", []) if k.strip()]
+        if custom:
+            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         if not rows:
-            self._bubble("", "当前时间范围内没有可分析的数据（可调整时间范围或取消『只看相关』）。")
+            self._bubble("", "当前条件下没有可分析的数据（可调整时间范围、关键词或『只看相关』）。")
             return
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         lines = []

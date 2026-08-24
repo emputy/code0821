@@ -85,6 +85,16 @@ class MainWindow(FluentWindow):
         last = s.get("last_run_at", "")
         interval = int(s.get("schedule_interval_days", 14))
         if not last:
+            # 未运行过：若设置了开始时间，到点触发第一次
+            start = s.get("schedule_start", "")
+            if start:
+                try:
+                    start_dt = datetime.fromisoformat(start.replace(" ", "T"))
+                    if datetime.now() >= start_dt:
+                        QMessageBox.information(self, "定时采集", "定时开始时间到了，正在自动采集最新数据……")
+                        self.start_collect()
+                except Exception:
+                    pass
             return
         try:
             last_dt = datetime.fromisoformat(last)
