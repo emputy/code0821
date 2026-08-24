@@ -3,17 +3,20 @@ import sqlite3
 from pathlib import Path
 
 from PySide6.QtWidgets import (
-    QHBoxLayout, QLabel, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
+    QCheckBox, QHBoxLayout, QLabel, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
 )
 
 from qfluentwidgets import PrimaryPushButton
 
 from app.collector.fetch import load_sources
+from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
+from app.filter.keywords import filter_db_rows
 from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
+CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"
 EXPORTS = BASE_DIR / "data" / "exports"
 
@@ -22,6 +25,9 @@ class WorkPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.worker = None
+        self.customers = load_customers(str(CUSTOMERS))
+        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
+        self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
         self._build_ui()
         self.refresh_buttons()
 
@@ -36,6 +42,10 @@ class WorkPage(QWidget):
         lay.addWidget(self.chat, 1)
 
         btns = QHBoxLayout()
+        self.chk_filter = QCheckBox("只看相关（关键词实时过滤）")
+        self.chk_filter.setChecked(True)
+        self.chk_filter.toggled.connect(lambda _: self.show_raw())
+        btns.addWidget(self.chk_filter)
         self.btn_raw = PrimaryPushButton("数据汇总")
         self.btn_raw.clicked.connect(self.show_raw)
         self.btn_analyze = PrimaryPushButton("分析信息数据")
@@ -64,7 +74,8 @@ class WorkPage(QWidget):
         try:
             conn = sqlite3.connect(str(DB))
             rows = conn.execute(
-                "SELECT fetched_at, source_name, title, url, summary FROM items ORDER BY fetched_at DESC, id DESC"
+                "SELECT id, source_id, source_name, title, url, published, summary, country, fetched_at "
+                "FROM items ORDER BY fetched_at DESC, id DESC"
             ).fetchall()
             conn.close()
             return rows
@@ -78,10 +89,14 @@ class WorkPage(QWidget):
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。", "#fff3cd")
             return
+        if self.chk_filter.isChecked():
+            rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
-        self._bubble("", f"共 {len(rows)} 条原始数据（未经任何修改/总结）：", "#f0f0f0")
-        for t, src, title, url, summary in rows[:50]:
-            body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(t)}<br/><b>{html_mod.escape(title)}</b>"
+        mode = "相关" if self.chk_filter.isChecked() else "全部原始"
+        self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：", "#f0f0f0")
+        for row in rows[:80]:
+            fetched, src, title, url, summary = row[8], row[2], row[3], row[4], row[6]
+            body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(fetched)}<br/><b>{html_mod.escape(title)}</b>"
             if url.startswith("http"):
                 body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
             if summary:

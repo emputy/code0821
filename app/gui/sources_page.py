@@ -5,7 +5,7 @@ from pathlib import Path
 from PySide6.QtCore import QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
-    QComboBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QLineEdit,
+    QCheckBox, QComboBox, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QLineEdit,
     QMessageBox, QTableWidget, QTableWidgetItem, QTabWidget, QTextEdit,
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
@@ -13,7 +13,8 @@ from PySide6.QtWidgets import (
 from qfluentwidgets import PrimaryPushButton
 
 from app.collector.fetch import load_sources
-from app.filter.entities import build_customer_matchers, load_customers
+from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
+from app.filter.keywords import filter_db_rows
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
@@ -28,6 +29,8 @@ class SourcesPage(QWidget):
         super().__init__(parent)
         self.customers = load_customers(str(CUSTOMERS))
         self.matchers = build_customer_matchers(self.customers)
+        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
+        self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
         self.all_rows = []
 
         tabs = QTabWidget()
@@ -69,6 +72,11 @@ class SourcesPage(QWidget):
         self.edt_keyword.setPlaceholderText("标题关键词...")
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
         tb.addWidget(self.edt_keyword)
+
+        self.chk_relevant = QCheckBox("只看相关")
+        self.chk_relevant.setChecked(True)
+        self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
+        tb.addWidget(self.chk_relevant)
         lay.addLayout(tb)
 
         self.table = QTableWidget(0, 6)
@@ -178,13 +186,17 @@ class SourcesPage(QWidget):
         try:
             conn = sqlite3.connect(str(DB))
             rows = conn.execute(
-                "SELECT fetched_at, source_name, title, url FROM items ORDER BY fetched_at DESC, id DESC"
+                "SELECT id, source_id, source_name, title, url, published, summary, country, fetched_at "
+                "FROM items ORDER BY fetched_at DESC, id DESC"
             ).fetchall()
             conn.close()
         except Exception:
             rows = []
+        if self.chk_relevant.isChecked():
+            rows = filter_db_rows(rows, self.entity_re, self.source_cats)
         self.all_rows = []
-        for t, src, title, url in rows:
+        for row in rows:
+            t, src, title, url = row[8], row[2], row[3], row[4]
             stage, country = self._match_item(title)
             self.all_rows.append({
                 "time": t, "source": src, "stage": stage,

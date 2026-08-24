@@ -5,7 +5,7 @@ from PySide6.QtCore import QThread, Signal
 
 
 class CollectWorker(QThread):
-    """采集工作线程：抓取 → 过滤 → 入库。"""
+    """采集工作线程：抓取全部原始数据并入库（不做关键词过滤，查看时实时筛选）。"""
     log = Signal(str)
     done = Signal(int, int)
     failed = Signal(str)
@@ -17,9 +17,7 @@ class CollectWorker(QThread):
         self.db = db
 
     def run(self):
-        from app.collector.fetch import fetch_all, load_sources
-        from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
-        from app.filter.keywords import filter_items, load_keywords
+        from app.collector.fetch import fetch_all
         from app.storage.database import Database
 
         buf = io.StringIO()
@@ -27,12 +25,6 @@ class CollectWorker(QThread):
         try:
             with contextlib.redirect_stdout(buf):
                 items = fetch_all(self.config)
-                keywords = load_keywords(self.config)
-                cust = load_customers(self.customers)
-                terms = build_entity_terms(cust)
-                matcher = build_entity_matcher(terms)
-                cats = {s.id: s.category for s in load_sources(self.config)}
-                items = filter_items(items, matcher, cats)
                 db = Database(self.db)
                 added = db.save(items)
                 total, _ = db.summary()
