@@ -2,8 +2,12 @@
   "keywords": [
     "450MHz", "450 MHz", "LTE450", "450M",
     "wireless private network", "private LTE", "private 5G", "private networks",
-    "专网", "电力专网", "配电", "电力", "智能电网",
-    "utility", "grid", "energy",
+    "专网", "电力专网", "电力无线专网",
+    "配电", "配电自动化", "distribution automation",
+    "电力", "智能电网", "电力物联网", "power grid",
+    "用电信息采集", "智能电表", "smart metering",
+    "变电站", "substation", "微电网", "microgrid", "新能源", "renewable energy",
+    "utility", "grid",
     "spectrum", "频谱", "ANATEL",
     "critical communications", "mission critical"
   ],
