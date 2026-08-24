@@ -42,9 +42,11 @@ class SettingsPage(QWidget):
         form.addRow("", self.lbl_test_result)
 
         self.chk_ai = SwitchButton("启用 AI 功能（关闭后工作页面不显示「分析信息数据」按钮）")
+        self.chk_ai.checkedChanged.connect(self._on_ai_toggled)
         form.addRow("", self.chk_ai)
 
         self.chk_translate = SwitchButton("启用原文翻译（原文 → 中文）")
+        self.chk_translate.checkedChanged.connect(self._on_translate_toggled)
         form.addRow("", self.chk_translate)
 
         self.cmb_model = ComboBox()
@@ -76,11 +78,26 @@ class SettingsPage(QWidget):
         lay.addLayout(btns)
         lay.addStretch(1)
 
+    def _on_ai_toggled(self, checked):
+        s = load_settings()
+        s["ai_enabled"] = bool(checked)
+        save_settings(s)
+        self.settings_changed.emit()
+
+    def _on_translate_toggled(self, checked):
+        s = load_settings()
+        s["translate_enabled"] = bool(checked)
+        save_settings(s)
+
     def load_from_settings(self):
         s = load_settings()
         self.edt_key.setText(s.get("api_key", ""))
+        self.chk_ai.blockSignals(True)
         self.chk_ai.setChecked(bool(s.get("ai_enabled")))
+        self.chk_ai.blockSignals(False)
+        self.chk_translate.blockSignals(True)
         self.chk_translate.setChecked(bool(s.get("translate_enabled", True)))
+        self.chk_translate.blockSignals(False)
         self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))
         self.spin_days.setValue(int(s.get("schedule_interval_days", 14)))
         self._update_schedule_labels(s)
