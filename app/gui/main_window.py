@@ -43,7 +43,7 @@ class MainWindow(FluentWindow):
         self.addSubInterface(self.settings_page, FluentIcon.ROBOT, "AI 设置")
         self.addSubInterface(self.sources_page, FluentIcon.CLOUD, "数据源")
         self.navigationInterface.expand(useAni=False)
-        self.navigationInterface.currentItemChanged.connect(self._on_nav_changed)
+        self.stackedWidget.currentChanged.connect(self._on_page_changed)
 
         self.settings_page.settings_changed.connect(self.work_page.refresh_buttons)
         self.settings_page.theme_changed.connect(self._apply_theme)
@@ -57,8 +57,8 @@ class MainWindow(FluentWindow):
 
         self.statusBar().showMessage("就绪")
 
-    def _on_nav_changed(self, item):
-        if item and item.text() == "可视化":
+    def _on_page_changed(self, index):
+        if self.stackedWidget.currentWidget() is self.viz_page:
             self.viz_page.refresh()
 
     def _apply_theme(self):
