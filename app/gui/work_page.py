@@ -13,6 +13,7 @@ from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+CONFIG = BASE_DIR / "config" / "sources.json"
 DB = BASE_DIR / "data" / "intel.db"
 EXPORTS = BASE_DIR / "data" / "exports"
 
@@ -51,10 +52,12 @@ class WorkPage(QWidget):
         self.btn_analyze.setVisible(bool(s.get("ai_enabled") and s.get("api_key")))
 
     def _bubble(self, title, body_html, color):
-        h = f'<div style="background:{color};border-radius:8px;padding:8px;margin:4px 0;">'
+        h = (f'<div style="background:{color};color:#1a1a1a;'
+             f'border:1px solid rgba(255,255,255,0.30);border-radius:8px;'
+             f'padding:10px 12px;margin:6px 0;">')
         if title:
             h += f"<b>{html_mod.escape(title)}</b><br/>"
-        h += body_html + "</div><br/>"
+        h += body_html + "</div>"
         self.chat.append(h)
 
     def _load_rows(self):
