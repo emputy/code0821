@@ -7,7 +7,7 @@ DEFAULTS = {
     "api_key": "",
     "ai_enabled": False,
     "translate_enabled": True,
-    "model": "deepseek-chat",
+    "model": "deepseek-v4-flash",
     "schedule_interval_days": 14,
     "last_run_at": "",
 }

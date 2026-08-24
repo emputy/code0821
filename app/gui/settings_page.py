@@ -51,7 +51,8 @@ class SettingsPage(QWidget):
         form.addRow("", self.chk_translate)
 
         self.cmb_model = ComboBox()
-        self.cmb_model.addItems(["deepseek-chat", "deepseek-reasoner"])
+        self.cmb_model.addItems(["deepseek-v4-flash", "deepseek-v4-pro"])
+        self.cmb_model.setToolTip("deepseek-v4-flash：快速版；deepseek-v4-pro：专业版（分析更强）")
         form.addRow("模型：", self.cmb_model)
 
         self.spin_days = QSpinBox()
