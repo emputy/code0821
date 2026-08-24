@@ -102,6 +102,11 @@ class MainWindow(FluentWindow):
 
 
 def run():
+    from PySide6.QtGui import QColor
+    from qfluentwidgets.common.config import qconfig
+
+    # 全局强调色设为中性灰，避免蓝色按钮/选中态
+    qconfig.set(qconfig.themeColor, QColor("#5c5c5c"))
     app = QApplication([])
     win = MainWindow()
     win.show()

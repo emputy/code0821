@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import CardWidget, ComboBox, LineEdit, PrimaryPushButton, SegmentedWidget, TableWidget
+from qfluentwidgets import CardWidget, ComboBox, LineEdit, PushButton, SegmentedWidget, TableWidget
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
@@ -58,7 +58,7 @@ class SourcesPage(QWidget):
         lay.setContentsMargins(16, 16, 16, 16)
         lay.setSpacing(12)
         tb = QHBoxLayout()
-        self.btn_collect = PrimaryPushButton("立即抓取")
+        self.btn_collect = PushButton("立即抓取")
         self.btn_collect.clicked.connect(self.collect_requested.emit)
         tb.addWidget(self.btn_collect)
         self.lbl_progress = QLabel("")
@@ -163,7 +163,7 @@ class SourcesPage(QWidget):
         self.edt_country = LineEdit()
         self.edt_country.setPlaceholderText("如：brazil（留空默认 global）")
         card_lay.addLayout(form)
-        btn_add = PrimaryPushButton("添加数据源")
+        btn_add = PushButton("添加数据源")
         btn_add.clicked.connect(self.add_source)
         card_lay.addWidget(btn_add)
         lay.addWidget(card)

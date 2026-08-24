@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QCheckBox, QHBoxLayout, QMessageBox, QTextBrowser, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import CardWidget, PrimaryPushButton, SubtitleLabel
+from qfluentwidgets import CardWidget, PushButton, SubtitleLabel
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
@@ -50,11 +50,11 @@ class WorkPage(QWidget):
         self.chk_filter.setChecked(True)
         self.chk_filter.toggled.connect(lambda _: self.show_raw())
         btns.addWidget(self.chk_filter)
-        self.btn_raw = PrimaryPushButton("数据汇总")
+        self.btn_raw = PushButton("数据汇总")
         self.btn_raw.clicked.connect(self.show_raw)
-        self.btn_analyze = PrimaryPushButton("分析信息数据")
+        self.btn_analyze = PushButton("分析信息数据")
         self.btn_analyze.clicked.connect(self.analyze)
-        self.btn_export = PrimaryPushButton("导出内容")
+        self.btn_export = PushButton("导出内容")
         self.btn_export.clicked.connect(self.export)
         btns.addWidget(self.btn_raw)
         btns.addWidget(self.btn_analyze)

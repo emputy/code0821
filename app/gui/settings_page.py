@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QSpinBox, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import ComboBox, LineEdit, PrimaryPushButton, SwitchButton
+from qfluentwidgets import ComboBox, LineEdit, PushButton, SwitchButton
 
 from app.gui.settings_store import load_settings, save_settings
 from app.gui.workers import TestKeyWorker
@@ -69,11 +69,11 @@ class SettingsPage(QWidget):
         lay.addLayout(form)
 
         btns = QHBoxLayout()
-        btn_test = PrimaryPushButton("测试连接")
+        btn_test = PushButton("测试连接")
         btn_test.clicked.connect(self.test_connection)
-        btn_save = PrimaryPushButton("保存设置")
+        btn_save = PushButton("保存设置")
         btn_save.clicked.connect(self.save)
-        btn_run = PrimaryPushButton("立即采集一次")
+        btn_run = PushButton("立即采集一次")
         btn_run.clicked.connect(self.run_collect.emit)
         btns.addWidget(btn_test)
         btns.addWidget(btn_save)
