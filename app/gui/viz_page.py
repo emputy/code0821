@@ -3,7 +3,7 @@ from collections import Counter
 from pathlib import Path
 
 from PySide6.QtCharts import (
-    QBarCategoryAxis, QBarSeries, QBarSet, QChart, QChartView, QPieSeries, QPieSlice, QValueAxis,
+    QBarSeries, QBarSet, QCategoryAxis, QChart, QChartView, QPieSeries, QPieSlice, QValueAxis,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
@@ -123,8 +123,11 @@ class VizPage(QWidget):
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle(title)
-        ax = QBarCategoryAxis()
-        ax.append(categories)
+        ax = QCategoryAxis()
+        ax.setStartValue(0)
+        for i, cat in enumerate(categories):
+            ax.append(cat, i + 1)
+        ax.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
         chart.addAxis(ax, Qt.AlignBottom)
         series.attachAxis(ax)
         ay = QValueAxis()

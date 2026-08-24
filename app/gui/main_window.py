@@ -62,6 +62,9 @@ class MainWindow(FluentWindow):
             QMessageBox.information(self, "采集", "采集正在进行中，请稍候")
             return
         InfoBar.info("采集", "正在采集最新数据……（约 10-15 分钟）", parent=self, position=InfoBarPosition.TOP)
+        s = load_settings()
+        s["collection_started_at"] = datetime.now().isoformat(timespec="seconds")
+        save_settings(s)
         self.collect_worker = CollectWorker(str(CONFIG), str(CUSTOMERS), str(DB), self)
         self.collect_worker.log.connect(self.sources_page.append_log)
         self.collect_worker.done.connect(self._collect_done)
