@@ -5,6 +5,10 @@ POWER_TERMS = [
     "电力", "配电", "智能电网", "电网", "变电站", "用电", "微电网", "新能源",
     "公用事业", "电力公司", "电力物联网", "electric", "utility", "utilities",
     "grid", "smart grid", "power sector", "energy sector", "electricity",
+    # 本地语言
+    "الطاقة", "الكهرباء", "énergie", "électricité", "électrique",
+    "energia", "elétrica", "eletricidade", "tenaga", "elektrik",
+    "energi", "listrik", "พลังงาน", "ไฟฟ้า",
 ]
 
 # 无线专网 / 频谱概念词
@@ -13,6 +17,12 @@ WIRELESS_TERMS = [
     "private network", "private networks", "private lte", "private 5g",
     "private wireless", "频谱", "spectrum", "frequency", "radio spectrum",
     "wireless", "lte", "5g",
+    # 本地语言
+    "الطيف", "التردد", "الترددات", "لاسلكي", "الشبكات الخاصة",
+    "fréquences", "spectre", "réseau privé", "sans fil",
+    "espectro", "frequências", "redes privadas", "sem fio",
+    "spektrum", "frekuensi", "wayarles", "nirkabel",
+    "คลื่นความถี่", "สเปกตรัม", "ไร้สาย",
 ]
 
 
