@@ -58,3 +58,18 @@ def build_entity_matcher(terms: list[str]):
         else:
             patterns.append(re.escape(t))
     return re.compile("|".join(patterns), re.I)
+
+
+def build_customer_matchers(customers: list[dict]):
+    """为每个客户构建匹配规则（客户缩写 + 英文国家名），用于给条目打阶段标签。"""
+    matchers = []
+    for c in customers:
+        for u in _split_terms(c.get("utility", "")):
+            if re.fullmatch(r"[A-Za-z0-9]+", u):
+                matchers.append((re.compile(r"\b" + re.escape(u) + r"\b", re.I), c))
+            else:
+                matchers.append((re.compile(re.escape(u), re.I), c))
+        en = c.get("country_en", "")
+        if en:
+            matchers.append((re.compile(re.escape(en), re.I), c))
+    return matchers

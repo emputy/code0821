@@ -1,0 +1,118 @@
+from datetime import datetime, timedelta
+
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import (
+    QCheckBox, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit,
+    QMessageBox, QPushButton, QSpinBox, QVBoxLayout, QWidget,
+)
+
+from app.gui.settings_store import load_settings, save_settings
+from app.gui.workers import TestKeyWorker
+
+
+class SettingsPage(QWidget):
+    settings_changed = Signal()
+    run_collect = Signal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.test_worker = None
+        self._build_ui()
+        self.load_from_settings()
+
+    def _build_ui(self):
+        lay = QVBoxLayout(self)
+        form = QFormLayout()
+
+        self.edt_key = QLineEdit()
+        self.edt_key.setEchoMode(QLineEdit.Password)
+        self.edt_key.setPlaceholderText("输入 DeepSeek API Key（sk-...）")
+        form.addRow("API Key：", self.edt_key)
+
+        self.edt_test_key = QLineEdit()
+        self.edt_test_key.setEchoMode(QLineEdit.Password)
+        self.edt_test_key.setPlaceholderText("可临时输入 Key 测试连接（不会改动已保存的 Key）")
+        form.addRow("测试连接 Key：", self.edt_test_key)
+
+        self.lbl_test_result = QLabel("")
+        form.addRow("", self.lbl_test_result)
+
+        self.chk_ai = QCheckBox("启用 AI 功能（关闭后工作页面不显示「分析信息数据」按钮）")
+        form.addRow("", self.chk_ai)
+
+        self.chk_translate = QCheckBox("启用原文翻译（原文 → 中文）")
+        form.addRow("", self.chk_translate)
+
+        self.cmb_model = QComboBox()
+        self.cmb_model.addItems(["deepseek-chat", "deepseek-reasoner"])
+        form.addRow("模型：", self.cmb_model)
+
+        self.spin_days = QSpinBox()
+        self.spin_days.setRange(1, 365)
+        self.spin_days.setSuffix(" 天")
+        form.addRow("定时采集间隔：", self.spin_days)
+
+        self.lbl_last = QLabel("")
+        self.lbl_next = QLabel("")
+        form.addRow("上次运行：", self.lbl_last)
+        form.addRow("下次运行：", self.lbl_next)
+
+        lay.addLayout(form)
+
+        btns = QHBoxLayout()
+        btn_test = QPushButton("测试连接")
+        btn_test.clicked.connect(self.test_connection)
+        btn_save = QPushButton("保存设置")
+        btn_save.clicked.connect(self.save)
+        btn_run = QPushButton("立即采集一次")
+        btn_run.clicked.connect(self.run_collect.emit)
+        btns.addWidget(btn_test)
+        btns.addWidget(btn_save)
+        btns.addWidget(btn_run)
+        lay.addLayout(btns)
+        lay.addStretch(1)
+
+    def load_from_settings(self):
+        s = load_settings()
+        self.edt_key.setText(s.get("api_key", ""))
+        self.chk_ai.setChecked(bool(s.get("ai_enabled")))
+        self.chk_translate.setChecked(bool(s.get("translate_enabled", True)))
+        self.cmb_model.setCurrentText(s.get("model", "deepseek-chat"))
+        self.spin_days.setValue(int(s.get("schedule_interval_days", 14)))
+        self._update_schedule_labels(s)
+
+    def _update_schedule_labels(self, s=None):
+        s = s or load_settings()
+        last = s.get("last_run_at", "")
+        self.lbl_last.setText(last or "从未运行")
+        if last:
+            try:
+                nxt = datetime.fromisoformat(last) + timedelta(days=int(s.get("schedule_interval_days", 14)))
+                self.lbl_next.setText(nxt.strftime("%Y-%m-%d %H:%M"))
+            except Exception:
+                self.lbl_next.setText("—")
+        else:
+            self.lbl_next.setText("—")
+
+    def save(self):
+        s = load_settings()
+        s["api_key"] = self.edt_key.text().strip()
+        s["ai_enabled"] = self.chk_ai.isChecked()
+        s["translate_enabled"] = self.chk_translate.isChecked()
+        s["model"] = self.cmb_model.currentText()
+        s["schedule_interval_days"] = self.spin_days.value()
+        save_settings(s)
+        self._update_schedule_labels(s)
+        self.settings_changed.emit()
+        QMessageBox.information(self, "保存", "设置已保存")
+
+    def test_connection(self):
+        key = self.edt_test_key.text().strip() or self.edt_key.text().strip()
+        if not key:
+            self.lbl_test_result.setText("请先输入 API Key")
+            return
+        self.lbl_test_result.setText("测试中……")
+        self.test_worker = TestKeyWorker(key, self)
+        self.test_worker.ok.connect(lambda: self.lbl_test_result.setText("✅ Key 有效，连接正常"))
+        self.test_worker.failed.connect(lambda e: self.lbl_test_result.setText("❌ " + str(e)[:90]))
+        self.test_worker.start()

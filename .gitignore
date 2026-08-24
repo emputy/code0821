@@ -10,3 +10,4 @@ data/raw/
 .env
 .vscode/
 .idea/
+config/settings.json
