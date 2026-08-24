@@ -116,8 +116,8 @@ class SourcesPage(QWidget):
     def _build_sources_tab(self):
         w = QWidget()
         lay = QVBoxLayout(w)
-        self.src_table = QTableWidget(0, 4)
-        self.src_table.setHorizontalHeaderLabels(["名称", "类型", "URL", "启用"])
+        self.src_table = QTableWidget(0, 5)
+        self.src_table.setHorizontalHeaderLabels(["分类", "名称", "类型", "URL", "启用"])
         self.src_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         lay.addWidget(self.src_table)
 
@@ -145,7 +145,8 @@ class SourcesPage(QWidget):
         sources = load_sources(str(CONFIG))
         self.src_table.setRowCount(len(sources))
         for i, s in enumerate(sources):
-            vals = [s.name_cn or s.name, s.type, s.url, "是" if s.enabled else "否"]
+            cat_cn = {"alliance": "联盟", "country": "重点国家", "competitor": "友商"}
+            vals = [cat_cn.get(s.category, s.category), s.name_cn or s.name, s.type, s.url, "是" if s.enabled else "否"]
             for j, val in enumerate(vals):
                 self.src_table.setItem(i, j, QTableWidgetItem(str(val)))
 

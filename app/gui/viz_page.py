@@ -30,6 +30,7 @@ class VizPage(QWidget):
         self.tabs.clear()
         self.tabs.addTab(self._chart_stage(), "客户阶段全景")
         self.tabs.addTab(self._chart_region(), "地区分布")
+        self.tabs.addTab(self._chart_category(), "来源分类分布")
         self.tabs.addTab(self._chart_source(), "情报来源分布")
         self.tabs.addTab(self._chart_time(), "时间趋势")
         self.tabs.addTab(self._chart_stage_pie(), "情报阶段分布")
@@ -79,11 +80,39 @@ class VizPage(QWidget):
             conn.close()
         except Exception:
             rows = []
+        sources = load_sources(str(CONFIG))
         counts = Counter(r[0] for r in rows)
-        cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
-        cats = [cn_map.get(c, c) for c in counts.keys()]
-        vals = [counts[c] for c in counts.keys()]
-        return self._bar_chart(cats, vals, "各来源情报量", "#27ae60")
+        cats, vals = [], []
+        for s in sorted(sources, key=lambda x: (x.category, x.name)):
+            cats.append(s.name_cn or s.name)
+            vals.append(counts.get(s.name, 0))
+        return self._bar_chart(cats, vals, "各来源情报量（含 0 条的全部监控来源）", "#27ae60")
+
+    def _chart_category(self):
+        sources = load_sources(str(CONFIG))
+        try:
+            conn = sqlite3.connect(str(DB))
+            rows = conn.execute("SELECT source_name FROM items").fetchall()
+            conn.close()
+        except Exception:
+            rows = []
+        counts = Counter(r[0] for r in rows)
+        cat_cn = {"alliance": "联盟动态", "country": "重点国家", "competitor": "友商动态"}
+        agg = Counter()
+        for s in sources:
+            if s.enabled:
+                agg[cat_cn.get(s.category, s.category)] += counts.get(s.name, 0)
+        series = QPieSeries()
+        for k in ["联盟动态", "重点国家", "友商动态"]:
+            series.append(k, agg.get(k, 0))
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+        view = QChartView(chart)
+        view.setRenderHint(QPainter.Antialiasing)
+        return view
 
     def _chart_time(self):
         try:

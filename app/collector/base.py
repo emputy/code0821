@@ -9,6 +9,7 @@ class Source:
     type: str            # "rss" | "html" | "sitemap"
     url: str
     name_cn: str = ""    # 中文名称（界面显示用）
+    category: str = ""   # "alliance"(联盟) | "country"(重点国家) | "competitor"(友商)
     country: str = "global"
     enabled: bool = True
     options: dict = field(default_factory=dict)
