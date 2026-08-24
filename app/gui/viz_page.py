@@ -3,7 +3,8 @@ from collections import Counter
 from pathlib import Path
 
 from PySide6.QtCharts import (
-    QBarSeries, QBarSet, QCategoryAxis, QChart, QChartView, QPieSeries, QPieSlice, QValueAxis,
+    QBarSeries, QBarSet, QCategoryAxis, QChart, QChartView, QHorizontalBarSeries,
+    QPieSeries, QPieSlice, QValueAxis,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
@@ -96,6 +97,37 @@ class VizPage(QWidget):
         view.setRenderHint(QPainter.Antialiasing)
         return view
 
+    def _hbar_chart(self, categories, values, title, color):
+        """横向柱状图：分类名放左侧纵轴，适合分类多的情况。"""
+        series = QHorizontalBarSeries()
+        bs = QBarSet("数量")
+        for v in values:
+            bs.append(v)
+        bs.setColor(QColor(color))
+        series.append(bs)
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle(title)
+
+        ay = QCategoryAxis()
+        ay.setStartValue(-0.5)
+        for i, cat in enumerate(categories):
+            short = cat if len(cat) <= 12 else cat[:11] + "…"
+            ay.append(short, i + 0.5)
+        ay.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
+        chart.addAxis(ay, Qt.AlignLeft)
+        series.attachAxis(ay)
+
+        ax = QValueAxis()
+        ax.setRange(0, max(values + [1]))
+        chart.addAxis(ax, Qt.AlignBottom)
+        series.attachAxis(ax)
+
+        chart.legend().hide()
+        view = QChartView(chart)
+        view.setRenderHint(QPainter.Antialiasing)
+        return view
+
     def _chart_stage(self):
         customers = load_customers(str(CUSTOMERS))
         counts = Counter(c["stage"] for c in customers)
@@ -118,7 +150,7 @@ class VizPage(QWidget):
         for s in sorted(sources, key=lambda x: (x.category, x.name)):
             cats.append(s.name_cn or s.name)
             vals.append(counts.get(s.name, 0))
-        return self._bar_chart(cats, vals, "各来源相关情报量", "#27ae60")
+        return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
     @staticmethod
     def _label_pie(series):
