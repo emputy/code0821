@@ -71,12 +71,8 @@ class SettingsPage(QWidget):
         form.addRow("下次运行：", self.lbl_next)
 
         self.edt_keywords = QPlainTextEdit()
-        self.edt_keywords.setPlaceholderText("每行一个关键词（固定数据源采集后二次筛选用），如：
-450MHz
-DEWA
-巴西
-ANATEL
-频谱")
+        self.edt_keywords.setPlaceholderText("每行一个关键词（固定数据源采集后二次筛选用），如：\n450MHz\nDEWA\n巴西\nANATEL\n频谱")
+
         self.edt_keywords.setFixedHeight(120)
         form.addRow("自定义筛选关键词：", self.edt_keywords)
 
