@@ -9,6 +9,7 @@ POWER_TERMS = [
     "الطاقة", "الكهرباء", "énergie", "électricité", "électrique",
     "energia", "elétrica", "eletricidade", "tenaga", "elektrik",
     "energi", "listrik", "พลังงาน", "ไฟฟ้า",
+    "energie", "electricite", "frequences", "frequencias", "eletrica",
 ]
 
 # 无线专网 / 频谱概念词
@@ -23,6 +24,7 @@ WIRELESS_TERMS = [
     "espectro", "frequências", "redes privadas", "sem fio",
     "spektrum", "frekuensi", "wayarles", "nirkabel",
     "คลื่นความถี่", "สเปกตรัม", "ไร้สาย",
+    "frequences", "frequencias",
 ]
 
 
