@@ -13,6 +13,7 @@ from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, load_customers
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+CONFIG = BASE_DIR / "config" / "sources.json"
 DB = BASE_DIR / "data" / "intel.db"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 
