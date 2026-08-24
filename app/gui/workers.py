@@ -31,12 +31,8 @@ class CollectWorker(QThread):
                 cust = load_customers(self.customers)
                 terms = build_entity_terms(cust)
                 matcher = build_entity_matcher(terms)
-                src_kw = {}
-                for s in load_sources(self.config):
-                    extras = (s.options or {}).get("extra_keywords", [])
-                    if extras:
-                        src_kw[s.id] = extras
-                items = filter_items(items, keywords, matcher, src_kw)
+                cats = {s.id: s.category for s in load_sources(self.config)}
+                items = filter_items(items, matcher, cats)
                 db = Database(self.db)
                 added = db.save(items)
                 total, _ = db.summary()

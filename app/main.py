@@ -12,14 +12,9 @@ from app.filter.keywords import filter_items, load_keywords
 from app.storage.database import Database
 
 
-def build_source_keywords(config_path):
-    """按来源读取 extra_keywords（用于友商等放宽过滤）。"""
-    out = {}
-    for s in load_sources(config_path):
-        extras = (s.options or {}).get("extra_keywords", [])
-        if extras:
-            out[s.id] = extras
-    return out
+def build_source_categories(config_path):
+    """按来源 id 建立分类映射（alliance/competitor/country）。"""
+    return {s.id: s.category for s in load_sources(config_path)}
 
 
 def main():
@@ -40,9 +35,9 @@ def main():
         customers = load_customers(args.customers)
         entity_terms = build_entity_terms(customers)
         entity_re = build_entity_matcher(entity_terms)
-        src_kw = build_source_keywords(args.config)
-        items = filter_items(items, keywords, entity_re, src_kw)
-        print(f"领域关键词 {len(keywords)} 个 + 跟踪客户/国家 {len(entity_terms)} 个 + 来源级关键词 {sum(len(v) for v in src_kw.values())} 个")
+        cats = build_source_categories(args.config)
+        items = filter_items(items, entity_re, cats)
+        print(f"领域关键词 {len(keywords)} 个 + 跟踪客户/国家 {len(entity_terms)} 个（按分类精确过滤）")
         print(f"过滤后剩 {len(items)} 条")
 
     print("== 入库阶段 ==")
