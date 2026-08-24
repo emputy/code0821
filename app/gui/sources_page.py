@@ -31,6 +31,7 @@ class SourcesPage(QWidget):
         self.matchers = build_customer_matchers(self.customers)
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
+        self.src_info = {s.name: (s.category, s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         self.all_rows = []
 
         self.pivot = SegmentedWidget(self)
@@ -219,7 +220,7 @@ class SourcesPage(QWidget):
         self.all_rows = []
         for row in rows:
             t, src, title, url = row[8], row[2], row[3], row[4]
-            stage, country = self._match_item(title)
+            stage, country = self._match_item(title, src)
             self.all_rows.append({
                 "time": t, "source": src, "stage": stage,
                 "country": country, "title": title, "url": url,
@@ -234,10 +235,15 @@ class SourcesPage(QWidget):
         self.cmb_source.blockSignals(False)
         self.apply_filter()
 
-    def _match_item(self, text):
+    def _match_item(self, text, src_name):
         for rx, c in self.matchers:
             if rx.search(text):
                 return f"阶段 {c['stage']}", c["country"]
+        cat, name_cn = self.src_info.get(src_name, ("", ""))
+        if cat == "alliance":
+            return name_cn or "联盟", ""
+        if cat == "competitor":
+            return name_cn or "友商", ""
         return "未匹配", ""
 
     def apply_filter(self):

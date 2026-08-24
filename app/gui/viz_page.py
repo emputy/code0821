@@ -149,13 +149,23 @@ class VizPage(QWidget):
         rows = self._relevant_rows()
         customers = load_customers(str(CUSTOMERS))
         matchers = build_customer_matchers(customers)
+        src_info = {s.name: (s.category, s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         counts = Counter()
         for row in rows:
-            title = row[3]
+            title, src = row[3], row[2]
+            matched = False
             for rx, c in matchers:
                 if rx.search(title or ""):
                     counts[f"阶段 {c['stage']}"] += 1
+                    matched = True
                     break
+            if matched:
+                continue
+            cat, name_cn = src_info.get(src, ("", ""))
+            if cat == "alliance":
+                counts[name_cn or "联盟"] += 1
+            elif cat == "competitor":
+                counts[name_cn or "友商"] += 1
             else:
                 counts["未匹配"] += 1
         series = QPieSeries()
@@ -164,7 +174,7 @@ class VizPage(QWidget):
         self._label_pie(series)
         chart = QChart()
         chart.addSeries(series)
-        chart.setTitle("情报阶段分布")
+        chart.setTitle("情报分布（客户阶段 / 来源）")
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
         view = QChartView(chart)
