@@ -30,7 +30,8 @@ class SettingsPage(QWidget):
 
         self.edt_key = LineEdit()
         self.edt_key.setEchoMode(LineEdit.Password)
-        self.edt_key.setPlaceholderText("输入 DeepSeek API Key（sk-...）")
+        self.edt_key.setPlaceholderText("输入 DeepSeek API Key（sk-...），回车或点别处即自动保存")
+        self.edt_key.editingFinished.connect(self._on_key_edited)
         form.addRow("API Key：", self.edt_key)
 
         self.edt_test_key = LineEdit()
@@ -77,6 +78,12 @@ class SettingsPage(QWidget):
         btns.addWidget(btn_run)
         lay.addLayout(btns)
         lay.addStretch(1)
+
+    def _on_key_edited(self):
+        s = load_settings()
+        s["api_key"] = self.edt_key.text().strip()
+        save_settings(s)
+        self.settings_changed.emit()
 
     def _on_ai_toggled(self, checked):
         s = load_settings()
