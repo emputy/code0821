@@ -69,34 +69,6 @@ class VizPage(QWidget):
             self.stack.addWidget(c)
         self.stack.setCurrentIndex(0)
 
-    @staticmethod
-    def _bar_chart(categories, values, title, color):
-        series = QBarSeries()
-        bs = QBarSet("数量")
-        for v in values:
-            bs.append(v)
-        bs.setColor(QColor(color))
-        series.append(bs)
-        chart = QChart()
-        chart.addSeries(series)
-        chart.setTitle(title)
-        ax = QCategoryAxis()
-        ax.setStartValue(-0.5)
-        for i, cat in enumerate(categories):
-            short = cat if len(cat) <= 10 else cat[:9] + "…"
-            ax.append(short, i + 0.5)
-        ax.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
-        chart.addAxis(ax, Qt.AlignBottom)
-        series.attachAxis(ax)
-        ay = QValueAxis()
-        ay.setRange(0, max(values + [1]))
-        chart.addAxis(ay, Qt.AlignLeft)
-        series.attachAxis(ay)
-        chart.legend().hide()
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
-
     def _hbar_chart(self, categories, values, title, color):
         """横向柱状图：分类名放左侧纵轴，适合分类多的情况。"""
         series = QHorizontalBarSeries()
@@ -133,14 +105,14 @@ class VizPage(QWidget):
         counts = Counter(c["stage"] for c in customers)
         cats = [f"阶段 {i}" for i in range(1, 6)]
         vals = [counts.get(i, 0) for i in range(1, 6)]
-        return self._bar_chart(cats, vals, "客户阶段全景（每阶段客户数）", "#4a90d9")
+        return self._hbar_chart(cats, vals, "客户阶段全景（每阶段客户数）", "#4a90d9")
 
     def _chart_region(self):
         customers = load_customers(str(CUSTOMERS))
         counts = Counter(c["region"] for c in customers)
         cats = list(counts.keys())
         vals = [counts[c] for c in cats]
-        return self._bar_chart(cats, vals, "客户地区分布", "#e67e22")
+        return self._hbar_chart(cats, vals, "客户地区分布", "#e67e22")
 
     def _chart_source(self):
         sources = load_sources(str(CONFIG))
