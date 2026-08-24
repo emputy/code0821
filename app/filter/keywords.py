@@ -25,6 +25,16 @@ PRIVATE_WIRELESS_TERMS = [
     "redes privadas", "jaringan privat", "เครือข่ายเอกชน",
 ]
 
+# 2.5 通信/网络概念词（与电力词组合，捕捉"电力通信/网络"类信息）
+COMMUNICATION_TERMS = [
+    "通信", "通讯", "网络", "无线通信", "宽带", "专网",
+    "communications", "communication", "network", "networks", "connectivity",
+    "broadband", "wireless", "telecom", "telecommunications",
+    # 本地语言
+    "الاتصالات", "تكنولوجيا المعلومات", "télécommunications", "telecomunicações",
+    "telekomunikasi", "komunikasi", "การสื่อสาร", "telekomunikacja",
+]
+
 # 3. 频谱概念词
 SPECTRUM_TERMS = [
     "频谱", "spectrum", "frequency", "frequencies", "radio frequency",
@@ -73,6 +83,8 @@ def filter_items(items, entity_re=None, source_categories=None):
         else:  # country / 默认
             if _has_any(text, SPECTRUM_TERMS) or (
                 _has_any(text, POWER_TERMS) and _has_any(text, PRIVATE_WIRELESS_TERMS)
+            ) or (
+                _has_any(text, POWER_TERMS) and _has_any(text, COMMUNICATION_TERMS)
             ):
                 kept.append(it)
     return kept
