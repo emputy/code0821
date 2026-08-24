@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from app.collector.fetch import load_sources
 from app.filter.entities import load_customers
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -186,7 +187,7 @@ class MainWindow(QMainWindow):
                 "time": t, "source": src, "stage": stage,
                 "country": country, "title": title, "url": url,
             })
-        sources = sorted({r["source"] for r in self.all_rows})
+        sources = sorted({s.name for s in load_sources(str(CONFIG))})
         self.cmb_source.blockSignals(True)
         self.cmb_source.clear()
         self.cmb_source.addItem("全部")
