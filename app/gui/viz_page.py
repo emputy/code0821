@@ -3,7 +3,7 @@ from collections import Counter
 from pathlib import Path
 
 from PySide6.QtCharts import (
-    QBarCategoryAxis, QBarSeries, QBarSet, QChart, QChartView, QPieSeries, QValueAxis,
+    QBarCategoryAxis, QBarSeries, QBarSet, QChart, QChartView, QPieSeries, QPieSlice, QValueAxis,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
@@ -32,8 +32,7 @@ class VizPage(QWidget):
         self.pivot.addItem("k1", "地区分布", lambda: self.stack.setCurrentIndex(1))
         self.pivot.addItem("k2", "来源分类分布", lambda: self.stack.setCurrentIndex(2))
         self.pivot.addItem("k3", "情报来源分布", lambda: self.stack.setCurrentIndex(3))
-        self.pivot.addItem("k4", "时间趋势", lambda: self.stack.setCurrentIndex(4))
-        self.pivot.addItem("k5", "情报阶段分布", lambda: self.stack.setCurrentIndex(5))
+        self.pivot.addItem("k4", "情报阶段分布", lambda: self.stack.setCurrentIndex(4))
         lay = QVBoxLayout(self)
         lay.setContentsMargins(20, 20, 20, 20)
         lay.setSpacing(12)
@@ -58,7 +57,7 @@ class VizPage(QWidget):
     def refresh(self):
         charts = [
             self._chart_stage(), self._chart_region(), self._chart_category(),
-            self._chart_source(), self._chart_time(), self._chart_stage_pie(),
+            self._chart_source(), self._chart_stage_pie(),
         ]
         while self.stack.count() > 0:
             w = self.stack.widget(0)
@@ -116,6 +115,14 @@ class VizPage(QWidget):
             vals.append(counts.get(s.name, 0))
         return self._bar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
+    @staticmethod
+    def _label_pie(series):
+        total = sum(s.value() for s in series.slices())
+        for s in series.slices():
+            pct = (s.value() / total * 100) if total else 0
+            s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
+            s.setLabelVisible(True)
+
     def _chart_category(self):
         sources = load_sources(str(CONFIG))
         rows = self._relevant_rows()
@@ -128,6 +135,7 @@ class VizPage(QWidget):
         series = QPieSeries()
         for k in ["联盟动态", "重点国家", "友商动态"]:
             series.append(k, agg.get(k, 0))
+        self._label_pie(series)
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
@@ -136,15 +144,6 @@ class VizPage(QWidget):
         view = QChartView(chart)
         view.setRenderHint(QPainter.Antialiasing)
         return view
-
-    def _chart_time(self):
-        rows = self._relevant_rows()
-        days = Counter((r[8] or "")[:10] for r in rows)
-        cats = sorted(days.keys())[-14:]
-        vals = [days[d] for d in cats]
-        if not cats:
-            cats, vals = ["暂无数据"], [0]
-        return self._bar_chart(cats, vals, "近 14 天情报趋势（按采集日）", "#8e44ad")
 
     def _chart_stage_pie(self):
         rows = self._relevant_rows()
@@ -162,6 +161,7 @@ class VizPage(QWidget):
         series = QPieSeries()
         for k, v in counts.items():
             series.append(k, v)
+        self._label_pie(series)
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle("情报阶段分布")
