@@ -164,9 +164,9 @@ class VizPage(QWidget):
         chart.addSeries(series)
         chart.setTitle(title)
         ax = QCategoryAxis()
-        ax.setStartValue(0)
+        ax.setStartValue(-0.5)
         for i, cat in enumerate(categories):
-            ax.append(cat, i + 1)
+            ax.append(cat, i + 0.5)
         ax.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
         chart.addAxis(ax, Qt.AlignBottom)
         series.attachAxis(ax)
