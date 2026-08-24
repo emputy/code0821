@@ -4,7 +4,7 @@ from pathlib import Path
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication, QMessageBox
 
-from qfluentwidgets import FluentIcon, FluentWindow, Theme, setTheme
+from qfluentwidgets import FluentIcon, FluentWindow, InfoBar, InfoBarPosition, Theme, setTheme
 
 from app.gui.settings_page import SettingsPage
 from app.gui.settings_store import load_settings, save_settings
@@ -55,8 +55,6 @@ class MainWindow(FluentWindow):
         self.timer.start(60000)
         self._check_schedule()
 
-        self.statusBar().showMessage("就绪")
-
     def _on_page_changed(self, index):
         if self.stackedWidget.currentWidget() is self.viz_page:
             self.viz_page.refresh()
@@ -69,7 +67,7 @@ class MainWindow(FluentWindow):
         if self.collect_worker and self.collect_worker.isRunning():
             QMessageBox.information(self, "采集", "采集正在进行中，请稍候")
             return
-        self.statusBar().showMessage("正在采集最新数据……（约 10-15 分钟）")
+        InfoBar.info("采集", "正在采集最新数据……（约 10-15 分钟）", parent=self, position=InfoBarPosition.TOP)
         self.collect_worker = CollectWorker(str(CONFIG), str(CUSTOMERS), str(DB), self)
         self.collect_worker.log.connect(self.sources_page.append_log)
         self.collect_worker.done.connect(self._collect_done)
@@ -77,7 +75,7 @@ class MainWindow(FluentWindow):
         self.collect_worker.start()
 
     def _collect_done(self, added, total):
-        self.statusBar().showMessage(f"采集完成：新增 {added} 条，共 {total} 条")
+        InfoBar.success("采集完成", f"新增 {added} 条，共 {total} 条", parent=self, position=InfoBarPosition.TOP)
         s = load_settings()
         s["last_run_at"] = datetime.now().isoformat(timespec="seconds")
         save_settings(s)
@@ -86,7 +84,6 @@ class MainWindow(FluentWindow):
         self.work_page.refresh_buttons()
 
     def _collect_failed(self, msg):
-        self.statusBar().showMessage("采集失败：" + str(msg)[:80])
         QMessageBox.warning(self, "采集失败", str(msg))
 
     def _check_schedule(self):
@@ -100,7 +97,6 @@ class MainWindow(FluentWindow):
         except Exception:
             return
         if datetime.now() >= last_dt + timedelta(days=interval):
-            self.statusBar().showMessage("定时采集时间到，开始自动采集……")
             QMessageBox.information(self, "定时采集", "定时采集时间到了，正在自动采集最新数据……")
             self.start_collect()
 
