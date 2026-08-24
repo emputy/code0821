@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QEvent, QTimer, Qt
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 from qfluentwidgets import FluentIcon, FluentWindow, InfoBar, InfoBarPosition, Theme, setTheme
@@ -52,6 +52,20 @@ class MainWindow(FluentWindow):
         self.timer.timeout.connect(self._check_schedule)
         self.timer.start(60000)
         self._check_schedule()
+
+        self.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        # Ctrl + 滚轮：全局界面缩放（字体大小）
+        if event.type() == QEvent.Wheel and (event.modifiers() & Qt.ControlModifier):
+            delta = event.angleDelta().y()
+            f = QApplication.font()
+            sz = f.pointSize() + (1 if delta > 0 else -1)
+            if 8 <= sz <= 22:
+                f.setPointSize(sz)
+                QApplication.setFont(f)
+            return True
+        return super().eventFilter(obj, event)
 
     def _on_page_changed(self, index):
         if self.stackedWidget.currentWidget() is self.viz_page:

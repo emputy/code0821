@@ -13,54 +13,24 @@ from qfluentwidgets import PushButton, SegmentedWidget
 
 
 class ZoomChartView(QChartView):
-    """支持滚轮缩放 / 双击重置的图表视图。
-
-    缩放通过调整坐标轴范围实现，纵轴始终从 0 开始，保证柱子与横轴相连。
-    """
+    """视图级缩放：整个图表图像（柱子+标签+坐标轴）一起放大/缩小，可缩到 0.4 倍。"""
 
     def __init__(self, chart, parent=None):
         super().__init__(chart, parent)
         self.setRenderHint(QPainter.Antialiasing)
         self.setMinimumHeight(380)
-        self._orig = {}
-        for axis in chart.axes(Qt.Vertical):
-            self._orig["y"] = (axis.min(), axis.max())
-        for axis in chart.axes(Qt.Horizontal):
-            self._orig["x"] = (axis.min(), axis.max())
+        self._level = 1.0
 
     def _apply_zoom(self, factor):
-        chart = self.chart()
-        verts = chart.axes(Qt.Vertical)
-        if not verts:  # 饼图没有坐标轴，用场景缩放
-            chart.zoom(factor)
-            return
-        for axis in verts:
-            if isinstance(axis, QValueAxis):
-                rmin, rmax = axis.min(), axis.max()
-                _, omax = self._orig.get("y", (rmin, rmax))
-                new_max = min(omax, rmax / factor)
-                if new_max > rmin + 1:
-                    axis.setRange(rmin, new_max)  # 纵轴始终从 0 起
-        for axis in chart.axes(Qt.Horizontal):
-            if isinstance(axis, QCategoryAxis):
-                rmin, rmax = axis.min(), axis.max()
-                omin, omax = self._orig.get("x", (rmin, rmax))
-                span = min((rmax - rmin) / factor, omax - omin)
-                mid = (rmin + rmax) / 2
-                new_min = max(omin, mid - span / 2)
-                new_max = min(omax, mid + span / 2)
-                if new_max - new_min > 1:
-                    axis.setRange(new_min, new_max)
+        new_level = self._level * factor
+        if 0.4 <= new_level <= 5.0:
+            self._level = new_level
+            self.resetTransform()
+            self.scale(new_level, new_level)
 
     def _reset(self):
-        chart = self.chart()
-        for axis in chart.axes(Qt.Vertical):
-            if isinstance(axis, QValueAxis) and "y" in self._orig:
-                axis.setRange(*self._orig["y"])
-        for axis in chart.axes(Qt.Horizontal):
-            if isinstance(axis, QCategoryAxis) and "x" in self._orig:
-                axis.setRange(*self._orig["x"])
-        chart.zoomReset()
+        self._level = 1.0
+        self.resetTransform()
 
     def wheelEvent(self, event):
         self._apply_zoom(1.2 if event.angleDelta().y() > 0 else 1 / 1.2)
@@ -166,7 +136,8 @@ class VizPage(QWidget):
         ax = QCategoryAxis()
         ax.setStartValue(-0.5)
         for i, cat in enumerate(categories):
-            ax.append(cat, i + 0.5)
+            short = cat if len(cat) <= 10 else cat[:9] + "…"
+            ax.append(short, i + 0.5)
         ax.setLabelsPosition(QCategoryAxis.AxisLabelsPositionCenter)
         chart.addAxis(ax, Qt.AlignBottom)
         series.attachAxis(ax)
