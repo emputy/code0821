@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter
 from PySide6.QtWidgets import QTabWidget, QVBoxLayout, QWidget
 
+from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, load_customers
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -78,8 +79,9 @@ class VizPage(QWidget):
         except Exception:
             rows = []
         counts = Counter(r[0] for r in rows)
-        cats = list(counts.keys())
-        vals = [counts[c] for c in cats]
+        cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
+        cats = [cn_map.get(c, c) for c in counts.keys()]
+        vals = [counts[c] for c in counts.keys()]
         return self._bar_chart(cats, vals, "各来源情报量", "#27ae60")
 
     def _chart_time(self):

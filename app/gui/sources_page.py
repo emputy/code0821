@@ -145,7 +145,7 @@ class SourcesPage(QWidget):
         sources = load_sources(str(CONFIG))
         self.src_table.setRowCount(len(sources))
         for i, s in enumerate(sources):
-            vals = [s.name, s.type, s.url, "是" if s.enabled else "否"]
+            vals = [s.name_cn or s.name, s.type, s.url, "是" if s.enabled else "否"]
             for j, val in enumerate(vals):
                 self.src_table.setItem(i, j, QTableWidgetItem(str(val)))
 
@@ -187,7 +187,8 @@ class SourcesPage(QWidget):
                 "time": t, "source": src, "stage": stage,
                 "country": country, "title": title, "url": url,
             })
-        sources = sorted({s.name for s in load_sources(str(CONFIG))})
+        self.source_cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
+        sources = sorted(set(self.source_cn_map.values()))
         self.cmb_source.blockSignals(True)
         self.cmb_source.clear()
         self.cmb_source.addItem("全部")
@@ -206,9 +207,10 @@ class SourcesPage(QWidget):
         src = self.cmb_source.currentText()
         stage = self.cmb_stage.currentText()
         kw = self.edt_keyword.text().strip().lower()
+        src_target = {v: k for k, v in getattr(self, "source_cn_map", {}).items()}.get(src, src)
         rows = []
         for r in self.all_rows:
-            if src != "全部" and r["source"] != src:
+            if src != "全部" and r["source"] != src_target:
                 continue
             if stage != "全部" and r["stage"] != stage:
                 continue

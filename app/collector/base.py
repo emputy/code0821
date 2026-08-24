@@ -6,6 +6,7 @@ class Source:
     """一个数据源的定义，对应 sources.json 中的条目。"""
     id: str
     name: str
+    name_cn: str = ""    # 中文名称（界面显示用）
     type: str            # "rss" | "html" | "sitemap"
     url: str
     country: str = "global"

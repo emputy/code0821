@@ -15,6 +15,7 @@
     {
       "id": "alliance_450",
       "name": "450 MHz Alliance",
+      "name_cn": "450MHz 联盟",
       "type": "rss",
       "url": "https://450alliance.org/feed/",
       "country": "global",
@@ -23,6 +24,7 @@
     {
       "id": "nokia_newsroom",
       "name": "Nokia Newsroom",
+      "name_cn": "诺基亚新闻室",
       "type": "sitemap",
       "url": "https://www.nokia.com/newsroom/sitemap.xml",
       "country": "global",
@@ -41,6 +43,7 @@
     {
       "id": "ericsson_press",
       "name": "Ericsson Newsroom",
+      "name_cn": "爱立信新闻室",
       "type": "rss",
       "url": "https://www.ericsson.com/en/newsroom/latest-news/feed?typeFilters=1,2,3,4&disableLocationDetect=true",
       "country": "global",
@@ -49,6 +52,7 @@
     {
       "id": "zte_news",
       "name": "ZTE 新闻中心",
+      "name_cn": "中兴新闻中心",
       "type": "html",
       "url": "https://www.zte.com.cn/china/about/news/",
       "country": "global",
@@ -62,6 +66,7 @@
     {
       "id": "ubba",
       "name": "Utility Broadband Alliance (UBBA)",
+      "name_cn": "公用事业宽带联盟 (UBBA)",
       "type": "rss",
       "url": "https://www.ubba.com/feed/",
       "country": "global",

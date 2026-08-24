@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QLabel, QMessageBox, QPushButton, QTextBrowser, QVBoxLayout, QWidget,
 )
 
+from app.collector.fetch import load_sources
 from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
 
@@ -72,9 +73,10 @@ class WorkPage(QWidget):
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。", "#fff3cd")
             return
+        cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         self._bubble("", f"共 {len(rows)} 条原始数据（未经任何修改/总结）：", "#f0f0f0")
         for t, src, title, url, summary in rows[:50]:
-            body = f"[{html_mod.escape(src)}] {html_mod.escape(t)}<br/><b>{html_mod.escape(title)}</b>"
+            body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(t)}<br/><b>{html_mod.escape(title)}</b>"
             if url.startswith("http"):
                 body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
             if summary:
