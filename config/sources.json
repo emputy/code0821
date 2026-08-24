@@ -174,10 +174,23 @@
       "type": "html",
       "url": "https://www.arcep.fr/actualites.html",
       "country": "france",
-      "enabled": true,
+      "enabled": false,
       "options": {
         "extra_keywords": ["fréquences", "spectre", "autorisation", "appel à candidatures", "450 MHz", "réseau privé"],
         "max_items": 20
+      }
+    },
+    {
+      "id": "univers_freebox",
+      "name": "Univers Freebox",
+      "name_cn": "法国电信媒体（ARCEP 监管动态）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://www.universfreebox.com/feed",
+      "country": "france",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["ARCEP", "fréquences", "spectre", "autorisation", "450 MHz", "appel à candidatures"]
       }
     },
     {
