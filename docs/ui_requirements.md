@@ -79,6 +79,15 @@
 
 ---
 
+## 二点五、项目约定（必须遵守）
+
+- 代码有任何改动并提交后，必须**同时推送到两个远程仓库**：
+  - GitHub：origin → https://github.com/emputy/code0821.git
+  - Gitee：gitee → https://gitee.com/dorianpan/code.git
+- 一键双推：双击 D:\code0821\push_all.bat
+
+---
+
 ## 三、用户待补充的想法（记录区）
 
 （用户后续想法在此记录）
