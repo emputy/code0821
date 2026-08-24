@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import PrimaryPushButton
+from qfluentwidgets import CardWidget, ComboBox, FluentTableWidget, LineEdit, PrimaryPushButton
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
@@ -47,6 +47,8 @@ class SourcesPage(QWidget):
     def _build_list_tab(self):
         w = QWidget()
         lay = QVBoxLayout(w)
+        lay.setContentsMargins(16, 16, 16, 16)
+        lay.setSpacing(12)
         tb = QHBoxLayout()
         self.btn_collect = PrimaryPushButton("立即抓取")
         self.btn_collect.clicked.connect(self.collect_requested.emit)
@@ -56,20 +58,23 @@ class SourcesPage(QWidget):
         tb.addStretch(1)
 
         tb.addWidget(QLabel("来源:"))
-        self.cmb_source = QComboBox()
+        self.cmb_source = ComboBox()
+        self.cmb_source.setFixedWidth(150)
         self.cmb_source.currentTextChanged.connect(lambda _: self.apply_filter())
         tb.addWidget(self.cmb_source)
 
         tb.addWidget(QLabel("阶段:"))
-        self.cmb_stage = QComboBox()
+        self.cmb_stage = ComboBox()
+        self.cmb_stage.setFixedWidth(110)
         for s in ["全部", "阶段 1", "阶段 2", "阶段 3", "阶段 4", "阶段 5", "未匹配"]:
             self.cmb_stage.addItem(s)
         self.cmb_stage.currentTextChanged.connect(lambda _: self.apply_filter())
         tb.addWidget(self.cmb_stage)
 
         tb.addWidget(QLabel("搜索:"))
-        self.edt_keyword = QLineEdit()
+        self.edt_keyword = LineEdit()
         self.edt_keyword.setPlaceholderText("标题关键词...")
+        self.edt_keyword.setFixedWidth(150)
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
         tb.addWidget(self.edt_keyword)
 
@@ -79,7 +84,8 @@ class SourcesPage(QWidget):
         tb.addWidget(self.chk_relevant)
         lay.addLayout(tb)
 
-        self.table = QTableWidget(0, 6)
+        self.table = FluentTableWidget(self)
+        self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(["时间", "来源", "阶段", "国家", "标题", "链接"])
         self.table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)
         self.table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -106,6 +112,7 @@ class SourcesPage(QWidget):
     def _build_customers_tab(self):
         w = QWidget()
         lay = QVBoxLayout(w)
+        lay.setContentsMargins(16, 16, 16, 16)
         tree = QTreeWidget()
         tree.setHeaderLabels(["阶段", "地区", "国家", "客户"])
         tree.header().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -126,29 +133,36 @@ class SourcesPage(QWidget):
     def _build_sources_tab(self):
         w = QWidget()
         lay = QVBoxLayout(w)
-        self.src_table = QTableWidget(0, 5)
+        lay.setContentsMargins(16, 16, 16, 16)
+        lay.setSpacing(12)
+        self.src_table = FluentTableWidget(self)
+        self.src_table.setColumnCount(5)
         self.src_table.setHorizontalHeaderLabels(["分类", "名称", "类型", "URL", "启用"])
         self.src_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         lay.addWidget(self.src_table)
 
+        card = CardWidget()
+        card.setMinimumHeight(180)
+        card_lay = QVBoxLayout(card)
+        card_lay.setContentsMargins(20, 16, 20, 16)
         form = QFormLayout()
-        self.edt_name = QLineEdit()
+        self.edt_name = LineEdit()
         self.edt_name.setPlaceholderText("如：巴西 ANATEL")
-        self.cmb_type = QComboBox()
+        self.cmb_type = ComboBox()
         self.cmb_type.addItems(["rss", "html", "sitemap"])
-        self.edt_url = QLineEdit()
+        self.edt_url = LineEdit()
         self.edt_url.setPlaceholderText("https://...")
-        self.edt_country = QLineEdit()
+        self.edt_country = LineEdit()
         self.edt_country.setPlaceholderText("如：brazil（留空默认 global）")
+        card_lay.addLayout(form)
+        btn_add = PrimaryPushButton("添加数据源")
+        btn_add.clicked.connect(self.add_source)
+        card_lay.addWidget(btn_add)
+        lay.addWidget(card)
         form.addRow("名称：", self.edt_name)
         form.addRow("类型：", self.cmb_type)
         form.addRow("URL：", self.edt_url)
         form.addRow("国家：", self.edt_country)
-        lay.addLayout(form)
-
-        btn_add = PrimaryPushButton("添加数据源")
-        btn_add.clicked.connect(self.add_source)
-        lay.addWidget(btn_add)
         return w
 
     def refresh_sources_table(self):

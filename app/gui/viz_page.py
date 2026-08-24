@@ -25,7 +25,13 @@ class VizPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.tabs = QTabWidget()
+        self.tabs.setStyleSheet(
+            "QTabWidget::pane{border:1px solid rgba(255,255,255,0.12);border-radius:8px;}"
+            "QTabBar::tab{background:transparent;padding:8px 16px;}"
+            "QTabBar::tab:selected{background:rgba(255,255,255,0.12);border-radius:6px;}"
+        )
         lay = QVBoxLayout(self)
+        lay.setContentsMargins(16, 16, 16, 16)
         lay.addWidget(self.tabs)
         self.customers = load_customers(str(CUSTOMERS))
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))

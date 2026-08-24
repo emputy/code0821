@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QSpinBox, QVBoxLayout, QWidget,
 )
 
-from qfluentwidgets import PrimaryPushButton, SwitchButton
+from qfluentwidgets import ComboBox, LineEdit, PrimaryPushButton, SwitchButton
 
 from app.gui.settings_store import load_settings, save_settings
 from app.gui.workers import TestKeyWorker
@@ -25,15 +25,17 @@ class SettingsPage(QWidget):
 
     def _build_ui(self):
         lay = QVBoxLayout(self)
+        lay.setContentsMargins(16, 16, 16, 16)
+        lay.setSpacing(12)
         form = QFormLayout()
 
-        self.edt_key = QLineEdit()
-        self.edt_key.setEchoMode(QLineEdit.Password)
+        self.edt_key = LineEdit()
+        self.edt_key.setEchoMode(LineEdit.Password)
         self.edt_key.setPlaceholderText("输入 DeepSeek API Key（sk-...）")
         form.addRow("API Key：", self.edt_key)
 
-        self.edt_test_key = QLineEdit()
-        self.edt_test_key.setEchoMode(QLineEdit.Password)
+        self.edt_test_key = LineEdit()
+        self.edt_test_key.setEchoMode(LineEdit.Password)
         self.edt_test_key.setPlaceholderText("可临时输入 Key 测试连接（不会改动已保存的 Key）")
         form.addRow("测试连接 Key：", self.edt_test_key)
 
@@ -50,7 +52,7 @@ class SettingsPage(QWidget):
         self.chk_translate = SwitchButton("启用原文翻译（原文 → 中文）")
         form.addRow("", self.chk_translate)
 
-        self.cmb_model = QComboBox()
+        self.cmb_model = ComboBox()
         self.cmb_model.addItems(["deepseek-chat", "deepseek-reasoner"])
         form.addRow("模型：", self.cmb_model)
 

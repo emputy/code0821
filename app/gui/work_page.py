@@ -33,12 +33,19 @@ class WorkPage(QWidget):
 
     def _build_ui(self):
         lay = QVBoxLayout(self)
+        lay.setContentsMargins(16, 16, 16, 16)
+        lay.setSpacing(12)
         title = QLabel("工作页面")
-        title.setStyleSheet("font-size:16px;font-weight:bold;")
+        title.setStyleSheet("font-size:18px;font-weight:bold;")
         lay.addWidget(title)
 
         self.chat = QTextBrowser()
         self.chat.setOpenExternalLinks(True)
+        self.chat.setStyleSheet(
+            "QTextBrowser{background:rgba(255,255,255,0.05);"
+            "border:1px solid rgba(255,255,255,0.15);border-radius:12px;"
+            "padding:8px;font-size:13px;}"
+        )
         lay.addWidget(self.chat, 1)
 
         btns = QHBoxLayout()
