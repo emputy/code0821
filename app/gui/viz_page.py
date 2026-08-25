@@ -139,6 +139,20 @@ class VizPage(QWidget):
             s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
             s.setLabelVisible(pct >= 5)
 
+    @staticmethod
+    def _setup_pie_hover(series):
+        """鼠标悬停到任意扇区时，弹出提示显示该扇区的数量与占比。"""
+        from PySide6.QtGui import QCursor
+        from PySide6.QtWidgets import QToolTip
+
+        def _on_hover(slice, state):
+            if state:
+                QToolTip.showText(QCursor.pos(), slice.label())
+            else:
+                QToolTip.hideText()
+
+        series.hovered.connect(_on_hover)
+
     def _chart_category(self):
         sources = load_sources(str(CONFIG))
         rows = self._relevant_rows()
@@ -152,6 +166,7 @@ class VizPage(QWidget):
         for k in ["联盟动态", "重点国家", "友商动态", "其他国家"]:
             series.append(k, agg.get(k, 0))
         self._label_pie(series)
+        self._setup_pie_hover(series)
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
@@ -188,6 +203,7 @@ class VizPage(QWidget):
         for k, v in counts.items():
             series.append(k, v)
         self._label_pie(series)
+        self._setup_pie_hover(series)
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle("情报分布（客户阶段 / 来源）")
