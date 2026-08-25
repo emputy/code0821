@@ -97,8 +97,8 @@ class VizPage(QWidget):
         chart.legend().hide()
         view = QChartView(chart)
         view.setRenderHint(QPainter.Antialiasing)
-        # 分类多时给足高度，每行至少 30px，防止标签挤在一起
-        view.setMinimumHeight(max(400, len(categories) * 30))
+        # 分类多时给足高度，但最小值控制在小值，避免把整个窗口撑大无法缩小
+        view.setMinimumHeight(min(320, max(260, len(categories) * 24)))
         return view
 
     def _chart_stage(self):

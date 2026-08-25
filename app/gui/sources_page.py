@@ -192,7 +192,7 @@ class SourcesPage(QWidget):
         tb.addWidget(self.edt_keyword)
 
         self.chk_relevant = QCheckBox("只看相关")
-        self.chk_relevant.setChecked(True)
+        self.chk_relevant.setChecked(False)
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
         tb.addWidget(self.chk_relevant)
         self.chk_dated = QCheckBox("只看有发布日期")
@@ -205,7 +205,7 @@ class SourcesPage(QWidget):
         tb2.addWidget(QLabel("时间范围:"))
         self.dt_start = QDateEdit()
         self.dt_start.setCalendarPopup(True)
-        self.dt_start.setDate(QDate(2026, 1, 1))
+        self.dt_start.setDate(QDate(2025, 1, 1))
         self.dt_start.setFixedWidth(110)
         self.dt_start.dateChanged.connect(lambda _: self.refresh_items())
         tb2.addWidget(self.dt_start)
