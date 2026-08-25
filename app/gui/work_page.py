@@ -74,6 +74,7 @@ class WorkPage(QWidget):
         btns = QHBoxLayout()
         self.chk_filter = QCheckBox("只看相关（关键词实时过滤）")
         self.chk_filter.setChecked(True)
+        self.chk_filter.setToolTip("勾选后只显示与【电力无线专网/450MHz/频谱/客户】相关的情报：\n命中客户名称或英文国名，或频谱关键词，或电力+专网/通信关键词")
         self.chk_filter.toggled.connect(lambda _: self.show_raw())
         btns.addWidget(self.chk_filter)
         self.btn_raw = PushButton("数据汇总")

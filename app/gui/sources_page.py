@@ -197,6 +197,7 @@ class SourcesPage(QWidget):
 
         self.chk_relevant = QCheckBox("只看相关")
         self.chk_relevant.setChecked(True)
+        self.chk_relevant.setToolTip("勾选后只显示与【电力无线专网/450MHz/频谱/客户】相关的情报：\n命中客户名称或英文国名，或频谱关键词，或电力+专网/通信关键词")
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
         tb3.addWidget(self.chk_relevant)
         self.chk_dated = QCheckBox("只看有发布日期")
