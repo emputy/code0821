@@ -12,10 +12,10 @@ from PySide6.QtWidgets import QLabel, QStackedWidget, QVBoxLayout, QWidget
 
 from qfluentwidgets import SegmentedWidget
 
-# 扇形图调色板：差异明显的 10 色，扇区多时循环使用
+# 扇形图调色板：Tableau 10（公认美观柔和的图表配色），扇区多时循环使用
 PIE_COLORS = [
-    "#e6194B", "#3cb44b", "#4363d8", "#f58231", "#911eb4",
-    "#42d4f4", "#f032e6", "#bfef45", "#469990", "#9A6324",
+    "#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F",
+    "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC",
 ]
 
 
@@ -165,28 +165,34 @@ class VizPage(QWidget):
         view.setRenderHint(QPainter.Antialiasing)
 
         total = sum(s.value() for s in slices)
-        lines = []
+        from PySide6.QtWidgets import QFrame
+
+        card = QWidget()
+        card.setStyleSheet("background:#f5f5f5; border:1px solid #dcdcdc; border-radius:6px;")
+        vlay = QVBoxLayout(card)
+        vlay.setContentsMargins(14, 10, 14, 10)
+        vlay.setSpacing(5)
         for i, s in enumerate(slices):
             pct = (s.value() / total * 100) if total else 0
             color = PIE_COLORS[i % len(PIE_COLORS)]
-            lines.append(
-                f'<span style="display:inline-block;width:14px;height:14px;'
-                f'background:{color};border-radius:3px;vertical-align:middle;"></span>&nbsp;'
-                f"<b>{s.label()}</b>：{int(s.value())} 条（{pct:.1f}%）"
-            )
-        note = QLabel("<br/>".join(lines))
-        note.setStyleSheet(
-            "font-size:13px; color:#333333; background:#f4f4f4;"
-            "border:1px solid #d9d9d9; border-radius:6px; padding:10px 14px;"
-        )
-        note.setWordWrap(True)
+            row = QHBoxLayout()
+            row.setSpacing(8)
+            swatch = QFrame()
+            swatch.setFixedSize(14, 14)
+            swatch.setStyleSheet("background:" + color + "; border-radius:3px; border:none;")
+            row.addWidget(swatch)
+            lbl = QLabel("<b>" + s.label() + "</b>：" + str(int(s.value())) + " 条（" + f"{pct:.1f}" + "%）")
+            lbl.setStyleSheet("font-size:13px; color:#333333; background:transparent; border:none;")
+            row.addWidget(lbl)
+            row.addStretch(1)
+            vlay.addLayout(row)
 
         w = QWidget()
         lay = QVBoxLayout(w)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(8)
         lay.addWidget(view, 1)
-        lay.addWidget(note)
+        lay.addWidget(card)
         return w
 
     def _chart_category(self):
