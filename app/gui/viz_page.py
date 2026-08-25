@@ -130,15 +130,14 @@ class VizPage(QWidget):
 
     @staticmethod
     def _label_pie(series):
+        """每个扇区都标注"名称: 数量 (占比)"：下方图例批注全部列出；
+        占比 <5% 的小扇区不在图上画标签（避免文字叠加），但批注里仍然完整。"""
         total = sum(s.value() for s in series.slices())
         for s in series.slices():
             pct = (s.value() / total * 100) if total else 0
-            if pct < 5:
-                # 占比太小的扇区不显示标签，避免文字叠加
-                s.setLabelVisible(False)
-                continue
+            # setLabel 同时影响扇区标签与下方图例批注
             s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
-            s.setLabelVisible(True)
+            s.setLabelVisible(pct >= 5)
 
     def _chart_category(self):
         sources = load_sources(str(CONFIG))
