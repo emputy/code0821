@@ -531,8 +531,12 @@ class SourcesPage(QWidget):
                 continue
             if stage != "全部" and r["stage"] != stage:
                 continue
-            if kw and kw not in r["title"].lower():
-                continue
+            if kw:
+                hay = " ".join([
+                    r["title"], r["source"], r["stage"], r["country"],
+                ]).lower()
+                if kw not in hay:
+                    continue
             rows.append(r)
         self.table.setRowCount(0)
         self.table.setRowCount(len(rows))
