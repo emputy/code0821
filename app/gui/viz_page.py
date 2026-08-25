@@ -119,10 +119,13 @@ class VizPage(QWidget):
         sources = load_sources(str(CONFIG))
         rows = self._relevant_rows()
         counts = Counter(r[2] for r in rows)
-        cats, vals = [], []
-        for s in sorted(sources, key=lambda x: (x.category, x.name)):
-            cats.append(s.name_cn or s.name)
-            vals.append(counts.get(s.name, 0))
+        # 只显示有数据的源，最多 Top 20（源太多时避免标签挤在一起）
+        pairs = [(s.name_cn or s.name, counts.get(s.name, 0)) for s in sources]
+        pairs = [(n, c) for n, c in pairs if c > 0]
+        pairs.sort(key=lambda x: -x[1])
+        pairs = pairs[:20]
+        cats = [n for n, _ in pairs]
+        vals = [c for _, c in pairs]
         return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
     @staticmethod
@@ -130,6 +133,10 @@ class VizPage(QWidget):
         total = sum(s.value() for s in series.slices())
         for s in series.slices():
             pct = (s.value() / total * 100) if total else 0
+            if pct < 5:
+                # 占比太小的扇区不显示标签，避免文字叠加
+                s.setLabelVisible(False)
+                continue
             s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
             s.setLabelVisible(True)
 

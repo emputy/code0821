@@ -117,8 +117,24 @@ class MainWindow(FluentWindow):
 
 
 def run():
+    import sys
+    import traceback
+
     from PySide6.QtGui import QColor
     from qfluentwidgets.common.config import qconfig
+
+    # 全局异常捕获：任何界面操作报错都写入 data/error.log 便于排查
+    def _excepthook(t, v, tb):
+        try:
+            err_file = BASE_DIR / "data" / "error.log"
+            err_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(err_file, "a", encoding="utf-8") as f:
+                f.write("".join(traceback.format_exception(t, v, tb)) + "\n")
+        except Exception:
+            pass
+        sys.__excepthook__(t, v, tb)
+
+    sys.excepthook = _excepthook
 
     # 全局强调色设为中性灰，避免蓝色按钮/选中态
     qconfig.set(qconfig.themeColor, QColor("#5c5c5c"))

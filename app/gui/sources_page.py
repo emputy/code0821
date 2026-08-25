@@ -196,7 +196,7 @@ class SourcesPage(QWidget):
         tb3.addWidget(self.edt_keyword)
 
         self.chk_relevant = QCheckBox("只看相关")
-        self.chk_relevant.setChecked(False)
+        self.chk_relevant.setChecked(True)
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
         tb3.addWidget(self.chk_relevant)
         self.chk_dated = QCheckBox("只看有发布日期")
@@ -235,7 +235,8 @@ class SourcesPage(QWidget):
 
         self.txt_log = QTextEdit()
         self.txt_log.setReadOnly(True)
-        self.txt_log.setMaximumHeight(140)
+        self.txt_log.setMaximumHeight(56)
+        self.txt_log.setPlaceholderText("采集日志：这里显示每次抓取的最新信息")
         lay.addWidget(self.txt_log)
         return w
 
@@ -308,6 +309,18 @@ class SourcesPage(QWidget):
 
     def add_customer(self):
         """添加客户：写入 customers.json，自动启用该国情报源，联动刷新可视化。"""
+        try:
+            self._add_customer_impl()
+        except Exception as e:
+            import traceback
+            try:
+                with open(BASE_DIR / "data" / "error.log", "a", encoding="utf-8") as f:
+                    f.write(traceback.format_exc() + "\n")
+            except Exception:
+                pass
+            QMessageBox.warning(self, "添加客户", "操作出错：" + str(e))
+
+    def _add_customer_impl(self):
         name = self.edt_utility.text().strip()
         stage = int(self.cmb_stage.currentData() or 1)
         code = self.cmb_country.currentData()
@@ -496,6 +509,18 @@ class SourcesPage(QWidget):
         return "未匹配", ""
 
     def apply_filter(self):
+        try:
+            self._apply_filter_impl()
+        except Exception as e:
+            import traceback
+            try:
+                with open(BASE_DIR / "data" / "error.log", "a", encoding="utf-8") as f:
+                    f.write(traceback.format_exc() + "\n")
+            except Exception:
+                pass
+            self.lbl_progress.setText("筛选出错：" + str(e))
+
+    def _apply_filter_impl(self):
         src = self.cmb_source.currentText()
         stage = self.cmb_stage.currentText()
         kw = self.edt_keyword.text().strip().lower()
@@ -517,4 +542,5 @@ class SourcesPage(QWidget):
                 item = QTableWidgetItem(str(val))
                 item.setToolTip(str(val))
                 self.table.setItem(i, j, item)
-        self.lbl_progress.setText(f"显示 {len(rows)} / {len(self.all_rows)} 条")
+        mode = "相关情报" if self.chk_relevant.isChecked() else "全部情报"
+        self.lbl_progress.setText(f"显示 {len(rows)} / {len(self.all_rows)} 条{mode}")
