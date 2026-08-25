@@ -3,7 +3,7 @@ import sqlite3
 from pathlib import Path
 
 from PySide6.QtCore import QDate, Qt, QUrl, Signal
-from PySide6.QtGui import QDesktopServices
+from PySide6.QtGui import QColor, QDesktopServices
 from PySide6.QtWidgets import (
     QCheckBox, QDateEdit, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QMessageBox,
     QStackedWidget, QTableWidget, QTableWidgetItem, QTextEdit, QTreeWidget,
