@@ -43,13 +43,13 @@ class WorkPage(QWidget):
         self.dt_start = QDateEdit()
         self.dt_start.setCalendarPopup(True)
         self.dt_start.setDate(QDate(2025, 1, 1))
-        self.dt_start.dateChanged.connect(lambda _: self.show_raw())
+        # 修改日期不自动汇总：点「数据汇总」按钮才生效
         row.addWidget(self.dt_start)
         row.addWidget(QLabel("至"))
         self.dt_end = QDateEdit()
         self.dt_end.setCalendarPopup(True)
         self.dt_end.setDate(QDate.currentDate())
-        self.dt_end.dateChanged.connect(lambda _: self.show_raw())
+        # 修改日期不自动汇总：点「数据汇总」按钮才生效
         row.addWidget(self.dt_end)
         self.chk_dated = QCheckBox("只看有发布日期")
         self.chk_dated.setChecked(False)
