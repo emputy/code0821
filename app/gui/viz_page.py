@@ -6,7 +6,7 @@ from PySide6.QtCharts import (
     QBarSeries, QBarSet, QCategoryAxis, QChart, QChartView, QHorizontalBarSeries,
     QPieSeries, QPieSlice, QValueAxis,
 )
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QMargins, Qt
 from PySide6.QtGui import QColor, QPainter
 from PySide6.QtWidgets import QStackedWidget, QVBoxLayout, QWidget
 
@@ -130,14 +130,15 @@ class VizPage(QWidget):
 
     @staticmethod
     def _label_pie(series):
-        """每个扇区都标注"名称: 数量 (占比)"：下方图例批注全部列出；
-        占比 <5% 的小扇区不在图上画标签（避免文字叠加），但批注里仍然完整。"""
+        """每个扇区都在图上标注"名称: 数量 (占比)"；通过增大图表边距给外侧标签留空间避免重叠。"""
         total = sum(s.value() for s in series.slices())
         for s in series.slices():
             pct = (s.value() / total * 100) if total else 0
-            # setLabel 同时影响扇区标签与下方图例批注
             s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
-            s.setLabelVisible(pct >= 5)
+            s.setLabelVisible(True)
+            # 小扇区的标签臂更长，把标签推远一点减少互相挤压
+            if pct < 8:
+                s.setLabelArmLengthFactor(1.4)
 
     @staticmethod
     def _setup_pie_hover(series):
@@ -169,6 +170,7 @@ class VizPage(QWidget):
         self._setup_pie_hover(series)
         chart = QChart()
         chart.addSeries(series)
+        chart.setMargins(QMargins(100, 40, 100, 80))
         chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
@@ -206,6 +208,7 @@ class VizPage(QWidget):
         self._setup_pie_hover(series)
         chart = QChart()
         chart.addSeries(series)
+        chart.setMargins(QMargins(100, 40, 100, 80))
         chart.setTitle("情报分布（客户阶段 / 来源）")
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
