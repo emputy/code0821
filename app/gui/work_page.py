@@ -49,10 +49,7 @@ class WorkPage(QWidget):
         self.dt_end.setCalendarPopup(True)
         self.dt_end.setDate(QDate.currentDate())
         row.addWidget(self.dt_end)
-        self.btn_apply = PushButton("确定")
-        self.btn_apply.setToolTip("按当前时间范围刷新数据汇总（改完年份/日期后点这里）")
-        self.btn_apply.clicked.connect(self.show_raw)
-        row.addWidget(self.btn_apply)
+        # 修改日期不自动汇总：点下方「数据汇总」按钮才生效
         self.chk_dated = QCheckBox("只看有发布日期")
         self.chk_dated.setChecked(False)
         self.chk_dated.toggled.connect(lambda _: self.show_raw())
