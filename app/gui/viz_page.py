@@ -12,6 +12,12 @@ from PySide6.QtWidgets import QLabel, QStackedWidget, QVBoxLayout, QWidget
 
 from qfluentwidgets import SegmentedWidget
 
+# 扇形图调色板：差异明显的 10 色，扇区多时循环使用
+PIE_COLORS = [
+    "#e6194B", "#3cb44b", "#4363d8", "#f58231", "#911eb4",
+    "#42d4f4", "#f032e6", "#bfef45", "#469990", "#9A6324",
+]
+
 
 from app.collector.fetch import load_sources
 from app.filter.entities import (
@@ -129,13 +135,17 @@ class VizPage(QWidget):
         return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
     def _pie_view(self, series, title):
-        """饼图视图：图上不画标签（避免重叠）；所有类别的名称/数量/占比
-        放在图下方明显的批注卡片里，紧贴图、大字号。"""
+        """饼图视图：图上不画标签；每个扇区用差异明显的颜色区分，
+        图下方批注卡片每行带对应色块 + 名称/数量/占比。"""
         from PySide6.QtGui import QCursor
         from PySide6.QtWidgets import QToolTip
 
-        for s in series.slices():
+        slices = series.slices()
+        for i, s in enumerate(slices):
             s.setLabelVisible(False)  # 图上不标注，杜绝重叠
+            color = PIE_COLORS[i % len(PIE_COLORS)]
+            s.setBrush(QColor(color))
+            s.setBorderColor(QColor("#ffffff"))
 
         def _on_hover(slice, state):
             if state:
@@ -154,11 +164,16 @@ class VizPage(QWidget):
         view = QChartView(chart)
         view.setRenderHint(QPainter.Antialiasing)
 
-        total = sum(s.value() for s in series.slices())
+        total = sum(s.value() for s in slices)
         lines = []
-        for s in series.slices():
+        for i, s in enumerate(slices):
             pct = (s.value() / total * 100) if total else 0
-            lines.append(f"<b>{s.label()}</b>：{int(s.value())} 条（{pct:.1f}%）")
+            color = PIE_COLORS[i % len(PIE_COLORS)]
+            lines.append(
+                f'<span style="display:inline-block;width:14px;height:14px;'
+                f'background:{color};border-radius:3px;vertical-align:middle;"></span>&nbsp;'
+                f"<b>{s.label()}</b>：{int(s.value())} 条（{pct:.1f}%）"
+            )
         note = QLabel("<br/>".join(lines))
         note.setStyleSheet(
             "font-size:13px; color:#333333; background:#f4f4f4;"
