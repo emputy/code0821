@@ -2,7 +2,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from PySide6.QtCore import QDate, QUrl, Signal
+from PySide6.QtCore import QDate, Qt, QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QCheckBox, QDateEdit, QFormLayout, QHeaderView, QHBoxLayout, QLabel, QMessageBox,
@@ -251,9 +251,10 @@ class SourcesPage(QWidget):
 
     def _open_link(self, row, col):
         if col == 5:
-            url = self.table.item(row, 5).text()
-            if url.startswith("http"):
-                QDesktopServices.openUrl(QUrl(url))
+            item = self.table.item(row, 5)
+            url = item.data(Qt.UserRole) or item.text()
+            if str(url).startswith("http"):
+                QDesktopServices.openUrl(QUrl(str(url)))
 
     # ---------- 客户全景 ----------
     def _build_customers_tab(self):
@@ -547,10 +548,15 @@ class SourcesPage(QWidget):
         self.table.setRowCount(0)
         self.table.setRowCount(len(rows))
         for i, r in enumerate(rows):
-            vals = [r["time"], r["source"], r["stage"], r["country"], r["title"], r["url"]]
+            vals = [r["time"], r["source"], r["stage"], r["country"], r["title"], "查看原文"]
             for j, val in enumerate(vals):
                 item = QTableWidgetItem(str(val))
-                item.setToolTip(str(val))
+                if j == 5:
+                    item.setData(Qt.UserRole, r["url"])
+                    item.setToolTip(r["url"])
+                    item.setForeground(QColor("#1a73e8"))
+                else:
+                    item.setToolTip(str(val))
                 self.table.setItem(i, j, item)
         mode = "相关情报" if self.chk_relevant.isChecked() else "全部情报"
         self.lbl_progress.setText(f"显示 {len(rows)} / {len(self.all_rows)} 条{mode}")

@@ -171,7 +171,14 @@ class WorkPage(QWidget):
                 f"<b style='font-size:14px;color:#1f1f1f;'>{t_title}</b>"
             )
             if url.startswith("http"):
-                body += f"<br/><a style='color:#1a73e8;text-decoration:none;' href='{t_url}'>{t_url}</a>"
+                if "news.google.com/rss/articles" in url:
+                    link_text = "🔗 查看原文（Google 跳转）"
+                else:
+                    link_text = "🔗 查看原文"
+                body += (
+                    f"<br/><a style='color:#1a73e8;text-decoration:none;font-size:13px;' "
+                    f"title='{t_url}' href='{t_url}'>{link_text}</a>"
+                )
             if summary:
                 body += f"<br/><span style='color:#555555;'>{t_sum}</span>"
             self._bubble("", body)

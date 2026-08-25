@@ -109,3 +109,11 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
 AttributeError: 'int' object has no attribute 'icon'
 
+Traceback (most recent call last):
+  File "D:\code0821\app\gui\sources_page.py", line 520, in apply_filter
+    self._apply_filter_impl()
+  File "D:\code0821\app\gui\sources_page.py", line 557, in _apply_filter_impl
+    item.setForeground(QColor("#1a73e8"))
+                       ^^^^^^
+NameError: name 'QColor' is not defined
+
