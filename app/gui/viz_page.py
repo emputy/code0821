@@ -129,13 +129,13 @@ class VizPage(QWidget):
         return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
     def _pie_view(self, series, title):
-        """饼图视图：扇区上只标注名称（小字）；数量与占比放在下方批注，
-        批注用多行文本展示，不会重叠。"""
+        """饼图视图：图上不画标签（避免重叠）；所有类别的名称/数量/占比
+        放在图下方明显的批注卡片里，紧贴图、大字号。"""
         from PySide6.QtGui import QCursor
         from PySide6.QtWidgets import QToolTip
 
         for s in series.slices():
-            s.setLabelVisible(True)  # 标签就是名称本身
+            s.setLabelVisible(False)  # 图上不标注，杜绝重叠
 
         def _on_hover(slice, state):
             if state:
@@ -158,16 +158,18 @@ class VizPage(QWidget):
         lines = []
         for s in series.slices():
             pct = (s.value() / total * 100) if total else 0
-            lines.append(f"{s.label()}: {int(s.value())} 条 ({pct:.1f}%)")
-        note = QLabel("\n".join(lines))
-        note.setStyleSheet("font-size:9px; color:#666666; padding:2px 8px; background:transparent;")
+            lines.append(f"<b>{s.label()}</b>：{int(s.value())} 条（{pct:.1f}%）")
+        note = QLabel("<br/>".join(lines))
+        note.setStyleSheet(
+            "font-size:13px; color:#333333; background:#f4f4f4;"
+            "border:1px solid #d9d9d9; border-radius:6px; padding:10px 14px;"
+        )
         note.setWordWrap(True)
-        note.setMinimumHeight(20)
 
         w = QWidget()
         lay = QVBoxLayout(w)
         lay.setContentsMargins(0, 0, 0, 0)
-        lay.setSpacing(4)
+        lay.setSpacing(8)
         lay.addWidget(view, 1)
         lay.addWidget(note)
         return w
