@@ -8,7 +8,7 @@ from PySide6.QtCharts import (
 )
 from PySide6.QtCore import QMargins, Qt
 from PySide6.QtGui import QColor, QPainter
-from PySide6.QtWidgets import QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QLabel, QStackedWidget, QVBoxLayout, QWidget
 
 from qfluentwidgets import SegmentedWidget
 
@@ -128,31 +128,49 @@ class VizPage(QWidget):
         vals = [c for _, c in pairs]
         return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
-    @staticmethod
-    def _label_pie(series):
-        """每个扇区都在图上标注"名称: 数量 (占比)"；通过增大图表边距给外侧标签留空间避免重叠。"""
-        total = sum(s.value() for s in series.slices())
-        for s in series.slices():
-            pct = (s.value() / total * 100) if total else 0
-            s.setLabel(f"{s.label()}: {int(s.value())} ({pct:.0f}%)")
-            s.setLabelVisible(True)
-            # 小扇区的标签臂更长，把标签推远一点减少互相挤压
-            if pct < 8:
-                s.setLabelArmLengthFactor(1.4)
-
-    @staticmethod
-    def _setup_pie_hover(series):
-        """鼠标悬停到任意扇区时，弹出提示显示该扇区的数量与占比。"""
+    def _pie_view(self, series, title):
+        """饼图视图：扇区上只标注名称（小字）；数量与占比放在下方批注，
+        批注用多行文本展示，不会重叠。"""
         from PySide6.QtGui import QCursor
         from PySide6.QtWidgets import QToolTip
 
+        for s in series.slices():
+            s.setLabelVisible(True)  # 标签就是名称本身
+
         def _on_hover(slice, state):
             if state:
-                QToolTip.showText(QCursor.pos(), slice.label())
+                total = sum(x.value() for x in series.slices())
+                pct = (slice.value() / total * 100) if total else 0
+                QToolTip.showText(QCursor.pos(), f"{slice.label()}: {int(slice.value())} ({pct:.1f}%)")
             else:
                 QToolTip.hideText()
 
         series.hovered.connect(_on_hover)
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.legend().hide()
+        chart.setTitle(title)
+        view = QChartView(chart)
+        view.setRenderHint(QPainter.Antialiasing)
+
+        total = sum(s.value() for s in series.slices())
+        lines = []
+        for s in series.slices():
+            pct = (s.value() / total * 100) if total else 0
+            lines.append(f"{s.label()}: {int(s.value())} 条 ({pct:.1f}%)")
+        note = QLabel("\n".join(lines))
+        note.setStyleSheet("font-size:9px; color:#666666; padding:2px 8px; background:transparent;")
+        note.setWordWrap(True)
+        note.setMinimumHeight(20)
+
+        w = QWidget()
+        lay = QVBoxLayout(w)
+        lay.setContentsMargins(0, 0, 0, 0)
+        lay.setSpacing(4)
+        lay.addWidget(view, 1)
+        lay.addWidget(note)
+        return w
 
     def _chart_category(self):
         sources = load_sources(str(CONFIG))
@@ -166,17 +184,7 @@ class VizPage(QWidget):
         series = QPieSeries()
         for k in ["联盟动态", "重点国家", "友商动态", "其他国家"]:
             series.append(k, agg.get(k, 0))
-        self._label_pie(series)
-        self._setup_pie_hover(series)
-        chart = QChart()
-        chart.addSeries(series)
-        chart.setMargins(QMargins(100, 40, 100, 80))
-        chart.setTitle("来源分类分布（联盟 / 重点国家 / 友商）")
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
+        return self._pie_view(series, "来源分类分布（联盟 / 重点国家 / 友商）")
 
     def _chart_stage_pie(self):
         rows = self._relevant_rows()
@@ -204,14 +212,4 @@ class VizPage(QWidget):
         series = QPieSeries()
         for k, v in counts.items():
             series.append(k, v)
-        self._label_pie(series)
-        self._setup_pie_hover(series)
-        chart = QChart()
-        chart.addSeries(series)
-        chart.setMargins(QMargins(100, 40, 100, 80))
-        chart.setTitle("情报分布（客户阶段 / 来源）")
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-        view = QChartView(chart)
-        view.setRenderHint(QPainter.Antialiasing)
-        return view
+        return self._pie_view(series, "情报分布（客户阶段 / 来源）")
