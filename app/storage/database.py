@@ -36,9 +36,13 @@ class Database:
                 continue
             try:
                 cur.execute(
-                    """INSERT OR IGNORE INTO items
+                    """INSERT INTO items
                        (source_id, source_name, title, url, published, summary, country, fetched_at)
-                       VALUES (?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?)
+                       ON CONFLICT(url) DO UPDATE SET
+                         title=excluded.title,
+                         published=CASE WHEN excluded.published != '' THEN excluded.published ELSE items.published END,
+                         summary=excluded.summary""",
                     (it.source_id, it.source_name, it.title, it.url,
                      it.published, it.summary, it.country, now),
                 )

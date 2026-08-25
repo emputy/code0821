@@ -102,11 +102,13 @@
       "name_cn": "南非 ICASA",
       "category": "country",
       "type": "html",
-      "url": "https://www.icasa.org.za/",
+      "url": "https://www.icasa.org.za/news",
       "country": "south-africa",
       "enabled": true,
       "options": {
-        "extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency"],
+        "extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency", "spectrum"],
+        "url_contains": "/news/202",
+        "allow_parent_title": true,
         "max_items": 20
       }
     },
@@ -157,13 +159,15 @@
       "name": "TDRA UAE",
       "name_cn": "阿联酋 TDRA",
       "category": "country",
-      "type": "html",
-      "url": "https://tdra.gov.ae/",
+      "type": "sitemap",
+      "url": "https://tdra.gov.ae/en/sitemap.xml",
       "country": "uae",
       "enabled": true,
       "options": {
         "extra_keywords": ["التردد", "الترددات", "الطيف", "الترخيص", "شبكة خاصة", "الاتصالات"],
-        "max_items": 20
+        "url_contains": "/en/media/press-release/",
+        "max_items": 20,
+        "enrich_titles": 5
       }
     },
     {

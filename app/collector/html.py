@@ -77,6 +77,8 @@ def fetch_html(source) -> list[FetchedItem]:
     ends_with = opts.get("url_ends_with", "")     # URL 必须以...结尾
     selector = opts.get("link_selector", "a")     # 链接 CSS 选择器
     max_items = int(opts.get("max_items", 30))
+    min_link_text = int(opts.get("min_link_text", 15))  # 链接文本最短长度
+    allow_parent_title = bool(opts.get("allow_parent_title", False))  # 文本短时回退父容器标题
 
     try:
         resp = requests.get(source.url, timeout=20, headers=HEADERS)
@@ -94,8 +96,25 @@ def fetch_html(source) -> list[FetchedItem]:
         text = " ".join(a.get_text().split())
         href = a["href"].strip()
         low = href.lower()
-        if len(text) < 15:
-            continue
+        if len(text) < min_link_text:
+            if not allow_parent_title:
+                continue
+            # 链接文本太短（如 "read more"）：向上找父容器里的 h1-h4 作为标题
+            node = a
+            found = False
+            for _ in range(4):
+                node = node.parent
+                if node is None:
+                    break
+                h = node.find(["h1", "h2", "h3", "h4"])
+                if h:
+                    tt = " ".join(h.get_text().split())
+                    if len(tt) >= min_link_text:
+                        text = tt
+                        found = True
+                        break
+            if not found:
+                continue
         if NAV_HINTS.search(low):
             continue
         if ends_with and not low.endswith(ends_with):
