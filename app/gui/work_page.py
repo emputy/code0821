@@ -183,6 +183,9 @@ class WorkPage(QWidget):
         if not rows:
             self._bubble("", "当前条件下没有可分析的数据（可调整时间范围、关键词或『只看相关』）。")
             return
+        # 先把当前筛选的情报汇总显示出来，让用户清楚分析的对象
+        self.show_raw()
+        self._bubble("", "以上共 " + str(len(rows)) + " 条为分析对象（最多取前 30 条送入 AI）。正在生成分析，请稍候……")
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         lines = []
         for row in rows[:30]:
@@ -193,7 +196,7 @@ class WorkPage(QWidget):
             {"role": "system", "content": "你是电力行业无线专网情报分析师。基于下面提供的情报条目（每条含来源/标题/链接），产出一份简洁专业的中文情报简报。要求：1) 只基于实际提供的情报，不臆造不扩展；2) 结构为：核心要点 → 逐条分析（引用对应条目） → 趋势研判 → 行动建议；3) 明确标注与电力无线专网、450MHz、频谱、客户进展的直接关联程度；4) 篇幅精炼，可用 Markdown 表格对比。"},
             {"role": "user", "content": text},
         ]
-        self._bubble("", "正在生成分析（基于相关条目），请稍候……")
+        self._bubble("", "正在生成分析（基于以上汇总数据），请稍候……")
         self.btn_analyze.setEnabled(False)
         self.btn_analyze.setText("分析中…")
 
