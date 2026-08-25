@@ -108,7 +108,7 @@ class WorkPage(QWidget):
         if _color == "error":
             body_html = f"<span style='color:#d93025;font-weight:600;'>{body_html}</span>"
         h += f"<div style='margin:6px 0 12px 0;padding:10px 12px;background:#fafafa;"
-        h += "border:1px solid #eeeeee;border-radius:8px;'>{body_html}</div>"
+        h += f"border:1px solid #eeeeee;border-radius:8px;'>{body_html}</div>"
         h += "<hr style='border:none;border-top:1px solid rgba(128,128,128,0.2);'>"
         self.chat.append(h)
 
