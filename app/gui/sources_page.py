@@ -271,12 +271,12 @@ class SourcesPage(QWidget):
         row1.addWidget(self.edt_utility)
         self.cmb_stage = ComboBox()
         for i in range(1, 6):
-            self.cmb_stage.addItem("阶段 " + str(i), i)
+            self.cmb_stage.addItem("阶段 " + str(i), None, i)
         self.cmb_stage.setFixedWidth(110)
         row1.addWidget(self.cmb_stage)
         self.cmb_country = ComboBox()
         for code, cn, en, reg in COUNTRY_LIST:
-            self.cmb_country.addItem(cn + "（" + en + "）", code)
+            self.cmb_country.addItem(cn + "（" + en + "）", None, code)
         self.cmb_country.setFixedWidth(230)
         row1.addWidget(self.cmb_country)
         btn_add = PushButton("添加客户")

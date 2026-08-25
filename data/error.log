@@ -70,3 +70,42 @@ Traceback (most recent call last):
           ^^^^^^^^^^^
 NameError: name 'QHBoxLayout' is not defined. Did you mean: 'QVBoxLayout'?
 
+Traceback (most recent call last):
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 421, in mouseReleaseEvent
+    self._toggleComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 357, in _toggleComboMenu
+    self._showComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 318, in _showComboMenu
+    action = QAction(item.icon, item.text)
+                     ^^^^^^^^^
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 48, in icon
+    return self._icon.icon()
+           ^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'icon'
+
+Traceback (most recent call last):
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 421, in mouseReleaseEvent
+    self._toggleComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 357, in _toggleComboMenu
+    self._showComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 318, in _showComboMenu
+    action = QAction(item.icon, item.text)
+                     ^^^^^^^^^
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 48, in icon
+    return self._icon.icon()
+           ^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'icon'
+
+Traceback (most recent call last):
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 421, in mouseReleaseEvent
+    self._toggleComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 357, in _toggleComboMenu
+    self._showComboMenu()
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 318, in _showComboMenu
+    action = QAction(item.icon, item.text)
+                     ^^^^^^^^^
+  File "D:\Python312\Lib\site-packages\qfluentwidgets\components\widgets\combo_box.py", line 48, in icon
+    return self._icon.icon()
+           ^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'icon'
+
