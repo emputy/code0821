@@ -447,6 +447,10 @@ class SourcesPage(QWidget):
 
     # ---------- 数据 ----------
     def refresh_items(self):
+        if self.dt_start.date() > self.dt_end.date():
+            self.lbl_progress.setText("时间范围无效：开始日期不能晚于结束日期")
+            self.table.setRowCount(0)
+            return
         try:
             conn = sqlite3.connect(str(DB))
             rows = conn.execute(

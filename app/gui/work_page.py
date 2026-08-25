@@ -121,9 +121,18 @@ class WorkPage(QWidget):
         except Exception:
             return []
 
+    def _date_range_ok(self) -> bool:
+        """开始日期不能晚于结束日期；无效时给出提示并返回 False。"""
+        if self.dt_start.date() > self.dt_end.date():
+            self._bubble("", "时间范围无效：开始日期晚于结束日期，请重新设置后点击「数据汇总」。")
+            return False
+        return True
+
     def show_raw(self):
         """数据汇总：直接呈现原文，不分析不删减。"""
         self.chat.clear()
+        if not self._date_range_ok():
+            return
         rows = self._load_rows()
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。")
@@ -166,6 +175,8 @@ class WorkPage(QWidget):
             return
         if not s.get("api_key"):
             self._bubble("", "尚未配置 API Key，请到「AI 设置」模块填写后重试。")
+            return
+        if not self._date_range_ok():
             return
         rows = self._load_rows()
         if self.chk_filter.isChecked():
