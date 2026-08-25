@@ -190,8 +190,9 @@ class SourcesPage(QWidget):
         tb3 = QHBoxLayout()
         tb3.addWidget(QLabel("搜索:"))
         self.edt_keyword = LineEdit()
-        self.edt_keyword.setPlaceholderText("标题关键词...")
-        self.edt_keyword.setFixedWidth(180)
+        self.edt_keyword.setPlaceholderText("搜标题/来源/阶段/国家...")
+        self.edt_keyword.setFixedWidth(200)
+        self.edt_keyword.setToolTip("按关键词过滤情报列表：匹配每条的标题、来源、阶段或国家（任一项包含即显示）")
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
         tb3.addWidget(self.edt_keyword)
 
