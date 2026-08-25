@@ -39,8 +39,7 @@ class VizPage(QWidget):
         self.pivot.addItem("k0", "客户阶段全景", lambda: self.stack.setCurrentIndex(0))
         self.pivot.addItem("k1", "地区分布", lambda: self.stack.setCurrentIndex(1))
         self.pivot.addItem("k2", "来源分类分布", lambda: self.stack.setCurrentIndex(2))
-        self.pivot.addItem("k3", "情报来源分布", lambda: self.stack.setCurrentIndex(3))
-        self.pivot.addItem("k4", "情报阶段分布", lambda: self.stack.setCurrentIndex(4))
+        self.pivot.addItem("k3", "情报阶段分布", lambda: self.stack.setCurrentIndex(3))
         lay = QVBoxLayout(self)
         lay.setContentsMargins(20, 20, 20, 20)
         lay.setSpacing(12)
@@ -65,7 +64,7 @@ class VizPage(QWidget):
     def refresh(self):
         charts = [
             self._chart_stage(), self._chart_region(), self._chart_category(),
-            self._chart_source(), self._chart_stage_pie(),
+            self._chart_stage_pie(),
         ]
         while self.stack.count() > 0:
             w = self.stack.widget(0)
@@ -120,19 +119,6 @@ class VizPage(QWidget):
         cats = list(counts.keys())
         vals = [counts[c] for c in cats]
         return self._hbar_chart(cats, vals, "客户地区分布", "#e67e22")
-
-    def _chart_source(self):
-        sources = load_sources(str(CONFIG))
-        rows = self._relevant_rows()
-        counts = Counter(r[2] for r in rows)
-        # 只显示有数据的源，最多 Top 20（源太多时避免标签挤在一起）
-        pairs = [(s.name_cn or s.name, counts.get(s.name, 0)) for s in sources]
-        pairs = [(n, c) for n, c in pairs if c > 0]
-        pairs.sort(key=lambda x: -x[1])
-        pairs = pairs[:20]
-        cats = [n for n, _ in pairs]
-        vals = [c for _, c in pairs]
-        return self._hbar_chart(cats, vals, "各来源相关情报量", "#27ae60")
 
     def _pie_view(self, series, title):
         """饼图视图：图上不画标签；每个扇区用差异明显的颜色区分，
