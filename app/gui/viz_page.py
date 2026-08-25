@@ -8,7 +8,7 @@ from PySide6.QtCharts import (
 )
 from PySide6.QtCore import QMargins, Qt
 from PySide6.QtGui import QColor, QPainter
-from PySide6.QtWidgets import QLabel, QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QStackedWidget, QVBoxLayout, QWidget
 
 from qfluentwidgets import SegmentedWidget
 
