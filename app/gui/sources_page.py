@@ -448,25 +448,37 @@ class SourcesPage(QWidget):
         for row in rows:
             t = row[5][:10] if row[5] else "—"
             src, title, url = row[2], row[3], row[4]
-            stage, country = self._match_item(title, src)
+            stage, country = self._match_item(title, src, row[7], row[6])
             self.all_rows.append({
                 "time": t, "source": src, "stage": stage,
                 "country": country, "title": title, "url": url,
             })
         self.source_cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         sources = sorted(set(self.source_cn_map.values()))
+        # 重建筛选下拉并复位为「全部」，保证默认显示全部数据
         self.cmb_source.blockSignals(True)
         self.cmb_source.clear()
         self.cmb_source.addItem("全部")
         for s in sources:
             self.cmb_source.addItem(s)
+        self.cmb_source.setCurrentIndex(0)
         self.cmb_source.blockSignals(False)
+        self.cmb_stage.blockSignals(True)
+        self.cmb_stage.setCurrentIndex(0)
+        self.cmb_stage.blockSignals(False)
         self.apply_filter()
 
-    def _match_item(self, text, src_name):
+    def _match_item(self, text, src_name, src_country="", summary=""):
+        """给条目打阶段标签：客户实体（标题/摘要）-> 来源国家对应客户 -> 联盟/友商 -> 未匹配。"""
         for rx, c in self.matchers:
-            if rx.search(text):
+            if rx.search(text) or (summary and rx.search(summary)):
                 return f"阶段 {c['stage']}", c["country"]
+        if src_country:
+            target = src_country.lower().replace("-", "").replace(" ", "")
+            for c in self.customers:
+                en = c.get("country_en", "").lower().replace("-", "").replace(" ", "")
+                if en and en == target:
+                    return f"阶段 {c['stage']}", c["country"]
         cat, name_cn = self.src_info.get(src_name, ("", ""))
         if cat == "alliance":
             return name_cn or "联盟", ""
