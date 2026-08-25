@@ -91,6 +91,12 @@ class WorkPage(QWidget):
         s = load_settings()
         self.btn_analyze.setVisible(bool(s.get("ai_enabled")))
 
+    def refresh_entities(self):
+        """客户清单变化后重建实体匹配（新客户的缩写/国家立即参与相关过滤）。"""
+        self.customers = load_customers(str(CUSTOMERS))
+        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
+        self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
+
     def _bubble(self, title, body_html, _color=None):
         """不自定义配色，交给主题渲染；用结构（粗体+分隔线）组织内容。"""
         h = ""

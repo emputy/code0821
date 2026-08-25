@@ -21,9 +21,140 @@ CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"
 
+# (code, 中文名, 英文名, 地区)
+COUNTRY_LIST = [
+    ("uae", "阿联酋", "UAE", "中东中亚"),
+    ("saudi-arabia", "沙特", "Saudi Arabia", "中东中亚"),
+    ("iraq", "伊拉克", "Iraq", "中东中亚"),
+    ("oman", "阿曼", "Oman", "中东中亚"),
+    ("pakistan", "巴基斯坦", "Pakistan", "中东中亚"),
+    ("turkey", "土耳其", "Turkey", "中东中亚"),
+    ("iran", "伊朗", "Iran", "中东中亚"),
+    ("qatar", "卡塔尔", "Qatar", "中东中亚"),
+    ("kuwait", "科威特", "Kuwait", "中东中亚"),
+    ("jordan", "约旦", "Jordan", "中东中亚"),
+    ("kazakhstan", "哈萨克斯坦", "Kazakhstan", "中东中亚"),
+    ("uzbekistan", "乌兹别克斯坦", "Uzbekistan", "中东中亚"),
+    ("china", "中国", "China", "亚太"),
+    ("japan", "日本", "Japan", "亚太"),
+    ("south-korea", "韩国", "South Korea", "亚太"),
+    ("india", "印度", "India", "亚太"),
+    ("indonesia", "印尼", "Indonesia", "亚太"),
+    ("malaysia", "马来西亚", "Malaysia", "亚太"),
+    ("thailand", "泰国", "Thailand", "亚太"),
+    ("vietnam", "越南", "Vietnam", "亚太"),
+    ("philippines", "菲律宾", "Philippines", "亚太"),
+    ("singapore", "新加坡", "Singapore", "亚太"),
+    ("bangladesh", "孟加拉", "Bangladesh", "亚太"),
+    ("sri-lanka", "斯里兰卡", "Sri Lanka", "亚太"),
+    ("australia", "澳大利亚", "Australia", "亚太"),
+    ("new-zealand", "新西兰", "New Zealand", "亚太"),
+    ("france", "法国", "France", "欧洲"),
+    ("germany", "德国", "Germany", "欧洲"),
+    ("united-kingdom", "英国", "United Kingdom", "欧洲"),
+    ("italy", "意大利", "Italy", "欧洲"),
+    ("spain", "西班牙", "Spain", "欧洲"),
+    ("portugal", "葡萄牙", "Portugal", "欧洲"),
+    ("netherlands", "荷兰", "Netherlands", "欧洲"),
+    ("switzerland", "瑞士", "Switzerland", "欧洲"),
+    ("sweden", "瑞典", "Sweden", "欧洲"),
+    ("norway", "挪威", "Norway", "欧洲"),
+    ("denmark", "丹麦", "Denmark", "欧洲"),
+    ("finland", "芬兰", "Finland", "欧洲"),
+    ("poland", "波兰", "Poland", "欧洲"),
+    ("romania", "罗马尼亚", "Romania", "欧洲"),
+    ("greece", "希腊", "Greece", "欧洲"),
+    ("slovakia", "斯洛伐克", "Slovakia", "欧洲"),
+    ("hungary", "匈牙利", "Hungary", "欧洲"),
+    ("czechia", "捷克", "Czechia", "欧洲"),
+    ("ireland", "爱尔兰", "Ireland", "欧洲"),
+    ("austria", "奥地利", "Austria", "欧洲"),
+    ("belgium", "比利时", "Belgium", "欧洲"),
+    ("egypt", "埃及", "Egypt", "北部非洲"),
+    ("algeria", "阿尔及利亚", "Algeria", "北部非洲"),
+    ("morocco", "摩洛哥", "Morocco", "北部非洲"),
+    ("tunisia", "突尼斯", "Tunisia", "北部非洲"),
+    ("libya", "利比亚", "Libya", "北部非洲"),
+    ("sudan", "苏丹", "Sudan", "北部非洲"),
+    ("ethiopia", "埃塞俄比亚", "Ethiopia", "北部非洲"),
+    ("south-africa", "南非", "South Africa", "南部非洲"),
+    ("nigeria", "尼日利亚", "Nigeria", "南部非洲"),
+    ("kenya", "肯尼亚", "Kenya", "南部非洲"),
+    ("ghana", "加纳", "Ghana", "南部非洲"),
+    ("angola", "安哥拉", "Angola", "南部非洲"),
+    ("mozambique", "莫桑比克", "Mozambique", "南部非洲"),
+    ("tanzania", "坦桑尼亚", "Tanzania", "南部非洲"),
+    ("uganda", "乌干达", "Uganda", "南部非洲"),
+    ("zambia", "赞比亚", "Zambia", "南部非洲"),
+    ("zimbabwe", "津巴布韦", "Zimbabwe", "南部非洲"),
+    ("cote-divoire", "科特迪瓦", "Cote d Ivoire", "南部非洲"),
+    ("cameroon", "喀麦隆", "Cameroon", "南部非洲"),
+    ("senegal", "塞内加尔", "Senegal", "南部非洲"),
+    ("mali", "马里", "Mali", "南部非洲"),
+    ("burkina-faso", "布基纳法索", "Burkina Faso", "南部非洲"),
+    ("guinea", "几内亚", "Guinea", "南部非洲"),
+    ("dr-congo", "刚果金", "DR Congo", "南部非洲"),
+    ("brazil", "巴西", "Brazil", "拉美"),
+    ("chile", "智利", "Chile", "拉美"),
+    ("argentina", "阿根廷", "Argentina", "拉美"),
+    ("ecuador", "厄瓜多尔", "Ecuador", "拉美"),
+    ("colombia", "哥伦比亚", "Colombia", "拉美"),
+    ("peru", "秘鲁", "Peru", "拉美"),
+    ("mexico", "墨西哥", "Mexico", "拉美"),
+    ("venezuela", "委内瑞拉", "Venezuela", "拉美"),
+    ("bolivia", "玻利维亚", "Bolivia", "拉美"),
+    ("paraguay", "巴拉圭", "Paraguay", "拉美"),
+    ("uruguay", "乌拉圭", "Uruguay", "拉美"),
+    ("panama", "巴拿马", "Panama", "拉美"),
+    ("costa-rica", "哥斯达黎加", "Costa Rica", "拉美"),
+    ("guatemala", "危地马拉", "Guatemala", "拉美"),
+    ("honduras", "洪都拉斯", "Honduras", "拉美"),
+]
+
+# 国家 -> 监管机构数据源模板：添加该国客户时自动启用对应抓取源
+COUNTRY_SOURCES = {
+    "brazil": {
+        "id": "anatel_brazil", "name": "ANATEL Brazil", "name_cn": "巴西 ANATEL",
+        "category": "country", "type": "html", "url": "https://www.gov.br/anatel/pt-br",
+        "country": "brazil",
+        "options": {"extra_keywords": ["espectro", "frequencias", "leilao", "450 MHz", "redes privadas", "telecomunicacoes"], "max_items": 20},
+    },
+    "south-africa": {
+        "id": "icasa_southafrica", "name": "ICASA South Africa", "name_cn": "南非 ICASA",
+        "category": "country", "type": "html", "url": "https://www.icasa.org.za/news",
+        "country": "south-africa",
+        "options": {"extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency", "spectrum"], "url_contains": "/news/202", "allow_parent_title": True, "max_items": 20},
+    },
+    "malaysia": {
+        "id": "mcmc_malaysia", "name": "MCMC Malaysia", "name_cn": "马来西亚 MCMC",
+        "category": "country", "type": "html", "url": "https://www.mcmc.gov.my/",
+        "country": "malaysia",
+        "options": {"extra_keywords": ["spektrum", "lesen", "peruntukan", "auction", "frequency"], "max_items": 20},
+    },
+    "indonesia": {
+        "id": "kominfo_indonesia", "name": "Kominfo Indonesia", "name_cn": "印尼 Kominfo",
+        "category": "country", "type": "html", "url": "https://www.kominfo.go.id/",
+        "country": "indonesia",
+        "options": {"extra_keywords": ["spektrum", "frekuensi", "lisensi", "izin", "telekomunikasi", "jaringan"], "max_items": 20},
+    },
+    "thailand": {
+        "id": "nbtc_thailand", "name": "NBTC Thailand", "name_cn": "泰国 NBTC",
+        "category": "country", "type": "html", "url": "https://www.nbtc.go.th/",
+        "country": "thailand",
+        "options": {"extra_keywords": ["spectrum", "frequency", "license", "auction", "telecom"], "max_items": 20},
+    },
+    "uae": {
+        "id": "tdra_uae", "name": "TDRA UAE", "name_cn": "阿联酋 TDRA",
+        "category": "country", "type": "sitemap", "url": "https://tdra.gov.ae/en/sitemap.xml",
+        "country": "uae",
+        "options": {"extra_keywords": ["spectrum", "frequency", "license", "private network", "telecom"], "url_contains": "/en/media/press-release/", "max_items": 20, "enrich_titles": 5},
+    },
+}
+
 
 class SourcesPage(QWidget):
     collect_requested = Signal()
+    customers_changed = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -144,21 +275,118 @@ class SourcesPage(QWidget):
         w = QWidget()
         lay = QVBoxLayout(w)
         lay.setContentsMargins(16, 16, 16, 16)
-        tree = QTreeWidget()
-        tree.setHeaderLabels(["阶段", "地区", "国家", "客户"])
-        tree.header().setSectionResizeMode(QHeaderView.ResizeToContents)
+        lay.setSpacing(12)
+
+        # 添加客户表单
+        card = CardWidget()
+        form = QFormLayout(card)
+        form.setContentsMargins(16, 12, 16, 12)
+        row1 = QHBoxLayout()
+        self.edt_utility = LineEdit()
+        self.edt_utility.setPlaceholderText("客户名称，如：Eskom / PLN")
+        self.edt_utility.setFixedWidth(220)
+        row1.addWidget(self.edt_utility)
+        self.cmb_stage = ComboBox()
+        for i in range(1, 6):
+            self.cmb_stage.addItem("阶段 " + str(i), i)
+        self.cmb_stage.setFixedWidth(110)
+        row1.addWidget(self.cmb_stage)
+        self.cmb_country = ComboBox()
+        for code, cn, en, reg in COUNTRY_LIST:
+            self.cmb_country.addItem(cn + "（" + en + "）", code)
+        self.cmb_country.setFixedWidth(230)
+        row1.addWidget(self.cmb_country)
+        btn_add = PushButton("添加客户")
+        btn_add.clicked.connect(self.add_customer)
+        row1.addWidget(btn_add)
+        row1.addStretch(1)
+        form.addRow("新客户：", row1)
+        lay.addWidget(card)
+
+        self.cust_tree = QTreeWidget()
+        self.cust_tree.setHeaderLabels(["阶段", "地区", "国家", "客户"])
+        self.cust_tree.header().setSectionResizeMode(QHeaderView.ResizeToContents)
+        lay.addWidget(self.cust_tree, 1)
+        self._fill_customers_tree()
+        return w
+
+    def _fill_customers_tree(self):
+        tree = self.cust_tree
+        tree.clear()
         groups = {}
         for c in self.customers:
             groups.setdefault(c["stage"], []).append(c)
         for stage in sorted(groups):
             items = groups[stage]
-            top = QTreeWidgetItem([f"阶段 {stage}：{items[0]['stage_name']}", "", "", ""])
+            top = QTreeWidgetItem(["阶段 " + str(stage) + "：" + items[0]["stage_name"], "", "", ""])
             tree.addTopLevelItem(top)
             for c in items:
                 QTreeWidgetItem(top, ["", c["region"], c["country"], c["utility"]])
         tree.expandAll()
-        lay.addWidget(tree)
-        return w
+
+    def add_customer(self):
+        """添加客户：写入 customers.json，自动启用该国情报源，联动刷新可视化。"""
+        name = self.edt_utility.text().strip()
+        stage = int(self.cmb_stage.currentData() or 1)
+        code = self.cmb_country.currentData()
+        if not name:
+            QMessageBox.warning(self, "添加客户", "请填写客户名称")
+            return
+        info = next((c for c in COUNTRY_LIST if c[0] == code), None)
+        if not info:
+            QMessageBox.warning(self, "添加客户", "请选择国家")
+            return
+        with open(CUSTOMERS, encoding="utf-8") as f:
+            data = json.load(f)
+        for st in data.get("stages", []):
+            if st.get("stage") == stage:
+                st.setdefault("customers", []).append({
+                    "region": info[3], "country": info[1],
+                    "country_en": info[2], "utility": name,
+                })
+                break
+        with open(CUSTOMERS, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        # 国家 -> 数据源联动：有该国监管源模板就自动启用/添加
+        msgs = []
+        tpl = COUNTRY_SOURCES.get(code)
+        if tpl:
+            msgs.append(self._ensure_source(tpl))
+        # 刷新本页与下游模块
+        self.customers = load_customers(str(CUSTOMERS))
+        self.matchers = build_customer_matchers(self.customers)
+        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
+        self._fill_customers_tree()
+        self.customers_changed.emit()
+        extra = (" " + "；".join(msgs)) if msgs else ""
+        QMessageBox.information(
+            self, "添加客户",
+            "已添加：" + name + "（阶段 " + str(stage) + "，" + info[1] + "）" + extra,
+        )
+        self.edt_utility.clear()
+
+    def _ensure_source(self, tpl) -> str:
+        """确保国家对应的数据源在 sources.json 中启用；返回提示文字。"""
+        with open(CONFIG, encoding="utf-8") as f:
+            data = json.load(f)
+        found = None
+        for s in data.get("sources", []):
+            if s.get("id") == tpl["id"]:
+                found = s
+                break
+        if found is None:
+            data.setdefault("sources", []).append(dict(tpl, enabled=True))
+            action = "新增"
+        else:
+            if not found.get("enabled", True):
+                found["enabled"] = True
+                action = "启用"
+            else:
+                return "该国家情报源「" + tpl["name_cn"] + "」已在抓取列表中"
+        with open(CONFIG, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        self.refresh_sources_table()
+        return "已" + action + "该国情报源「" + tpl["name_cn"] + "」，下次抓取生效"
 
     # ---------- 数据源管理 ----------
     def _build_sources_tab(self):

@@ -47,6 +47,7 @@ class MainWindow(FluentWindow):
         self.settings_page.settings_changed.connect(self.work_page.refresh_buttons)
         self.settings_page.run_collect.connect(self.start_collect)
         self.sources_page.collect_requested.connect(self.start_collect)
+        self.sources_page.customers_changed.connect(self._customers_changed)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._check_schedule)
@@ -56,6 +57,11 @@ class MainWindow(FluentWindow):
     def _on_page_changed(self, index):
         if self.stackedWidget.currentWidget() is self.viz_page:
             self.viz_page.refresh()
+
+    def _customers_changed(self):
+        """客户清单变化：刷新可视化与工作页面的实体匹配。"""
+        self.viz_page.refresh()
+        self.work_page.refresh_entities()
 
     def start_collect(self):
         if self.collect_worker and self.collect_worker.isRunning():
