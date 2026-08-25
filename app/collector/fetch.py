@@ -28,7 +28,7 @@ def _fetch_one(src):
     elif src.type == "sitemap":
         items = fetch_sitemap(src)
     else:
-        print(f"  [跳过] 未知类型: {src.type}")
+        print(f"  [skip] unknown type: {src.type}")
         items = []
     return src, items
 
@@ -47,7 +47,7 @@ def fetch_all(config_path: str, on_progress=None, max_workers: int = 6) -> list:
         try:
             results[i] = _fetch_one(sources[i])
         except Exception as e:
-            print(f"  [错误] {sources[i].name}: {e}")
+            print(f"  [error] {sources[i].id}: {e}")
             results[i] = (sources[i], [])
         if on_progress:
             done = sum(1 for r in results if r is not None)
@@ -59,6 +59,7 @@ def fetch_all(config_path: str, on_progress=None, max_workers: int = 6) -> list:
 
     all_items = []
     for src, items in results:
-        print(f"抓取 {src.name} ... 得到 {len(items)} 条")
+        # 源名可能含非 ASCII（如 ÚREK），用 id 打印避免编码崩溃
+        print(f"[{src.id}] got {len(items)} items")
         all_items.extend(items)
     return all_items
