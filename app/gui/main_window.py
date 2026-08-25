@@ -23,8 +23,8 @@ class MainWindow(FluentWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("无线专网情报监测系统")
-        self.resize(1180, 720)
-        self.setMinimumSize(1080, 660)
+        self.resize(1160, 700)
+        self.setMinimumSize(1000, 600)
         self.collect_worker = None
 
         setTheme(Theme.LIGHT)
@@ -68,12 +68,13 @@ class MainWindow(FluentWindow):
         if self.collect_worker and self.collect_worker.isRunning():
             QMessageBox.information(self, "采集", "采集正在进行中，请稍候")
             return
-        InfoBar.info("采集", "正在采集最新数据……（约 10-15 分钟）", parent=self, position=InfoBarPosition.TOP)
+        InfoBar.info("采集", "正在并发采集最新数据……（约 2-5 分钟）", parent=self, position=InfoBarPosition.TOP)
         s = load_settings()
         s["collection_started_at"] = datetime.now().isoformat(timespec="seconds")
         save_settings(s)
         self.collect_worker = CollectWorker(str(CONFIG), str(CUSTOMERS), str(DB), self)
         self.collect_worker.log.connect(self.sources_page.append_log)
+        self.collect_worker.progress.connect(self.sources_page.set_collect_progress)
         self.collect_worker.done.connect(self._collect_done)
         self.collect_worker.failed.connect(self._collect_failed)
         self.collect_worker.start()

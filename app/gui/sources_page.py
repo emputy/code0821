@@ -184,22 +184,27 @@ class SourcesPage(QWidget):
         self.cmb_stage.currentTextChanged.connect(lambda _: self.apply_filter())
         tb.addWidget(self.cmb_stage)
 
-        tb.addWidget(QLabel("搜索:"))
+        lay.addLayout(tb)
+
+        # 第二行：搜索 + 筛选复选框（避免窄窗口挤压重叠）
+        tb3 = QHBoxLayout()
+        tb3.addWidget(QLabel("搜索:"))
         self.edt_keyword = LineEdit()
         self.edt_keyword.setPlaceholderText("标题关键词...")
-        self.edt_keyword.setFixedWidth(150)
+        self.edt_keyword.setFixedWidth(180)
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
-        tb.addWidget(self.edt_keyword)
+        tb3.addWidget(self.edt_keyword)
 
         self.chk_relevant = QCheckBox("只看相关")
         self.chk_relevant.setChecked(False)
         self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
-        tb.addWidget(self.chk_relevant)
+        tb3.addWidget(self.chk_relevant)
         self.chk_dated = QCheckBox("只看有发布日期")
         self.chk_dated.setChecked(False)
         self.chk_dated.toggled.connect(lambda _: self.refresh_items())
-        tb.addWidget(self.chk_dated)
-        lay.addLayout(tb)
+        tb3.addWidget(self.chk_dated)
+        tb3.addStretch(1)
+        lay.addLayout(tb3)
 
         tb2 = QHBoxLayout()
         tb2.addWidget(QLabel("时间范围:"))
@@ -236,6 +241,10 @@ class SourcesPage(QWidget):
 
     def append_log(self, text):
         self.txt_log.append(text)
+
+    def set_collect_progress(self, done, total):
+        """采集进度显示：已完成源数 / 总源数。"""
+        self.lbl_progress.setText(f"正在抓取 {done}/{total} 个数据源……")
 
     def _open_link(self, row, col):
         if col == 5:

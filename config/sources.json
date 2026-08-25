@@ -1,15 +1,39 @@
 {
   "keywords": [
-    "450MHz", "450 MHz", "LTE450", "450M",
-    "wireless private network", "private LTE", "private 5G", "private networks",
-    "专网", "电力专网", "电力无线专网",
-    "配电", "配电自动化", "distribution automation",
-    "电力", "智能电网", "电力物联网", "power grid",
-    "用电信息采集", "智能电表", "smart metering",
-    "变电站", "substation", "微电网", "microgrid", "新能源", "renewable energy",
-    "utility", "grid",
-    "spectrum", "频谱", "ANATEL",
-    "critical communications", "mission critical"
+    "450MHz",
+    "450 MHz",
+    "LTE450",
+    "450M",
+    "wireless private network",
+    "private LTE",
+    "private 5G",
+    "private networks",
+    "专网",
+    "电力专网",
+    "电力无线专网",
+    "配电",
+    "配电自动化",
+    "distribution automation",
+    "电力",
+    "智能电网",
+    "电力物联网",
+    "power grid",
+    "用电信息采集",
+    "智能电表",
+    "smart metering",
+    "变电站",
+    "substation",
+    "微电网",
+    "microgrid",
+    "新能源",
+    "renewable energy",
+    "utility",
+    "grid",
+    "spectrum",
+    "频谱",
+    "ANATEL",
+    "critical communications",
+    "mission critical"
   ],
   "sources": [
     {
@@ -42,14 +66,33 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"],
+        "extra_keywords": [
+          "无线专网",
+          "专用网络",
+          "private wireless",
+          "enterprise private",
+          "dedicated network",
+          "industrial network",
+          "industrial wireless",
+          "power utility",
+          "energy"
+        ],
         "max_items": 15,
         "enrich_titles": 15,
         "noise_patterns": [
-          "managers-transactions", "own-shares", "share-buyback", "shares-",
-          "financial-report", "financial-information", "media-library",
-          "notification-under-chapter", "stock-exchange", "transactions-",
-          "fi-fi", "de-de", "sv-se"
+          "managers-transactions",
+          "own-shares",
+          "share-buyback",
+          "shares-",
+          "financial-report",
+          "financial-information",
+          "media-library",
+          "notification-under-chapter",
+          "stock-exchange",
+          "transactions-",
+          "fi-fi",
+          "de-de",
+          "sv-se"
         ]
       }
     },
@@ -63,7 +106,17 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"]
+        "extra_keywords": [
+          "无线专网",
+          "专用网络",
+          "private wireless",
+          "enterprise private",
+          "dedicated network",
+          "industrial network",
+          "industrial wireless",
+          "power utility",
+          "energy"
+        ]
       }
     },
     {
@@ -76,7 +129,17 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "extra_keywords": ["无线专网", "专用网络", "private wireless", "enterprise private", "dedicated network", "industrial network", "industrial wireless", "power utility", "energy"],
+        "extra_keywords": [
+          "无线专网",
+          "专用网络",
+          "private wireless",
+          "enterprise private",
+          "dedicated network",
+          "industrial network",
+          "industrial wireless",
+          "power utility",
+          "energy"
+        ],
         "url_contains": "/about/news/",
         "url_ends_with": ".html",
         "max_items": 20
@@ -87,13 +150,20 @@
       "name": "ANATEL Brazil",
       "name_cn": "巴西 ANATEL",
       "category": "country",
-      "type": "html",
-      "url": "https://www.gov.br/anatel/pt-br",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ANATEL%20espectro%20OR%20frequencia%20OR%20leilao&hl=pt-BR",
       "country": "brazil",
       "enabled": true,
       "options": {
-        "extra_keywords": ["espectro", "frequências", "leilão", "450 MHz", "redes privadas", "telecomunicações"],
-        "max_items": 20
+        "extra_keywords": [
+          "espectro",
+          "frequências",
+          "leilão",
+          "450 MHz",
+          "redes privadas",
+          "telecomunicações"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -101,15 +171,22 @@
       "name": "ICASA South Africa",
       "name_cn": "南非 ICASA",
       "category": "country",
-      "type": "html",
-      "url": "https://www.icasa.org.za/news",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ICASA%20spectrum%20OR%20frequency&hl=en-ZA",
       "country": "south-africa",
       "enabled": true,
       "options": {
-        "extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency", "spectrum"],
+        "extra_keywords": [
+          "auction",
+          "licence",
+          "license",
+          "frequency band",
+          "radio frequency",
+          "spectrum"
+        ],
         "url_contains": "/news/202",
         "allow_parent_title": true,
-        "max_items": 20
+        "max_items": 50
       }
     },
     {
@@ -117,13 +194,19 @@
       "name": "MCMC Malaysia",
       "name_cn": "马来西亚 MCMC",
       "category": "country",
-      "type": "html",
-      "url": "https://www.mcmc.gov.my/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=MCMC%20spectrum%20OR%20spektrum&hl=en-MY",
       "country": "malaysia",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spektrum", "lesen", "peruntukan", "auction", "frequency"],
-        "max_items": 20
+        "extra_keywords": [
+          "spektrum",
+          "lesen",
+          "peruntukan",
+          "auction",
+          "frequency"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -131,13 +214,20 @@
       "name": "Kominfo Indonesia",
       "name_cn": "印尼 Kominfo",
       "category": "country",
-      "type": "html",
-      "url": "https://www.kominfo.go.id/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Kominfo%20spektrum%20OR%20frekuensi&hl=id-ID",
       "country": "indonesia",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spektrum", "frekuensi", "lisensi", "izin", "telekomunikasi", "jaringan"],
-        "max_items": 20
+        "extra_keywords": [
+          "spektrum",
+          "frekuensi",
+          "lisensi",
+          "izin",
+          "telekomunikasi",
+          "jaringan"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -145,13 +235,19 @@
       "name": "NBTC Thailand",
       "name_cn": "泰国 NBTC",
       "category": "country",
-      "type": "html",
-      "url": "https://www.nbtc.go.th/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NBTC%20spectrum%20OR%20frequency&hl=th-TH",
       "country": "thailand",
       "enabled": true,
       "options": {
-        "extra_keywords": ["คลื่นความถี่", "สเปกตรัม", "ใบอนุญาต", "ประมูล", "โทรคมนาคม"],
-        "max_items": 20
+        "extra_keywords": [
+          "คลื่นความถี่",
+          "สเปกตรัม",
+          "ใบอนุญาต",
+          "ประมูล",
+          "โทรคมนาคม"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -159,14 +255,21 @@
       "name": "TDRA UAE",
       "name_cn": "阿联酋 TDRA",
       "category": "country",
-      "type": "sitemap",
-      "url": "https://tdra.gov.ae/en/sitemap.xml",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=TDRA%20spectrum%20OR%20frequency&hl=en-AE",
       "country": "uae",
       "enabled": true,
       "options": {
-        "extra_keywords": ["التردد", "الترددات", "الطيف", "الترخيص", "شبكة خاصة", "الاتصالات"],
+        "extra_keywords": [
+          "التردد",
+          "الترددات",
+          "الطيف",
+          "الترخيص",
+          "شبكة خاصة",
+          "الاتصالات"
+        ],
         "url_contains": "/en/media/press-release/",
-        "max_items": 20,
+        "max_items": 50,
         "enrich_titles": 5
       }
     },
@@ -175,13 +278,21 @@
       "name": "SUBTEL Chile",
       "name_cn": "智利 SUBTEL",
       "category": "country",
-      "type": "html",
-      "url": "https://www.subtel.gob.cl/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=SUBTEL%20espectro%20OR%20frecuencias&hl=es-CL",
       "country": "chile",
       "enabled": true,
       "options": {
-        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
-        "max_items": 20
+        "extra_keywords": [
+          "espectro",
+          "frecuencias",
+          "concesión",
+          "450 MHz",
+          "redes privadas",
+          "telecomunicaciones"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -189,13 +300,20 @@
       "name": "ENACOM Argentina",
       "name_cn": "阿根廷 ENACOM",
       "category": "country",
-      "type": "html",
-      "url": "https://www.enacom.gob.ar/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ENACOM%20espectro%20OR%20frecuencias&hl=es-AR",
       "country": "argentina",
       "enabled": true,
       "options": {
-        "extra_keywords": ["espectro", "frecuencias", "licencia", "450 MHz", "redes privadas", "telecomunicaciones"],
-        "max_items": 20
+        "extra_keywords": [
+          "espectro",
+          "frecuencias",
+          "licencia",
+          "450 MHz",
+          "redes privadas",
+          "telecomunicaciones"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -203,13 +321,20 @@
       "name": "CRC Colombia",
       "name_cn": "哥伦比亚 CRC",
       "category": "country",
-      "type": "html",
-      "url": "https://www.crcom.gov.co/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=CRC%20Colombia%20espectro%20OR%20frecuencias&hl=es-CO",
       "country": "colombia",
       "enabled": true,
       "options": {
-        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
-        "max_items": 20
+        "extra_keywords": [
+          "espectro",
+          "frecuencias",
+          "concesión",
+          "450 MHz",
+          "redes privadas",
+          "telecomunicaciones"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -217,13 +342,21 @@
       "name": "ARCOTEL Ecuador",
       "name_cn": "厄瓜多尔 ARCOTEL",
       "category": "country",
-      "type": "html",
-      "url": "https://www.arcotel.gob.ec/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ARCOTEL%20espectro%20OR%20frecuencias&hl=es-EC",
       "country": "ecuador",
       "enabled": true,
       "options": {
-        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
-        "max_items": 20
+        "extra_keywords": [
+          "espectro",
+          "frecuencias",
+          "concesión",
+          "450 MHz",
+          "redes privadas",
+          "telecomunicaciones"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -231,13 +364,22 @@
       "name": "NCC Nigeria",
       "name_cn": "尼日利亚 NCC",
       "category": "country",
-      "type": "html",
-      "url": "https://www.ncc.gov.ng/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NCC%20Nigeria%20spectrum%20OR%20frequency&hl=en-NG",
       "country": "nigeria",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -245,13 +387,22 @@
       "name": "CA Kenya",
       "name_cn": "肯尼亚 CA",
       "category": "country",
-      "type": "html",
-      "url": "https://www.ca.go.ke/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=CA%20Kenya%20spectrum%20OR%20frequency&hl=en-KE",
       "country": "kenya",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -259,13 +410,21 @@
       "name": "NTRA Egypt",
       "name_cn": "埃及 NTRA",
       "category": "country",
-      "type": "html",
-      "url": "https://www.tra.gov.eg/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NTRA%20Egypt%20spectrum%20OR%20frequency&hl=en-EG",
       "country": "egypt",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -273,13 +432,21 @@
       "name": "ANRT Morocco",
       "name_cn": "摩洛哥 ANRT",
       "category": "country",
-      "type": "html",
-      "url": "https://www.anrt.ma/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ANRT%20spectre%20OR%20frequences&hl=fr-MA",
       "country": "morocco",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectre", "fréquences", "autorisation", "450 MHz", "réseau privé", "télécommunications"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectre",
+          "fréquences",
+          "autorisation",
+          "450 MHz",
+          "réseau privé",
+          "télécommunications"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -287,13 +454,20 @@
       "name": "ARPT Algeria",
       "name_cn": "阿尔及利亚 ARPT",
       "category": "country",
-      "type": "html",
-      "url": "https://www.arpt.dz/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ARPT%20spectre%20OR%20frequences&hl=fr-DZ",
       "country": "algeria",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectre", "fréquences", "autorisation", "450 MHz", "réseau privé", "télécommunications"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectre",
+          "fréquences",
+          "autorisation",
+          "450 MHz",
+          "réseau privé",
+          "télécommunications"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -301,13 +475,22 @@
       "name": "PTA Pakistan",
       "name_cn": "巴基斯坦 PTA",
       "category": "country",
-      "type": "html",
-      "url": "https://www.pta.gov.pk/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=PTA%20Pakistan%20spectrum%20OR%20frequency&hl=en-PK",
       "country": "pakistan",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -315,13 +498,21 @@
       "name": "TRA Oman",
       "name_cn": "阿曼 TRA",
       "category": "country",
-      "type": "html",
-      "url": "https://www.tra.gov.om/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=TRA%20Oman%20spectrum%20OR%20frequency&hl=en-OM",
       "country": "oman",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -329,13 +520,22 @@
       "name": "CMC Iraq",
       "name_cn": "伊拉克 CMC",
       "category": "country",
-      "type": "html",
-      "url": "https://www.cmc.iq/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=CMC%20Iraq%20spectrum%20OR%20frequency&hl=ar-IQ",
       "country": "iraq",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectrum",
+          "frequency",
+          "licence",
+          "license",
+          "450 MHz",
+          "private network",
+          "telecom"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -343,13 +543,21 @@
       "name": "ANCOM Romania",
       "name_cn": "罗马尼亚 ANCOM",
       "category": "country",
-      "type": "html",
-      "url": "https://www.ancom.ro/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ANCOM%20spectru%20OR%20frecventa&hl=ro-RO",
       "country": "romania",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spectru", "frecvențe", "licență", "450 MHz", "rețea privată", "telecomunicații"],
-        "max_items": 20
+        "extra_keywords": [
+          "spectru",
+          "frecvențe",
+          "licență",
+          "450 MHz",
+          "rețea privată",
+          "telecomunicații"
+        ],
+        "allow_parent_title": true,
+        "max_items": 50
       }
     },
     {
@@ -357,13 +565,20 @@
       "name": "EETT Greece",
       "name_cn": "希腊 EETT",
       "category": "country",
-      "type": "html",
-      "url": "https://www.eett.gr/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=EETT%20spectrum%20OR%20frequency&hl=el-GR",
       "country": "greece",
       "enabled": true,
       "options": {
-        "extra_keywords": ["φάσμα", "συχνότητα", "άδεια", "450 MHz", "ιδιωτικό δίκτυο", "τηλεπικοινωνίες"],
-        "max_items": 20
+        "extra_keywords": [
+          "φάσμα",
+          "συχνότητα",
+          "άδεια",
+          "450 MHz",
+          "ιδιωτικό δίκτυο",
+          "τηλεπικοινωνίες"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -371,13 +586,20 @@
       "name": "ÚREK Slovakia",
       "name_cn": "斯洛伐克 ÚREK",
       "category": "country",
-      "type": "html",
-      "url": "https://www.teleoff.gov.sk/",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=UREK%20spektrum%20OR%20frekvencia&hl=sk-SK",
       "country": "slovakia",
       "enabled": true,
       "options": {
-        "extra_keywords": ["spektrum", "frekvencia", "licencia", "450 MHz", "súkromná sieť", "telekomunikácie"],
-        "max_items": 20
+        "extra_keywords": [
+          "spektrum",
+          "frekvencia",
+          "licencia",
+          "450 MHz",
+          "súkromná sieť",
+          "telekomunikácie"
+        ],
+        "max_items": 50
       }
     },
     {
@@ -390,7 +612,19 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "extra_keywords": ["private network", "private wireless", "utility", "grid", "450 MHz", "smart grid", "spectrum", "5G", "microgrid", "distribution automation", "smart meter"]
+        "extra_keywords": [
+          "private network",
+          "private wireless",
+          "utility",
+          "grid",
+          "450 MHz",
+          "smart grid",
+          "spectrum",
+          "5G",
+          "microgrid",
+          "distribution automation",
+          "smart meter"
+        ]
       }
     },
     {
@@ -403,7 +637,19 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "extra_keywords": ["private network", "private wireless", "utility", "grid", "450 MHz", "smart grid", "spectrum", "5G", "broadband", "smart city", "digital utility"]
+        "extra_keywords": [
+          "private network",
+          "private wireless",
+          "utility",
+          "grid",
+          "450 MHz",
+          "smart grid",
+          "spectrum",
+          "5G",
+          "broadband",
+          "smart city",
+          "digital utility"
+        ]
       }
     },
     {
@@ -416,7 +662,14 @@
       "country": "france",
       "enabled": false,
       "options": {
-        "extra_keywords": ["fréquences", "spectre", "autorisation", "appel à candidatures", "450 MHz", "réseau privé"],
+        "extra_keywords": [
+          "fréquences",
+          "spectre",
+          "autorisation",
+          "appel à candidatures",
+          "450 MHz",
+          "réseau privé"
+        ],
         "max_items": 20
       }
     },
@@ -430,7 +683,14 @@
       "country": "france",
       "enabled": true,
       "options": {
-        "extra_keywords": ["ARCEP", "fréquences", "spectre", "autorisation", "450 MHz", "appel à candidatures"]
+        "extra_keywords": [
+          "ARCEP",
+          "fréquences",
+          "spectre",
+          "autorisation",
+          "450 MHz",
+          "appel à candidatures"
+        ]
       }
     },
     {
@@ -452,7 +712,9 @@
       "url": "https://www.lightreading.com/",
       "country": "global",
       "enabled": true,
-      "options": { "max_items": 25 }
+      "options": {
+        "max_items": 25
+      }
     },
     {
       "id": "utility_dive",

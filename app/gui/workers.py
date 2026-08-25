@@ -5,8 +5,9 @@ from PySide6.QtCore import QThread, Signal
 
 
 class CollectWorker(QThread):
-    """采集工作线程：抓取全部原始数据并入库（不做关键词过滤，查看时实时筛选）。"""
+    """采集工作线程：并发抓取全部原始数据并入库（不做关键词过滤，查看时实时筛选）。"""
     log = Signal(str)
+    progress = Signal(int, int)
     done = Signal(int, int)
     failed = Signal(str)
 
@@ -24,7 +25,7 @@ class CollectWorker(QThread):
         added, total = 0, 0
         try:
             with contextlib.redirect_stdout(buf):
-                items = fetch_all(self.config)
+                items = fetch_all(self.config, on_progress=lambda d, t: self.progress.emit(d, t))
                 db = Database(self.db)
                 added = db.save(items)
                 total, _ = db.summary()
