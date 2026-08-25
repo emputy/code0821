@@ -101,12 +101,15 @@ class WorkPage(QWidget):
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
 
     def _bubble(self, title, body_html, _color=None):
-        """不自定义配色，交给主题渲染；用结构（粗体+分隔线）组织内容。"""
+        """结构化展示：标题粗体、正文卡片、浅色分隔线；错误用红色提示。"""
         h = ""
         if title:
-            h += f"<div style='font-weight:600;margin-top:12px;'>{html_mod.escape(title)}</div>"
-        h += f"<div style='margin:4px 0 10px 0;'>{body_html}</div>"
-        h += "<hr style='border:none;border-top:1px solid rgba(128,128,128,0.3);'>"
+            h += f"<div style='font-weight:600;margin-top:14px;font-size:14px;color:#1f1f1f;'>{html_mod.escape(title)}</div>"
+        if _color == "error":
+            body_html = f"<span style='color:#d93025;font-weight:600;'>{body_html}</span>"
+        h += f"<div style='margin:6px 0 12px 0;padding:10px 12px;background:#fafafa;"
+        h += "border:1px solid #eeeeee;border-radius:8px;'>{body_html}</div>"
+        h += "<hr style='border:none;border-top:1px solid rgba(128,128,128,0.2);'>"
         self.chat.append(h)
 
     def _load_rows(self):
@@ -124,7 +127,7 @@ class WorkPage(QWidget):
     def _date_range_ok(self) -> bool:
         """开始日期不能晚于结束日期；无效时给出提示并返回 False。"""
         if self.dt_start.date() > self.dt_end.date():
-            self._bubble("", "时间范围无效：开始日期晚于结束日期，请重新设置后点击「数据汇总」。")
+            self._bubble("", "时间范围无效：开始日期晚于结束日期，请重新设置后点击「数据汇总」。", _color="error")
             return False
         return True
 
@@ -157,11 +160,20 @@ class WorkPage(QWidget):
                 time_str = "发布：" + row[5][:10]
             else:
                 time_str = ""
-            body = f"[{html_mod.escape(cn_map.get(src, src))}] {html_mod.escape(time_str)}<br/><b>{html_mod.escape(title)}</b>"
+            src_cn = html_mod.escape(cn_map.get(src, src))
+            t_title = html_mod.escape(title)
+            t_url = html_mod.escape(url)
+            t_sum = html_mod.escape(summary)
+            body = (
+                f"<span style='background:#ececec;color:#444444;border-radius:4px;"
+                f"padding:2px 8px;font-size:12px;'>{src_cn}</span> "
+                f"<span style='color:#888888;font-size:12px;'>{html_mod.escape(time_str)}</span><br/>"
+                f"<b style='font-size:14px;color:#1f1f1f;'>{t_title}</b>"
+            )
             if url.startswith("http"):
-                body += f"<br/><a href='{html_mod.escape(url)}'>{html_mod.escape(url)}</a>"
+                body += f"<br/><a style='color:#1a73e8;text-decoration:none;' href='{t_url}'>{t_url}</a>"
             if summary:
-                body += f"<br/>{html_mod.escape(summary)}"
+                body += f"<br/><span style='color:#555555;'>{t_sum}</span>"
             self._bubble("", body)
 
     def analyze(self):
