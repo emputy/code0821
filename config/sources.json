@@ -171,6 +171,242 @@
       }
     },
     {
+      "id": "chile_subtel",
+      "name": "SUBTEL Chile",
+      "name_cn": "智利 SUBTEL",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.subtel.gob.cl/",
+      "country": "chile",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "argentina_enacom",
+      "name": "ENACOM Argentina",
+      "name_cn": "阿根廷 ENACOM",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.enacom.gob.ar/",
+      "country": "argentina",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["espectro", "frecuencias", "licencia", "450 MHz", "redes privadas", "telecomunicaciones"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "colombia_crc",
+      "name": "CRC Colombia",
+      "name_cn": "哥伦比亚 CRC",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.crcom.gov.co/",
+      "country": "colombia",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "ecuador_arcotel",
+      "name": "ARCOTEL Ecuador",
+      "name_cn": "厄瓜多尔 ARCOTEL",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.arcotel.gob.ec/",
+      "country": "ecuador",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["espectro", "frecuencias", "concesión", "450 MHz", "redes privadas", "telecomunicaciones"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "nigeria_ncc",
+      "name": "NCC Nigeria",
+      "name_cn": "尼日利亚 NCC",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.ncc.gov.ng/",
+      "country": "nigeria",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "kenya_ca",
+      "name": "CA Kenya",
+      "name_cn": "肯尼亚 CA",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.ca.go.ke/",
+      "country": "kenya",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "egypt_ntra",
+      "name": "NTRA Egypt",
+      "name_cn": "埃及 NTRA",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.tra.gov.eg/",
+      "country": "egypt",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "morocco_anrt",
+      "name": "ANRT Morocco",
+      "name_cn": "摩洛哥 ANRT",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.anrt.ma/",
+      "country": "morocco",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectre", "fréquences", "autorisation", "450 MHz", "réseau privé", "télécommunications"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "algeria_arpt",
+      "name": "ARPT Algeria",
+      "name_cn": "阿尔及利亚 ARPT",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.arpt.dz/",
+      "country": "algeria",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectre", "fréquences", "autorisation", "450 MHz", "réseau privé", "télécommunications"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "pakistan_pta",
+      "name": "PTA Pakistan",
+      "name_cn": "巴基斯坦 PTA",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.pta.gov.pk/",
+      "country": "pakistan",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "oman_tra",
+      "name": "TRA Oman",
+      "name_cn": "阿曼 TRA",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.tra.gov.om/",
+      "country": "oman",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "iraq_cmc",
+      "name": "CMC Iraq",
+      "name_cn": "伊拉克 CMC",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.cmc.iq/",
+      "country": "iraq",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectrum", "frequency", "licence", "license", "450 MHz", "private network", "telecom"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "romania_ancom",
+      "name": "ANCOM Romania",
+      "name_cn": "罗马尼亚 ANCOM",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.ancom.ro/",
+      "country": "romania",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spectru", "frecvențe", "licență", "450 MHz", "rețea privată", "telecomunicații"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "greece_eett",
+      "name": "EETT Greece",
+      "name_cn": "希腊 EETT",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.eett.gr/",
+      "country": "greece",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["φάσμα", "συχνότητα", "άδεια", "450 MHz", "ιδιωτικό δίκτυο", "τηλεπικοινωνίες"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "slovakia_urek",
+      "name": "ÚREK Slovakia",
+      "name_cn": "斯洛伐克 ÚREK",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.teleoff.gov.sk/",
+      "country": "slovakia",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["spektrum", "frekvencia", "licencia", "450 MHz", "súkromná sieť", "telekomunikácie"],
+        "max_items": 20
+      }
+    },
+    {
+      "id": "other_power_eng",
+      "name": "Power Engineering",
+      "name_cn": "全球发电电力（其他国家）",
+      "category": "other",
+      "type": "rss",
+      "url": "https://www.power-eng.com/rss/",
+      "country": "global",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["private network", "private wireless", "utility", "grid", "450 MHz", "smart grid", "spectrum", "5G", "microgrid", "distribution automation", "smart meter"]
+      }
+    },
+    {
+      "id": "other_smart_cities",
+      "name": "Smart Cities Dive",
+      "name_cn": "全球智能城市公用事业（其他国家）",
+      "category": "other",
+      "type": "rss",
+      "url": "https://www.smartcitiesdive.com/feeds/news/",
+      "country": "global",
+      "enabled": true,
+      "options": {
+        "extra_keywords": ["private network", "private wireless", "utility", "grid", "450 MHz", "smart grid", "spectrum", "5G", "broadband", "smart city", "digital utility"]
+      }
+    },
+    {
       "id": "arcep_france",
       "name": "ARCEP France",
       "name_cn": "法国 ARCEP（频谱监管）",

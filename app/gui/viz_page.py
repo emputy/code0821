@@ -137,13 +137,13 @@ class VizPage(QWidget):
         sources = load_sources(str(CONFIG))
         rows = self._relevant_rows()
         counts = Counter(r[2] for r in rows)
-        cat_cn = {"alliance": "联盟动态", "country": "重点国家", "competitor": "友商动态"}
+        cat_cn = {"alliance": "联盟动态", "country": "重点国家", "competitor": "友商动态", "other": "其他国家"}
         agg = Counter()
         for s in sources:
             if s.enabled:
                 agg[cat_cn.get(s.category, s.category)] += counts.get(s.name, 0)
         series = QPieSeries()
-        for k in ["联盟动态", "重点国家", "友商动态"]:
+        for k in ["联盟动态", "重点国家", "友商动态", "其他国家"]:
             series.append(k, agg.get(k, 0))
         self._label_pie(series)
         chart = QChart()

@@ -68,7 +68,7 @@ def _is_relevant(text: str, source_id: str, entity_re=None, source_categories=No
         return _has_any(text, PRIVATE_WIRELESS_TERMS) or _has_any(text, SPECTRUM_TERMS)
     if cat == "competitor":
         return _has_any(text, PRIVATE_WIRELESS_TERMS) or _has_any(text, SPECTRUM_TERMS)
-    # country / 默认：频谱词，或（电力词+专网词），或（电力词+通信词）
+    # country / other（重点国家与全球其他源）默认规则：频谱词，或（电力词+专网词），或（电力词+通信词）
     return (
         _has_any(text, SPECTRUM_TERMS)
         or (_has_any(text, POWER_TERMS) and _has_any(text, PRIVATE_WIRELESS_TERMS))

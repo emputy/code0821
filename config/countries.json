@@ -1,0 +1,1175 @@
+{
+  "note": "联合国会员国（193）+ 观察员国（梵蒂冈、巴勒斯坦）= 195 个",
+  "countries": [
+    {
+      "code": "china",
+      "cn": "中国",
+      "en": "China",
+      "region": "亚太"
+    },
+    {
+      "code": "japan",
+      "cn": "日本",
+      "en": "Japan",
+      "region": "亚太"
+    },
+    {
+      "code": "south-korea",
+      "cn": "韩国",
+      "en": "South Korea",
+      "region": "亚太"
+    },
+    {
+      "code": "north-korea",
+      "cn": "朝鲜",
+      "en": "North Korea",
+      "region": "亚太"
+    },
+    {
+      "code": "mongolia",
+      "cn": "蒙古",
+      "en": "Mongolia",
+      "region": "亚太"
+    },
+    {
+      "code": "indonesia",
+      "cn": "印尼",
+      "en": "Indonesia",
+      "region": "亚太"
+    },
+    {
+      "code": "malaysia",
+      "cn": "马来西亚",
+      "en": "Malaysia",
+      "region": "亚太"
+    },
+    {
+      "code": "thailand",
+      "cn": "泰国",
+      "en": "Thailand",
+      "region": "亚太"
+    },
+    {
+      "code": "vietnam",
+      "cn": "越南",
+      "en": "Vietnam",
+      "region": "亚太"
+    },
+    {
+      "code": "philippines",
+      "cn": "菲律宾",
+      "en": "Philippines",
+      "region": "亚太"
+    },
+    {
+      "code": "singapore",
+      "cn": "新加坡",
+      "en": "Singapore",
+      "region": "亚太"
+    },
+    {
+      "code": "myanmar",
+      "cn": "缅甸",
+      "en": "Myanmar",
+      "region": "亚太"
+    },
+    {
+      "code": "cambodia",
+      "cn": "柬埔寨",
+      "en": "Cambodia",
+      "region": "亚太"
+    },
+    {
+      "code": "laos",
+      "cn": "老挝",
+      "en": "Laos",
+      "region": "亚太"
+    },
+    {
+      "code": "brunei",
+      "cn": "文莱",
+      "en": "Brunei",
+      "region": "亚太"
+    },
+    {
+      "code": "timor-leste",
+      "cn": "东帝汶",
+      "en": "Timor-Leste",
+      "region": "亚太"
+    },
+    {
+      "code": "india",
+      "cn": "印度",
+      "en": "India",
+      "region": "亚太"
+    },
+    {
+      "code": "pakistan",
+      "cn": "巴基斯坦",
+      "en": "Pakistan",
+      "region": "亚太"
+    },
+    {
+      "code": "bangladesh",
+      "cn": "孟加拉",
+      "en": "Bangladesh",
+      "region": "亚太"
+    },
+    {
+      "code": "sri-lanka",
+      "cn": "斯里兰卡",
+      "en": "Sri Lanka",
+      "region": "亚太"
+    },
+    {
+      "code": "nepal",
+      "cn": "尼泊尔",
+      "en": "Nepal",
+      "region": "亚太"
+    },
+    {
+      "code": "bhutan",
+      "cn": "不丹",
+      "en": "Bhutan",
+      "region": "亚太"
+    },
+    {
+      "code": "maldives",
+      "cn": "马尔代夫",
+      "en": "Maldives",
+      "region": "亚太"
+    },
+    {
+      "code": "afghanistan",
+      "cn": "阿富汗",
+      "en": "Afghanistan",
+      "region": "亚太"
+    },
+    {
+      "code": "kazakhstan",
+      "cn": "哈萨克斯坦",
+      "en": "Kazakhstan",
+      "region": "亚太"
+    },
+    {
+      "code": "uzbekistan",
+      "cn": "乌兹别克斯坦",
+      "en": "Uzbekistan",
+      "region": "亚太"
+    },
+    {
+      "code": "turkmenistan",
+      "cn": "土库曼斯坦",
+      "en": "Turkmenistan",
+      "region": "亚太"
+    },
+    {
+      "code": "kyrgyzstan",
+      "cn": "吉尔吉斯斯坦",
+      "en": "Kyrgyzstan",
+      "region": "亚太"
+    },
+    {
+      "code": "tajikistan",
+      "cn": "塔吉克斯坦",
+      "en": "Tajikistan",
+      "region": "亚太"
+    },
+    {
+      "code": "australia",
+      "cn": "澳大利亚",
+      "en": "Australia",
+      "region": "亚太"
+    },
+    {
+      "code": "new-zealand",
+      "cn": "新西兰",
+      "en": "New Zealand",
+      "region": "亚太"
+    },
+    {
+      "code": "papua-new-guinea",
+      "cn": "巴布亚新几内亚",
+      "en": "Papua New Guinea",
+      "region": "亚太"
+    },
+    {
+      "code": "fiji",
+      "cn": "斐济",
+      "en": "Fiji",
+      "region": "亚太"
+    },
+    {
+      "code": "solomon-islands",
+      "cn": "所罗门群岛",
+      "en": "Solomon Islands",
+      "region": "亚太"
+    },
+    {
+      "code": "vanuatu",
+      "cn": "瓦努阿图",
+      "en": "Vanuatu",
+      "region": "亚太"
+    },
+    {
+      "code": "samoa",
+      "cn": "萨摩亚",
+      "en": "Samoa",
+      "region": "亚太"
+    },
+    {
+      "code": "tonga",
+      "cn": "汤加",
+      "en": "Tonga",
+      "region": "亚太"
+    },
+    {
+      "code": "kiribati",
+      "cn": "基里巴斯",
+      "en": "Kiribati",
+      "region": "亚太"
+    },
+    {
+      "code": "micronesia",
+      "cn": "密克罗尼西亚",
+      "en": "Micronesia",
+      "region": "亚太"
+    },
+    {
+      "code": "marshall-islands",
+      "cn": "马绍尔群岛",
+      "en": "Marshall Islands",
+      "region": "亚太"
+    },
+    {
+      "code": "palau",
+      "cn": "帕劳",
+      "en": "Palau",
+      "region": "亚太"
+    },
+    {
+      "code": "nauru",
+      "cn": "瑙鲁",
+      "en": "Nauru",
+      "region": "亚太"
+    },
+    {
+      "code": "tuvalu",
+      "cn": "图瓦卢",
+      "en": "Tuvalu",
+      "region": "亚太"
+    },
+    {
+      "code": "uae",
+      "cn": "阿联酋",
+      "en": "UAE",
+      "region": "中东中亚"
+    },
+    {
+      "code": "saudi-arabia",
+      "cn": "沙特",
+      "en": "Saudi Arabia",
+      "region": "中东中亚"
+    },
+    {
+      "code": "iraq",
+      "cn": "伊拉克",
+      "en": "Iraq",
+      "region": "中东中亚"
+    },
+    {
+      "code": "iran",
+      "cn": "伊朗",
+      "en": "Iran",
+      "region": "中东中亚"
+    },
+    {
+      "code": "turkey",
+      "cn": "土耳其",
+      "en": "Turkey",
+      "region": "中东中亚"
+    },
+    {
+      "code": "qatar",
+      "cn": "卡塔尔",
+      "en": "Qatar",
+      "region": "中东中亚"
+    },
+    {
+      "code": "kuwait",
+      "cn": "科威特",
+      "en": "Kuwait",
+      "region": "中东中亚"
+    },
+    {
+      "code": "bahrain",
+      "cn": "巴林",
+      "en": "Bahrain",
+      "region": "中东中亚"
+    },
+    {
+      "code": "oman",
+      "cn": "阿曼",
+      "en": "Oman",
+      "region": "中东中亚"
+    },
+    {
+      "code": "jordan",
+      "cn": "约旦",
+      "en": "Jordan",
+      "region": "中东中亚"
+    },
+    {
+      "code": "israel",
+      "cn": "以色列",
+      "en": "Israel",
+      "region": "中东中亚"
+    },
+    {
+      "code": "lebanon",
+      "cn": "黎巴嫩",
+      "en": "Lebanon",
+      "region": "中东中亚"
+    },
+    {
+      "code": "syria",
+      "cn": "叙利亚",
+      "en": "Syria",
+      "region": "中东中亚"
+    },
+    {
+      "code": "yemen",
+      "cn": "也门",
+      "en": "Yemen",
+      "region": "中东中亚"
+    },
+    {
+      "code": "palestine",
+      "cn": "巴勒斯坦",
+      "en": "Palestine",
+      "region": "中东中亚"
+    },
+    {
+      "code": "cyprus",
+      "cn": "塞浦路斯",
+      "en": "Cyprus",
+      "region": "中东中亚"
+    },
+    {
+      "code": "georgia",
+      "cn": "格鲁吉亚",
+      "en": "Georgia",
+      "region": "中东中亚"
+    },
+    {
+      "code": "armenia",
+      "cn": "亚美尼亚",
+      "en": "Armenia",
+      "region": "中东中亚"
+    },
+    {
+      "code": "azerbaijan",
+      "cn": "阿塞拜疆",
+      "en": "Azerbaijan",
+      "region": "中东中亚"
+    },
+    {
+      "code": "norway",
+      "cn": "挪威",
+      "en": "Norway",
+      "region": "欧洲"
+    },
+    {
+      "code": "sweden",
+      "cn": "瑞典",
+      "en": "Sweden",
+      "region": "欧洲"
+    },
+    {
+      "code": "denmark",
+      "cn": "丹麦",
+      "en": "Denmark",
+      "region": "欧洲"
+    },
+    {
+      "code": "finland",
+      "cn": "芬兰",
+      "en": "Finland",
+      "region": "欧洲"
+    },
+    {
+      "code": "iceland",
+      "cn": "冰岛",
+      "en": "Iceland",
+      "region": "欧洲"
+    },
+    {
+      "code": "estonia",
+      "cn": "爱沙尼亚",
+      "en": "Estonia",
+      "region": "欧洲"
+    },
+    {
+      "code": "latvia",
+      "cn": "拉脱维亚",
+      "en": "Latvia",
+      "region": "欧洲"
+    },
+    {
+      "code": "lithuania",
+      "cn": "立陶宛",
+      "en": "Lithuania",
+      "region": "欧洲"
+    },
+    {
+      "code": "united-kingdom",
+      "cn": "英国",
+      "en": "United Kingdom",
+      "region": "欧洲"
+    },
+    {
+      "code": "ireland",
+      "cn": "爱尔兰",
+      "en": "Ireland",
+      "region": "欧洲"
+    },
+    {
+      "code": "france",
+      "cn": "法国",
+      "en": "France",
+      "region": "欧洲"
+    },
+    {
+      "code": "germany",
+      "cn": "德国",
+      "en": "Germany",
+      "region": "欧洲"
+    },
+    {
+      "code": "netherlands",
+      "cn": "荷兰",
+      "en": "Netherlands",
+      "region": "欧洲"
+    },
+    {
+      "code": "belgium",
+      "cn": "比利时",
+      "en": "Belgium",
+      "region": "欧洲"
+    },
+    {
+      "code": "luxembourg",
+      "cn": "卢森堡",
+      "en": "Luxembourg",
+      "region": "欧洲"
+    },
+    {
+      "code": "switzerland",
+      "cn": "瑞士",
+      "en": "Switzerland",
+      "region": "欧洲"
+    },
+    {
+      "code": "austria",
+      "cn": "奥地利",
+      "en": "Austria",
+      "region": "欧洲"
+    },
+    {
+      "code": "portugal",
+      "cn": "葡萄牙",
+      "en": "Portugal",
+      "region": "欧洲"
+    },
+    {
+      "code": "spain",
+      "cn": "西班牙",
+      "en": "Spain",
+      "region": "欧洲"
+    },
+    {
+      "code": "italy",
+      "cn": "意大利",
+      "en": "Italy",
+      "region": "欧洲"
+    },
+    {
+      "code": "greece",
+      "cn": "希腊",
+      "en": "Greece",
+      "region": "欧洲"
+    },
+    {
+      "code": "malta",
+      "cn": "马耳他",
+      "en": "Malta",
+      "region": "欧洲"
+    },
+    {
+      "code": "slovenia",
+      "cn": "斯洛文尼亚",
+      "en": "Slovenia",
+      "region": "欧洲"
+    },
+    {
+      "code": "croatia",
+      "cn": "克罗地亚",
+      "en": "Croatia",
+      "region": "欧洲"
+    },
+    {
+      "code": "bosnia-herzegovina",
+      "cn": "波黑",
+      "en": "Bosnia and Herzegovina",
+      "region": "欧洲"
+    },
+    {
+      "code": "serbia",
+      "cn": "塞尔维亚",
+      "en": "Serbia",
+      "region": "欧洲"
+    },
+    {
+      "code": "montenegro",
+      "cn": "黑山",
+      "en": "Montenegro",
+      "region": "欧洲"
+    },
+    {
+      "code": "north-macedonia",
+      "cn": "北马其顿",
+      "en": "North Macedonia",
+      "region": "欧洲"
+    },
+    {
+      "code": "albania",
+      "cn": "阿尔巴尼亚",
+      "en": "Albania",
+      "region": "欧洲"
+    },
+    {
+      "code": "hungary",
+      "cn": "匈牙利",
+      "en": "Hungary",
+      "region": "欧洲"
+    },
+    {
+      "code": "slovakia",
+      "cn": "斯洛伐克",
+      "en": "Slovakia",
+      "region": "欧洲"
+    },
+    {
+      "code": "czechia",
+      "cn": "捷克",
+      "en": "Czechia",
+      "region": "欧洲"
+    },
+    {
+      "code": "poland",
+      "cn": "波兰",
+      "en": "Poland",
+      "region": "欧洲"
+    },
+    {
+      "code": "romania",
+      "cn": "罗马尼亚",
+      "en": "Romania",
+      "region": "欧洲"
+    },
+    {
+      "code": "bulgaria",
+      "cn": "保加利亚",
+      "en": "Bulgaria",
+      "region": "欧洲"
+    },
+    {
+      "code": "moldova",
+      "cn": "摩尔多瓦",
+      "en": "Moldova",
+      "region": "欧洲"
+    },
+    {
+      "code": "ukraine",
+      "cn": "乌克兰",
+      "en": "Ukraine",
+      "region": "欧洲"
+    },
+    {
+      "code": "belarus",
+      "cn": "白俄罗斯",
+      "en": "Belarus",
+      "region": "欧洲"
+    },
+    {
+      "code": "russia",
+      "cn": "俄罗斯",
+      "en": "Russia",
+      "region": "欧洲"
+    },
+    {
+      "code": "holy-see",
+      "cn": "梵蒂冈",
+      "en": "Holy See",
+      "region": "欧洲"
+    },
+    {
+      "code": "andorra",
+      "cn": "安道尔",
+      "en": "Andorra",
+      "region": "欧洲"
+    },
+    {
+      "code": "monaco",
+      "cn": "摩纳哥",
+      "en": "Monaco",
+      "region": "欧洲"
+    },
+    {
+      "code": "san-marino",
+      "cn": "圣马力诺",
+      "en": "San Marino",
+      "region": "欧洲"
+    },
+    {
+      "code": "liechtenstein",
+      "cn": "列支敦士登",
+      "en": "Liechtenstein",
+      "region": "欧洲"
+    },
+    {
+      "code": "egypt",
+      "cn": "埃及",
+      "en": "Egypt",
+      "region": "北部非洲"
+    },
+    {
+      "code": "libya",
+      "cn": "利比亚",
+      "en": "Libya",
+      "region": "北部非洲"
+    },
+    {
+      "code": "tunisia",
+      "cn": "突尼斯",
+      "en": "Tunisia",
+      "region": "北部非洲"
+    },
+    {
+      "code": "algeria",
+      "cn": "阿尔及利亚",
+      "en": "Algeria",
+      "region": "北部非洲"
+    },
+    {
+      "code": "morocco",
+      "cn": "摩洛哥",
+      "en": "Morocco",
+      "region": "北部非洲"
+    },
+    {
+      "code": "sudan",
+      "cn": "苏丹",
+      "en": "Sudan",
+      "region": "北部非洲"
+    },
+    {
+      "code": "south-sudan",
+      "cn": "南苏丹",
+      "en": "South Sudan",
+      "region": "北部非洲"
+    },
+    {
+      "code": "ethiopia",
+      "cn": "埃塞俄比亚",
+      "en": "Ethiopia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "eritrea",
+      "cn": "厄立特里亚",
+      "en": "Eritrea",
+      "region": "南部非洲"
+    },
+    {
+      "code": "djibouti",
+      "cn": "吉布提",
+      "en": "Djibouti",
+      "region": "南部非洲"
+    },
+    {
+      "code": "somalia",
+      "cn": "索马里",
+      "en": "Somalia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "kenya",
+      "cn": "肯尼亚",
+      "en": "Kenya",
+      "region": "南部非洲"
+    },
+    {
+      "code": "uganda",
+      "cn": "乌干达",
+      "en": "Uganda",
+      "region": "南部非洲"
+    },
+    {
+      "code": "tanzania",
+      "cn": "坦桑尼亚",
+      "en": "Tanzania",
+      "region": "南部非洲"
+    },
+    {
+      "code": "rwanda",
+      "cn": "卢旺达",
+      "en": "Rwanda",
+      "region": "南部非洲"
+    },
+    {
+      "code": "burundi",
+      "cn": "布隆迪",
+      "en": "Burundi",
+      "region": "南部非洲"
+    },
+    {
+      "code": "nigeria",
+      "cn": "尼日利亚",
+      "en": "Nigeria",
+      "region": "南部非洲"
+    },
+    {
+      "code": "ghana",
+      "cn": "加纳",
+      "en": "Ghana",
+      "region": "南部非洲"
+    },
+    {
+      "code": "cote-divoire",
+      "cn": "科特迪瓦",
+      "en": "Cote d'Ivoire",
+      "region": "南部非洲"
+    },
+    {
+      "code": "senegal",
+      "cn": "塞内加尔",
+      "en": "Senegal",
+      "region": "南部非洲"
+    },
+    {
+      "code": "mali",
+      "cn": "马里",
+      "en": "Mali",
+      "region": "南部非洲"
+    },
+    {
+      "code": "burkina-faso",
+      "cn": "布基纳法索",
+      "en": "Burkina Faso",
+      "region": "南部非洲"
+    },
+    {
+      "code": "guinea",
+      "cn": "几内亚",
+      "en": "Guinea",
+      "region": "南部非洲"
+    },
+    {
+      "code": "guinea-bissau",
+      "cn": "几内亚比绍",
+      "en": "Guinea-Bissau",
+      "region": "南部非洲"
+    },
+    {
+      "code": "sierra-leone",
+      "cn": "塞拉利昂",
+      "en": "Sierra Leone",
+      "region": "南部非洲"
+    },
+    {
+      "code": "liberia",
+      "cn": "利比里亚",
+      "en": "Liberia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "togo",
+      "cn": "多哥",
+      "en": "Togo",
+      "region": "南部非洲"
+    },
+    {
+      "code": "benin",
+      "cn": "贝宁",
+      "en": "Benin",
+      "region": "南部非洲"
+    },
+    {
+      "code": "niger",
+      "cn": "尼日尔",
+      "en": "Niger",
+      "region": "南部非洲"
+    },
+    {
+      "code": "mauritania",
+      "cn": "毛里塔尼亚",
+      "en": "Mauritania",
+      "region": "南部非洲"
+    },
+    {
+      "code": "gambia",
+      "cn": "冈比亚",
+      "en": "Gambia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "cabo-verde",
+      "cn": "佛得角",
+      "en": "Cabo Verde",
+      "region": "南部非洲"
+    },
+    {
+      "code": "sao-tome-principe",
+      "cn": "圣多美和普林西比",
+      "en": "Sao Tome and Principe",
+      "region": "南部非洲"
+    },
+    {
+      "code": "equatorial-guinea",
+      "cn": "赤道几内亚",
+      "en": "Equatorial Guinea",
+      "region": "南部非洲"
+    },
+    {
+      "code": "gabon",
+      "cn": "加蓬",
+      "en": "Gabon",
+      "region": "南部非洲"
+    },
+    {
+      "code": "congo",
+      "cn": "刚果布",
+      "en": "Congo",
+      "region": "南部非洲"
+    },
+    {
+      "code": "dr-congo",
+      "cn": "刚果金",
+      "en": "DR Congo",
+      "region": "南部非洲"
+    },
+    {
+      "code": "central-african-republic",
+      "cn": "中非",
+      "en": "Central African Republic",
+      "region": "南部非洲"
+    },
+    {
+      "code": "chad",
+      "cn": "乍得",
+      "en": "Chad",
+      "region": "南部非洲"
+    },
+    {
+      "code": "cameroon",
+      "cn": "喀麦隆",
+      "en": "Cameroon",
+      "region": "南部非洲"
+    },
+    {
+      "code": "south-africa",
+      "cn": "南非",
+      "en": "South Africa",
+      "region": "南部非洲"
+    },
+    {
+      "code": "namibia",
+      "cn": "纳米比亚",
+      "en": "Namibia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "botswana",
+      "cn": "博茨瓦纳",
+      "en": "Botswana",
+      "region": "南部非洲"
+    },
+    {
+      "code": "zimbabwe",
+      "cn": "津巴布韦",
+      "en": "Zimbabwe",
+      "region": "南部非洲"
+    },
+    {
+      "code": "mozambique",
+      "cn": "莫桑比克",
+      "en": "Mozambique",
+      "region": "南部非洲"
+    },
+    {
+      "code": "zambia",
+      "cn": "赞比亚",
+      "en": "Zambia",
+      "region": "南部非洲"
+    },
+    {
+      "code": "malawi",
+      "cn": "马拉维",
+      "en": "Malawi",
+      "region": "南部非洲"
+    },
+    {
+      "code": "angola",
+      "cn": "安哥拉",
+      "en": "Angola",
+      "region": "南部非洲"
+    },
+    {
+      "code": "lesotho",
+      "cn": "莱索托",
+      "en": "Lesotho",
+      "region": "南部非洲"
+    },
+    {
+      "code": "eswatini",
+      "cn": "斯威士兰",
+      "en": "Eswatini",
+      "region": "南部非洲"
+    },
+    {
+      "code": "madagascar",
+      "cn": "马达加斯加",
+      "en": "Madagascar",
+      "region": "南部非洲"
+    },
+    {
+      "code": "comoros",
+      "cn": "科摩罗",
+      "en": "Comoros",
+      "region": "南部非洲"
+    },
+    {
+      "code": "mauritius",
+      "cn": "毛里求斯",
+      "en": "Mauritius",
+      "region": "南部非洲"
+    },
+    {
+      "code": "seychelles",
+      "cn": "塞舌尔",
+      "en": "Seychelles",
+      "region": "南部非洲"
+    },
+    {
+      "code": "united-states",
+      "cn": "美国",
+      "en": "United States",
+      "region": "北美"
+    },
+    {
+      "code": "canada",
+      "cn": "加拿大",
+      "en": "Canada",
+      "region": "北美"
+    },
+    {
+      "code": "mexico",
+      "cn": "墨西哥",
+      "en": "Mexico",
+      "region": "拉美"
+    },
+    {
+      "code": "guatemala",
+      "cn": "危地马拉",
+      "en": "Guatemala",
+      "region": "拉美"
+    },
+    {
+      "code": "belize",
+      "cn": "伯利兹",
+      "en": "Belize",
+      "region": "拉美"
+    },
+    {
+      "code": "honduras",
+      "cn": "洪都拉斯",
+      "en": "Honduras",
+      "region": "拉美"
+    },
+    {
+      "code": "el-salvador",
+      "cn": "萨尔瓦多",
+      "en": "El Salvador",
+      "region": "拉美"
+    },
+    {
+      "code": "nicaragua",
+      "cn": "尼加拉瓜",
+      "en": "Nicaragua",
+      "region": "拉美"
+    },
+    {
+      "code": "costa-rica",
+      "cn": "哥斯达黎加",
+      "en": "Costa Rica",
+      "region": "拉美"
+    },
+    {
+      "code": "panama",
+      "cn": "巴拿马",
+      "en": "Panama",
+      "region": "拉美"
+    },
+    {
+      "code": "cuba",
+      "cn": "古巴",
+      "en": "Cuba",
+      "region": "拉美"
+    },
+    {
+      "code": "jamaica",
+      "cn": "牙买加",
+      "en": "Jamaica",
+      "region": "拉美"
+    },
+    {
+      "code": "haiti",
+      "cn": "海地",
+      "en": "Haiti",
+      "region": "拉美"
+    },
+    {
+      "code": "dominican-republic",
+      "cn": "多米尼加",
+      "en": "Dominican Republic",
+      "region": "拉美"
+    },
+    {
+      "code": "barbados",
+      "cn": "巴巴多斯",
+      "en": "Barbados",
+      "region": "拉美"
+    },
+    {
+      "code": "bahamas",
+      "cn": "巴哈马",
+      "en": "Bahamas",
+      "region": "拉美"
+    },
+    {
+      "code": "trinidad-tobago",
+      "cn": "特立尼达和多巴哥",
+      "en": "Trinidad and Tobago",
+      "region": "拉美"
+    },
+    {
+      "code": "saint-lucia",
+      "cn": "圣卢西亚",
+      "en": "Saint Lucia",
+      "region": "拉美"
+    },
+    {
+      "code": "saint-vincent-grenadines",
+      "cn": "圣文森特和格林纳丁斯",
+      "en": "Saint Vincent and the Grenadines",
+      "region": "拉美"
+    },
+    {
+      "code": "grenada",
+      "cn": "格林纳达",
+      "en": "Grenada",
+      "region": "拉美"
+    },
+    {
+      "code": "antigua-barbuda",
+      "cn": "安提瓜和巴布达",
+      "en": "Antigua and Barbuda",
+      "region": "拉美"
+    },
+    {
+      "code": "saint-kitts-nevis",
+      "cn": "圣基茨和尼维斯",
+      "en": "Saint Kitts and Nevis",
+      "region": "拉美"
+    },
+    {
+      "code": "dominica",
+      "cn": "多米尼克",
+      "en": "Dominica",
+      "region": "拉美"
+    },
+    {
+      "code": "brazil",
+      "cn": "巴西",
+      "en": "Brazil",
+      "region": "拉美"
+    },
+    {
+      "code": "argentina",
+      "cn": "阿根廷",
+      "en": "Argentina",
+      "region": "拉美"
+    },
+    {
+      "code": "chile",
+      "cn": "智利",
+      "en": "Chile",
+      "region": "拉美"
+    },
+    {
+      "code": "peru",
+      "cn": "秘鲁",
+      "en": "Peru",
+      "region": "拉美"
+    },
+    {
+      "code": "colombia",
+      "cn": "哥伦比亚",
+      "en": "Colombia",
+      "region": "拉美"
+    },
+    {
+      "code": "venezuela",
+      "cn": "委内瑞拉",
+      "en": "Venezuela",
+      "region": "拉美"
+    },
+    {
+      "code": "ecuador",
+      "cn": "厄瓜多尔",
+      "en": "Ecuador",
+      "region": "拉美"
+    },
+    {
+      "code": "bolivia",
+      "cn": "玻利维亚",
+      "en": "Bolivia",
+      "region": "拉美"
+    },
+    {
+      "code": "paraguay",
+      "cn": "巴拉圭",
+      "en": "Paraguay",
+      "region": "拉美"
+    },
+    {
+      "code": "uruguay",
+      "cn": "乌拉圭",
+      "en": "Uruguay",
+      "region": "拉美"
+    },
+    {
+      "code": "guyana",
+      "cn": "圭亚那",
+      "en": "Guyana",
+      "region": "拉美"
+    },
+    {
+      "code": "suriname",
+      "cn": "苏里南",
+      "en": "Suriname",
+      "region": "拉美"
+    }
+  ]
+}

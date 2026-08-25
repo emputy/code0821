@@ -20,9 +20,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"
+COUNTRIES_JSON = BASE_DIR / "config" / "countries.json"
 
-# (code, 中文名, 英文名, 地区)
-COUNTRY_LIST = [
+
+def _load_countries() -> list:
+    """从 config/countries.json 加载联合国 195 国清单。"""
+    try:
+        with open(COUNTRIES_JSON, encoding="utf-8") as f:
+            data = json.load(f)
+        return [(c["code"], c["cn"], c["en"], c["region"]) for c in data.get("countries", [])]
+    except Exception:
+        return []
+
+
+# 优先使用联合国 195 国清单（config/countries.json）；读取失败时回退内联清单
+COUNTRY_LIST = _load_countries() or [
+# (code, 中文名, 英文名, 地区) — fallback
     ("uae", "阿联酋", "UAE", "中东中亚"),
     ("saudi-arabia", "沙特", "Saudi Arabia", "中东中亚"),
     ("iraq", "伊拉克", "Iraq", "中东中亚"),
@@ -110,46 +123,6 @@ COUNTRY_LIST = [
     ("guatemala", "危地马拉", "Guatemala", "拉美"),
     ("honduras", "洪都拉斯", "Honduras", "拉美"),
 ]
-
-# 国家 -> 监管机构数据源模板：添加该国客户时自动启用对应抓取源
-COUNTRY_SOURCES = {
-    "brazil": {
-        "id": "anatel_brazil", "name": "ANATEL Brazil", "name_cn": "巴西 ANATEL",
-        "category": "country", "type": "html", "url": "https://www.gov.br/anatel/pt-br",
-        "country": "brazil",
-        "options": {"extra_keywords": ["espectro", "frequencias", "leilao", "450 MHz", "redes privadas", "telecomunicacoes"], "max_items": 20},
-    },
-    "south-africa": {
-        "id": "icasa_southafrica", "name": "ICASA South Africa", "name_cn": "南非 ICASA",
-        "category": "country", "type": "html", "url": "https://www.icasa.org.za/news",
-        "country": "south-africa",
-        "options": {"extra_keywords": ["auction", "licence", "license", "frequency band", "radio frequency", "spectrum"], "url_contains": "/news/202", "allow_parent_title": True, "max_items": 20},
-    },
-    "malaysia": {
-        "id": "mcmc_malaysia", "name": "MCMC Malaysia", "name_cn": "马来西亚 MCMC",
-        "category": "country", "type": "html", "url": "https://www.mcmc.gov.my/",
-        "country": "malaysia",
-        "options": {"extra_keywords": ["spektrum", "lesen", "peruntukan", "auction", "frequency"], "max_items": 20},
-    },
-    "indonesia": {
-        "id": "kominfo_indonesia", "name": "Kominfo Indonesia", "name_cn": "印尼 Kominfo",
-        "category": "country", "type": "html", "url": "https://www.kominfo.go.id/",
-        "country": "indonesia",
-        "options": {"extra_keywords": ["spektrum", "frekuensi", "lisensi", "izin", "telekomunikasi", "jaringan"], "max_items": 20},
-    },
-    "thailand": {
-        "id": "nbtc_thailand", "name": "NBTC Thailand", "name_cn": "泰国 NBTC",
-        "category": "country", "type": "html", "url": "https://www.nbtc.go.th/",
-        "country": "thailand",
-        "options": {"extra_keywords": ["spectrum", "frequency", "license", "auction", "telecom"], "max_items": 20},
-    },
-    "uae": {
-        "id": "tdra_uae", "name": "TDRA UAE", "name_cn": "阿联酋 TDRA",
-        "category": "country", "type": "sitemap", "url": "https://tdra.gov.ae/en/sitemap.xml",
-        "country": "uae",
-        "options": {"extra_keywords": ["spectrum", "frequency", "license", "private network", "telecom"], "url_contains": "/en/media/press-release/", "max_items": 20, "enrich_titles": 5},
-    },
-}
 
 
 class SourcesPage(QWidget):
@@ -347,11 +320,8 @@ class SourcesPage(QWidget):
                 break
         with open(CUSTOMERS, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        # 国家 -> 数据源联动：有该国监管源模板就自动启用/添加
-        msgs = []
-        tpl = COUNTRY_SOURCES.get(code)
-        if tpl:
-            msgs.append(self._ensure_source(tpl))
+        # 国家 -> 数据源联动：sources.json 中有该国的源则自动启用
+        msgs = [self._ensure_source(code)]
         # 刷新本页与下游模块
         self.customers = load_customers(str(CUSTOMERS))
         self.matchers = build_customer_matchers(self.customers)
@@ -365,28 +335,25 @@ class SourcesPage(QWidget):
         )
         self.edt_utility.clear()
 
-    def _ensure_source(self, tpl) -> str:
-        """确保国家对应的数据源在 sources.json 中启用；返回提示文字。"""
+    def _ensure_source(self, code) -> str:
+        """sources.json 中有该国的数据源则启用；返回提示文字。"""
         with open(CONFIG, encoding="utf-8") as f:
             data = json.load(f)
-        found = None
-        for s in data.get("sources", []):
-            if s.get("id") == tpl["id"]:
-                found = s
-                break
-        if found is None:
-            data.setdefault("sources", []).append(dict(tpl, enabled=True))
-            action = "新增"
-        else:
-            if not found.get("enabled", True):
-                found["enabled"] = True
-                action = "启用"
-            else:
-                return "该国家情报源「" + tpl["name_cn"] + "」已在抓取列表中"
-        with open(CONFIG, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        self.refresh_sources_table()
-        return "已" + action + "该国情报源「" + tpl["name_cn"] + "」，下次抓取生效"
+        hits = [s for s in data.get("sources", []) if s.get("country") == code]
+        if not hits:
+            return "该国家暂无内置情报源，可在「数据源管理」手动添加监管机构网址"
+        msgs = []
+        changed = False
+        for s in hits:
+            if not s.get("enabled", True):
+                s["enabled"] = True
+                changed = True
+                msgs.append("已启用「" + (s.get("name_cn") or s["name"]) + "」")
+        if changed:
+            with open(CONFIG, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            self.refresh_sources_table()
+        return "；".join(msgs) if msgs else "该国情报源「" + (hits[0].get("name_cn") or hits[0]["name"]) + "」已在抓取列表中"
 
     # ---------- 数据源管理 ----------
     def _build_sources_tab(self):
@@ -428,7 +395,7 @@ class SourcesPage(QWidget):
         sources = load_sources(str(CONFIG))
         self.src_table.setRowCount(len(sources))
         for i, s in enumerate(sources):
-            cat_cn = {"alliance": "联盟", "country": "重点国家", "competitor": "友商"}
+            cat_cn = {"alliance": "联盟", "country": "重点国家", "competitor": "友商", "other": "其他国家"}
             vals = [cat_cn.get(s.category, s.category), s.name_cn or s.name, s.type, s.url, "是" if s.enabled else "否"]
             for j, val in enumerate(vals):
                 self.src_table.setItem(i, j, QTableWidgetItem(str(val)))
