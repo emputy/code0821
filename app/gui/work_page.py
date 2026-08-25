@@ -157,7 +157,10 @@ class WorkPage(QWidget):
             self._bubble("", body)
 
     def analyze(self):
-        """分析信息数据：调用 AI 生成总结分析。"""
+        """分析信息数据：调用 AI 生成总结分析（防重复触发）。"""
+        if self.worker and self.worker.isRunning():
+            self._bubble("", "分析正在进行中，请稍候……（分析完成前请勿重复点击）")
+            return
         s = load_settings()
         if not s.get("ai_enabled"):
             self._bubble("", "AI 功能未启用，请到「AI 设置」模块开启。")
@@ -191,9 +194,18 @@ class WorkPage(QWidget):
             {"role": "user", "content": text},
         ]
         self._bubble("", "正在生成分析（基于相关条目），请稍候……")
+        self.btn_analyze.setEnabled(False)
+        self.btn_analyze.setText("分析中…")
+
+        def _finish(*_a):
+            self.btn_analyze.setEnabled(True)
+            self.btn_analyze.setText("分析信息数据")
+
         self.worker = DeepSeekWorker(s["api_key"], s.get("model", "deepseek-chat"), messages, self)
         self.worker.done.connect(self._show_analysis)
+        self.worker.done.connect(_finish)
         self.worker.failed.connect(lambda e: self._bubble("分析失败", html_mod.escape(str(e))))
+        self.worker.failed.connect(_finish)
         self.worker.start()
 
     def _show_analysis(self, content):
