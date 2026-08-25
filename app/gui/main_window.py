@@ -23,8 +23,8 @@ class MainWindow(FluentWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("无线专网情报监测系统")
-        self.resize(1120, 700)
-        self.setMinimumSize(900, 560)
+        self.resize(1180, 720)
+        self.setMinimumSize(1080, 660)
         self.collect_worker = None
 
         setTheme(Theme.LIGHT)
