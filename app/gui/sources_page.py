@@ -451,7 +451,7 @@ class SourcesPage(QWidget):
             conn = sqlite3.connect(str(DB))
             rows = conn.execute(
                 "SELECT id, source_id, source_name, title, url, published, summary, country, fetched_at "
-                "FROM items ORDER BY fetched_at DESC, id DESC"
+                "FROM items ORDER BY (published = '' OR published IS NULL), published DESC, id DESC"
             ).fetchall()
             conn.close()
         except Exception:
