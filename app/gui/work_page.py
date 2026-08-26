@@ -1,6 +1,5 @@
 import html as html_mod
 import sqlite3
-from pathlib import Path
 
 from PySide6.QtCore import QDate
 from PySide6.QtWidgets import (
@@ -14,8 +13,8 @@ from app.filter.entities import build_entity_matcher, build_entity_terms, load_c
 from app.filter.keywords import filter_db_rows
 from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
+from app.paths import BASE_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"

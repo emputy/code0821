@@ -1,7 +1,8 @@
 import json
-from pathlib import Path
 
-SETTINGS_PATH = Path(__file__).resolve().parent.parent.parent / "config" / "settings.json"
+from app.paths import BASE_DIR
+
+SETTINGS_PATH = BASE_DIR / "config" / "settings.json"
 
 DEFAULTS = {
     "api_key": "",

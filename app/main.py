@@ -1,13 +1,13 @@
 import argparse
 import sys
-from pathlib import Path
 
 # 控制台用 UTF-8 输出，避免源名含特殊字符（如 ÚREK）触发 GBK 编码崩溃
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from app.paths import BASE_DIR
+
 CONFIG = BASE_DIR / "config" / "sources.json"
 DB = BASE_DIR / "data" / "intel.db"
 

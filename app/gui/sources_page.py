@@ -1,6 +1,5 @@
 import json
 import sqlite3
-from pathlib import Path
 
 from PySide6.QtCore import QDate, Qt, QUrl, Signal
 from PySide6.QtGui import QColor, QDesktopServices
@@ -15,8 +14,8 @@ from qfluentwidgets import CardWidget, ComboBox, LineEdit, PushButton, Segmented
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
 from app.filter.keywords import filter_db_rows
+from app.paths import BASE_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"

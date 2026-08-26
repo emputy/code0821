@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from pathlib import Path
 
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication, QMessageBox
@@ -12,8 +11,8 @@ from app.gui.sources_page import SourcesPage
 from app.gui.viz_page import VizPage
 from app.gui.work_page import WorkPage
 from app.gui.workers import CollectWorker
+from app.paths import BASE_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"

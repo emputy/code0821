@@ -1,6 +1,5 @@
 import sqlite3
 from collections import Counter
-from pathlib import Path
 
 from PySide6.QtCharts import (
     QBarSeries, QBarSet, QCategoryAxis, QChart, QChartView, QHorizontalBarSeries,
@@ -24,8 +23,8 @@ from app.filter.entities import (
     build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers,
 )
 from app.filter.keywords import filter_db_rows
+from app.paths import BASE_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG = BASE_DIR / "config" / "sources.json"
 DB = BASE_DIR / "data" / "intel.db"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
