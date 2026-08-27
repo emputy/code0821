@@ -2,8 +2,11 @@ import email.utils
 from datetime import datetime
 
 import feedparser
+import requests
 
 from .base import FetchedItem
+
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
 
 
 def _norm_date(raw: str) -> str:
@@ -18,9 +21,15 @@ def _norm_date(raw: str) -> str:
 
 
 def fetch_rss(source) -> list[FetchedItem]:
-    """抓取一个 RSS 订阅源，返回前 50 条内容。"""
+    """抓取一个 RSS 订阅源，返回前 50 条内容。
+
+    用 requests 先取内容（带 20s 超时和浏览器 UA），再交给 feedparser 解析，
+    避免 feedparser 直连无超时导致长时间挂起。
+    """
     try:
-        feed = feedparser.parse(source.url)
+        resp = requests.get(source.url, timeout=20, headers=HEADERS)
+        resp.raise_for_status()
+        feed = feedparser.parse(resp.content)
     except Exception as e:
         print(f"  [RSS 错误] {source.name}: {e}")
         return []

@@ -1,4 +1,5 @@
 import re
+from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urljoin
 
 import requests
@@ -26,10 +27,10 @@ def _extract_page_date(soup, url: str = "") -> str:
 
 
 def _fill_article_dates(items) -> list:
-    """打开没有发布日期的文章页，提取发布时间。"""
-    for it in items:
+    """并行打开没有发布日期的文章页，提取发布时间（单源内 6 并发）。"""
+    def _fill(it):
         if it.published:
-            continue
+            return
         try:
             d = from_url(it.url)
             if not d:
@@ -41,6 +42,9 @@ def _fill_article_dates(items) -> list:
                 it.published = d
         except Exception:
             pass
+
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(_fill, items))
     return items
 
 

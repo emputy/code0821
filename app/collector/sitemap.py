@@ -1,4 +1,5 @@
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 from bs4 import BeautifulSoup
@@ -30,16 +31,17 @@ def _fetch_sitemap_entries(url: str) -> list[tuple[str, str]]:
             entries.append((loc.group(1), lastmod))
     if not entries:  # 无 <url> 块（索引或简单 sitemap），退化为直接找 loc
         entries = [(u, "") for u in re.findall(r"<loc>([^<]+)</loc>", text)]
-    # 如果是 sitemap 索引（内含多个子 sitemap），逐个取回合并
+    # 如果是 sitemap 索引（内含多个子 sitemap），并行取回合并（最多 20 个子图）
     sub = [u for u, _ in entries if u.lower().endswith((".xml", ".xml.gz"))]
     if sub and len(sub) > len(entries) * 0.5:
-        merged = []
-        for u in sub[:20]:
+        def _get(u):
             try:
-                merged.extend(_fetch_sitemap_entries(u))
+                return _fetch_sitemap_entries(u)
             except Exception:
-                continue
-        return merged
+                return []
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            parts = list(ex.map(_get, sub[:20]))
+        return [e for part in parts for e in part]
     return entries
 
 
@@ -52,10 +54,11 @@ def _guess_title(url: str) -> str:
 
 
 def _enrich_titles(items: list, n: int) -> list:
-    """抓取前 n 篇文章页面的真实标题和发布日期。"""
+    """并行抓取前 n 篇文章页面的真实标题和发布日期（单源内 6 并发）。"""
     if n <= 0:
         return items
-    for it in items[:n]:
+
+    def _enrich(it):
         try:
             resp = requests.get(it.url, timeout=20, headers=HEADERS)
             if resp.status_code == 200:
@@ -71,6 +74,9 @@ def _enrich_titles(items: list, n: int) -> list:
                         it.published = d
         except Exception:
             pass
+
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(_enrich, items[:n]))
     return items
 
 
