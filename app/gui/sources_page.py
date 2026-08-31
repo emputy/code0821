@@ -13,7 +13,7 @@ from qfluentwidgets import CardWidget, ComboBox, LineEdit, PushButton, Segmented
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
-from app.filter.keywords import filter_db_rows
+from app.filter.keywords import filter_db_rows, load_keywords
 from app.paths import BASE_DIR
 
 CONFIG = BASE_DIR / "config" / "sources.json"
@@ -134,6 +134,7 @@ class SourcesPage(QWidget):
         self.matchers = build_customer_matchers(self.customers)
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
+        self.config_keywords = load_keywords(str(CONFIG))
         self.src_info = {s.name: (s.category, s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         self.all_rows = []
 
@@ -350,6 +351,7 @@ class SourcesPage(QWidget):
         self.customers = load_customers(str(CUSTOMERS))
         self.matchers = build_customer_matchers(self.customers)
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
+        self.config_keywords = load_keywords(str(CONFIG))
         self._fill_customers_tree()
         self.customers_changed.emit()
         extra = (" " + "；".join(msgs)) if msgs else ""
@@ -461,7 +463,7 @@ class SourcesPage(QWidget):
         except Exception:
             rows = []
         if self.chk_relevant.isChecked():
-            rows = filter_db_rows(rows, self.entity_re, self.source_cats)
+            rows = filter_db_rows(rows, self.entity_re, self.source_cats, self.config_keywords)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():

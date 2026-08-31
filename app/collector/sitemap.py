@@ -97,6 +97,7 @@ def fetch_sitemap(source) -> list[FetchedItem]:
         return []
 
     noise_re = re.compile("|".join(noise), re.I)
+    exclude = opts.get("url_exclude", "")   # URL 含此片段则排除（可多个，用 | 分隔）
     article_urls = []
     seen = set()
     for u, lastmod in entries:
@@ -106,6 +107,8 @@ def fetch_sitemap(source) -> list[FetchedItem]:
         if noise_re.search(u):
             continue
         if contains and contains not in u:
+            continue
+        if exclude and any(x in u for x in exclude.split("|")):
             continue
         if u.rstrip("/").endswith(("/newsroom", "/newsroom/")):
             continue

@@ -47,16 +47,6 @@
       "enabled": true
     },
     {
-      "id": "ubba",
-      "name": "Utility Broadband Alliance (UBBA)",
-      "name_cn": "UBBA 公用事业联盟",
-      "category": "alliance",
-      "type": "rss",
-      "url": "https://www.ubba.com/feed/",
-      "country": "global",
-      "enabled": true
-    },
-    {
       "id": "nokia_newsroom",
       "name": "Nokia Newsroom",
       "name_cn": "诺基亚新闻室",
@@ -144,592 +134,6 @@
         "url_ends_with": ".html",
         "max_items": 20
       }
-    },
-    {
-      "id": "anatel_brazil",
-      "name": "ANATEL Brazil",
-      "name_cn": "巴西 ANATEL",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ANATEL%20espectro%20OR%20frequencia%20OR%20leilao&hl=pt-BR",
-      "country": "brazil",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "espectro",
-          "frequências",
-          "leilão",
-          "450 MHz",
-          "redes privadas",
-          "telecomunicações"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "icasa_southafrica",
-      "name": "ICASA South Africa",
-      "name_cn": "南非 ICASA",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.icasa.org.za/news-category/communications",
-      "country": "south-africa",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "auction",
-          "licence",
-          "license",
-          "frequency band",
-          "radio frequency",
-          "spectrum"
-        ],
-        "url_contains": "/news/20",
-        "allow_parent_title": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "mcmc_malaysia",
-      "name": "MCMC Malaysia",
-      "name_cn": "马来西亚 MCMC",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.mcmc.gov.my/en/media/press-releases",
-      "country": "malaysia",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spektrum",
-          "lesen",
-          "peruntukan",
-          "auction",
-          "frequency"
-        ],
-        "max_items": 20,
-        "url_contains": "/media/press-releases/"
-      }
-    },
-    {
-      "id": "kominfo_indonesia",
-      "name": "Kominfo Indonesia",
-      "name_cn": "印尼 Kominfo",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=Kominfo%20spektrum%20OR%20frekuensi&hl=id-ID",
-      "country": "indonesia",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spektrum",
-          "frekuensi",
-          "lisensi",
-          "izin",
-          "telekomunikasi",
-          "jaringan"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "nbtc_thailand",
-      "name": "NBTC Thailand",
-      "name_cn": "泰国 NBTC",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=NBTC%20spectrum%20OR%20frequency&hl=th-TH",
-      "country": "thailand",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "คลื่นความถี่",
-          "สเปกตรัม",
-          "ใบอนุญาต",
-          "ประมูล",
-          "โทรคมนาคม"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "tdra_uae",
-      "name": "TDRA UAE",
-      "name_cn": "阿联酋 TDRA",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=TDRA%20spectrum%20OR%20frequency&hl=en-AE",
-      "country": "uae",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "التردد",
-          "الترددات",
-          "الطيف",
-          "الترخيص",
-          "شبكة خاصة",
-          "الاتصالات"
-        ],
-        "url_contains": "/en/media/press-release/",
-        "max_items": 50,
-        "enrich_titles": 5
-      }
-    },
-    {
-      "id": "chile_subtel",
-      "name": "SUBTEL Chile",
-      "name_cn": "智利 SUBTEL",
-      "category": "country",
-      "type": "rss",
-      "url": "https://www.subtel.gob.cl/feed/",
-      "country": "chile",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "espectro",
-          "frecuencias",
-          "concesión",
-          "450 MHz",
-          "redes privadas",
-          "telecomunicaciones"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "argentina_enacom",
-      "name": "ENACOM Argentina",
-      "name_cn": "阿根廷 ENACOM",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ENACOM%20espectro%20OR%20frecuencias&hl=es-AR",
-      "country": "argentina",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "espectro",
-          "frecuencias",
-          "licencia",
-          "450 MHz",
-          "redes privadas",
-          "telecomunicaciones"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "colombia_crc",
-      "name": "CRC Colombia",
-      "name_cn": "哥伦比亚 CRC",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=CRC%20Colombia%20espectro%20OR%20frecuencias&hl=es-CO",
-      "country": "colombia",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "espectro",
-          "frecuencias",
-          "concesión",
-          "450 MHz",
-          "redes privadas",
-          "telecomunicaciones"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "ecuador_arcotel",
-      "name": "ARCOTEL Ecuador",
-      "name_cn": "厄瓜多尔 ARCOTEL",
-      "category": "country",
-      "type": "rss",
-      "url": "https://arcotel.gob.ec/feed/",
-      "country": "ecuador",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "espectro",
-          "frecuencias",
-          "concesión",
-          "450 MHz",
-          "redes privadas",
-          "telecomunicaciones"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "nigeria_ncc",
-      "name": "NCC Nigeria",
-      "name_cn": "尼日利亚 NCC",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=NCC%20Nigeria%20spectrum%20OR%20frequency&hl=en-NG",
-      "country": "nigeria",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "kenya_ca",
-      "name": "CA Kenya",
-      "name_cn": "肯尼亚 CA",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=CA%20Kenya%20spectrum%20OR%20frequency&hl=en-KE",
-      "country": "kenya",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "egypt_ntra",
-      "name": "NTRA Egypt",
-      "name_cn": "埃及 NTRA",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=NTRA%20Egypt%20spectrum%20OR%20frequency&hl=en-EG",
-      "country": "egypt",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "morocco_anrt",
-      "name": "ANRT Morocco",
-      "name_cn": "摩洛哥 ANRT",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ANRT%20spectre%20OR%20frequences&hl=fr-MA",
-      "country": "morocco",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectre",
-          "fréquences",
-          "autorisation",
-          "450 MHz",
-          "réseau privé",
-          "télécommunications"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "algeria_arpt",
-      "name": "ARPT Algeria",
-      "name_cn": "阿尔及利亚 ARPT",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ARPT%20spectre%20OR%20frequences&hl=fr-DZ",
-      "country": "algeria",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectre",
-          "fréquences",
-          "autorisation",
-          "450 MHz",
-          "réseau privé",
-          "télécommunications"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "pakistan_pta",
-      "name": "PTA Pakistan",
-      "name_cn": "巴基斯坦 PTA",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=PTA%20Pakistan%20spectrum%20OR%20frequency&hl=en-PK",
-      "country": "pakistan",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "oman_tra",
-      "name": "TRA Oman",
-      "name_cn": "阿曼 TRA",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=TRA%20Oman%20spectrum%20OR%20frequency&hl=en-OM",
-      "country": "oman",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "iraq_cmc",
-      "name": "CMC Iraq",
-      "name_cn": "伊拉克 CMC",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=CMC%20Iraq%20spectrum%20OR%20frequency&hl=ar-IQ",
-      "country": "iraq",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectrum",
-          "frequency",
-          "licence",
-          "license",
-          "450 MHz",
-          "private network",
-          "telecom"
-        ],
-        "allow_parent_title": true,
-        "max_items": 50
-      }
-    },
-    {
-      "id": "romania_ancom",
-      "name": "ANCOM Romania",
-      "name_cn": "罗马尼亚 ANCOM",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.ancom.ro/despre-noi/media/comunicate-de-presa/",
-      "country": "romania",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spectru",
-          "frecvențe",
-          "licență",
-          "450 MHz",
-          "rețea privată",
-          "telecomunicații"
-        ],
-        "allow_parent_title": true,
-        "max_items": 20,
-        "url_contains": "/comunicate-de-presa/"
-      }
-    },
-    {
-      "id": "greece_eett",
-      "name": "EETT Greece",
-      "name_cn": "希腊 EETT",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.eett.gr/en/media-publications/press-releases-announcements/press-releases/",
-      "country": "greece",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "φάσμα",
-          "συχνότητα",
-          "άδεια",
-          "450 MHz",
-          "ιδιωτικό δίκτυο",
-          "τηλεπικοινωνίες"
-        ],
-        "max_items": 20,
-        "url_contains": "/en/deltia_tipou/"
-      }
-    },
-    {
-      "id": "slovakia_urek",
-      "name": "ÚREK Slovakia",
-      "name_cn": "斯洛伐克 ÚREK",
-      "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=UREK%20spektrum%20OR%20frekvencia&hl=sk-SK",
-      "country": "slovakia",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "spektrum",
-          "frekvencia",
-          "licencia",
-          "450 MHz",
-          "súkromná sieť",
-          "telekomunikácie"
-        ],
-        "max_items": 50
-      }
-    },
-    {
-      "id": "other_power_eng",
-      "name": "Power Engineering",
-      "name_cn": "全球发电电力（其他国家）",
-      "category": "other",
-      "type": "rss",
-      "url": "https://www.power-eng.com/rss/",
-      "country": "global",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "private network",
-          "private wireless",
-          "utility",
-          "grid",
-          "450 MHz",
-          "smart grid",
-          "spectrum",
-          "5G",
-          "microgrid",
-          "distribution automation",
-          "smart meter"
-        ]
-      }
-    },
-    {
-      "id": "other_smart_cities",
-      "name": "Smart Cities Dive",
-      "name_cn": "全球智能城市公用事业（其他国家）",
-      "category": "other",
-      "type": "rss",
-      "url": "https://www.smartcitiesdive.com/feeds/news/",
-      "country": "global",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "private network",
-          "private wireless",
-          "utility",
-          "grid",
-          "450 MHz",
-          "smart grid",
-          "spectrum",
-          "5G",
-          "broadband",
-          "smart city",
-          "digital utility"
-        ]
-      }
-    },
-    {
-      "id": "arcep_france",
-      "name": "ARCEP France",
-      "name_cn": "法国 ARCEP（频谱监管）",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.arcep.fr/actualites.html",
-      "country": "france",
-      "enabled": false,
-      "options": {
-        "extra_keywords": [
-          "fréquences",
-          "spectre",
-          "autorisation",
-          "appel à candidatures",
-          "450 MHz",
-          "réseau privé"
-        ],
-        "max_items": 20
-      }
-    },
-    {
-      "id": "univers_freebox",
-      "name": "Univers Freebox",
-      "name_cn": "法国电信媒体",
-      "category": "country",
-      "type": "rss",
-      "url": "https://www.universfreebox.com/feed",
-      "country": "france",
-      "enabled": true,
-      "options": {
-        "extra_keywords": [
-          "ARCEP",
-          "fréquences",
-          "spectre",
-          "autorisation",
-          "450 MHz",
-          "appel à candidatures"
-        ],
-        "direct": true
-      }
-    },
-    {
-      "id": "rcr_wireless",
-      "name": "RCR Wireless",
-      "name_cn": "RCR Wireless",
-      "category": "country",
-      "type": "rss",
-      "url": "https://rcrwireless.com/feed",
-      "country": "global",
-      "enabled": true
-    },
-    {
-      "id": "light_reading",
-      "name": "Light Reading",
-      "name_cn": "Light Reading",
-      "category": "country",
-      "type": "html",
-      "url": "https://www.lightreading.com/",
-      "country": "global",
-      "enabled": true,
-      "options": {
-        "max_items": 25,
-        "direct": true
-      }
-    },
-    {
-      "id": "utility_dive",
-      "name": "Utility Dive",
-      "name_cn": "Utility Dive",
-      "category": "country",
-      "type": "rss",
-      "url": "https://www.utilitydive.com/feeds/news/",
-      "country": "global",
-      "enabled": true
     },
     {
       "id": "cust_tnb",
@@ -837,6 +241,147 @@
       "enabled": true,
       "options": {
         "url_contains": "/tous-les-communiques-de-presse/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_cge",
+      "name": "CGE Chile",
+      "name_cn": "智利 CGE 电力公司",
+      "category": "customer",
+      "type": "rss",
+      "url": "https://www.cge.cl/category/prensa/feed/",
+      "country": "chile",
+      "enabled": true,
+      "options": {}
+    },
+    {
+      "id": "cust_nigeria",
+      "name": "NERC Nigeria",
+      "name_cn": "尼日利亚电力监管委员会",
+      "category": "customer",
+      "type": "html",
+      "url": "https://nerc.gov.ng/media/",
+      "country": "nigeria",
+      "enabled": true,
+      "options": {
+        "url_contains": "nerc.gov.ng/media/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_kplc",
+      "name": "Kenya Power",
+      "name_cn": "肯尼亚电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://newsroom.kplc.co.ke",
+      "country": "kenya",
+      "enabled": true,
+      "options": {
+        "url_contains": "newsroom.kplc.co.ke/articles/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_onee",
+      "name": "ONEE",
+      "name_cn": "摩洛哥水电局",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.one.ma/fr/pages/actua.asp?esp=2&id1=8&id2=70&t1=1&t2=1",
+      "country": "morocco",
+      "enabled": true,
+      "options": {
+        "verify_ssl": false,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_pln",
+      "name": "PLN",
+      "name_cn": "印尼国家电力公司（安塔拉通讯社）",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.antaranews.com/tag/pt-perusahaan-listrik-negara-pln",
+      "country": "indonesia",
+      "enabled": true,
+      "options": {
+        "url_contains": "/berita/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_snel",
+      "name": "SNEL",
+      "name_cn": "刚果金国家电力公司（ACP通讯社）",
+      "category": "customer",
+      "type": "html",
+      "url": "https://acp.cd/?s=snel",
+      "country": "dr-congo",
+      "enabled": true,
+      "options": {
+        "url_contains": "snel",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_sonabel",
+      "name": "Sonabel",
+      "name_cn": "布基纳法索国家电力公司（Burkina24）",
+      "category": "customer",
+      "type": "html",
+      "url": "https://burkina24.com/tag/sonabel/",
+      "country": "burkina-faso",
+      "enabled": true,
+      "options": {
+        "url_contains": "sonabel",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_cnel",
+      "name": "CNEL EP",
+      "name_cn": "厄瓜多尔国家电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.cnelep.gob.ec/category/noticias/",
+      "country": "ecuador",
+      "enabled": true,
+      "options": {
+        "link_selector": "article h2 a, h2.entry-title a",
+        "min_link_text": 25,
+        "url_exclude": "/category/|/noticias_un_|/noticias/page/|/page/|/wp-content/|/wp-json|/feed/|/#",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_edenor",
+      "name": "Edenor",
+      "name_cn": "阿根廷 Edenor 电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.edenor.com/noticias/",
+      "country": "argentina",
+      "enabled": true,
+      "options": {
+        "url_contains": "/noticias/",
+        "url_exclude": "/institucional/|/files/|/inversores/|/centro-ayuda/|/sites/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_eneo",
+      "name": "ENEO",
+      "name_cn": "喀麦隆 ENEO 电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://eneocameroon.cm/index.php/fr/actualite-communiques/communiques-communiques-de-presse",
+      "country": "cameroon",
+      "enabled": true,
+      "options": {
+        "url_contains": "/actualite-communiques/",
+        "url_exclude": "&start=|?itemid=|?tmpl=component|&print=1|&layout=|#",
         "max_items": 20
       }
     }

@@ -49,7 +49,8 @@ SPECTRUM_TERMS = [
 
 
 def _has_any(text: str, terms) -> bool:
-    return any(t in text for t in terms)
+    """text 已小写；对词也统一小写再匹配，避免 450MHz/MHz 等大写词失效。"""
+    return any(t.lower() in text for t in terms)
 
 
 def load_keywords(config_path: str) -> list[str]:
@@ -59,9 +60,15 @@ def load_keywords(config_path: str) -> list[str]:
     return data.get("keywords", [])
 
 
-def _is_relevant(text: str, source_id: str, entity_re=None, source_categories=None) -> bool:
-    """判断一条内容是否与「电力无线专网 / 频谱动态」相关（实时过滤核心）。"""
+def _is_relevant(text: str, source_id: str, entity_re=None, source_categories=None,
+                 extra_terms=None) -> bool:
+    """判断一条内容是否与「电力无线专网 / 频谱动态」相关（实时过滤核心）。
+
+    extra_terms：sources.json 顶层 keywords（用户可编辑的补充词表），命中任一即算相关。
+    """
     if entity_re and entity_re.search(text):
+        return True
+    if extra_terms and _has_any(text, extra_terms):
         return True
     cat = (source_categories or {}).get(source_id, "")
     if cat == "alliance":
@@ -77,16 +84,18 @@ def _is_relevant(text: str, source_id: str, entity_re=None, source_categories=No
     )
 
 
-def filter_items(items, entity_re=None, source_categories=None):
+def filter_items(items, entity_re=None, source_categories=None, extra_terms=None):
     """过滤 FetchedItem 列表（兼容旧调用）。"""
     return [it for it in items
-            if _is_relevant(f"{it.title} {it.summary}".lower(), it.source_id, entity_re, source_categories)]
+            if _is_relevant(f"{it.title} {it.summary}".lower(), it.source_id,
+                            entity_re, source_categories, extra_terms)]
 
 
-def filter_db_rows(rows, entity_re=None, source_categories=None):
+def filter_db_rows(rows, entity_re=None, source_categories=None, extra_terms=None):
     """过滤数据库行。
 
     rows 每行列序：(id, source_id, source_name, title, url, published, summary, country, fetched_at)
     """
     return [r for r in rows
-            if _is_relevant(f"{r[3]} {r[6]}".lower(), r[1], entity_re, source_categories)]
+            if _is_relevant(f"{r[3]} {r[6]}".lower(), r[1],
+                            entity_re, source_categories, extra_terms)]

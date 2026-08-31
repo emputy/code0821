@@ -79,6 +79,7 @@ def fetch_html(source) -> list[FetchedItem]:
     opts = source.options or {}
     contains = opts.get("url_contains", "")       # URL 必须包含
     ends_with = opts.get("url_ends_with", "")     # URL 必须以...结尾
+    exclude = opts.get("url_exclude", "")         # URL 含此片段则排除（可多个，用 | 分隔）
     selector = opts.get("link_selector", "a")     # 链接 CSS 选择器
     max_items = int(opts.get("max_items", 30))
     min_link_text = int(opts.get("min_link_text", 15))  # 链接文本最短长度
@@ -127,6 +128,8 @@ def fetch_html(source) -> list[FetchedItem]:
             continue
         full = urljoin(source.url, href)
         if contains and contains not in full:
+            continue
+        if exclude and any(x in full for x in exclude.split("|")):
             continue
         if full in seen:
             continue
