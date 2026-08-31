@@ -384,6 +384,21 @@
         "url_exclude": "&start=|?itemid=|?tmpl=component|&print=1|&layout=|#",
         "max_items": 20
       }
+    },
+    {
+      "id": "cust_dewa",
+      "name": "DEWA",
+      "name_cn": "迪拜水电局",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.dewa.gov.ae/en/about-us/media-publications/latest-news",
+      "country": "uae",
+      "enabled": true,
+      "options": {
+        "url_contains": "latest-news",
+        "impersonate": true,
+        "max_items": 20
+      }
     }
   ],
   "proxy": "http://127.0.0.1:7890"

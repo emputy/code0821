@@ -26,7 +26,30 @@ def _extract_page_date(soup, url: str = "") -> str:
     return from_url(url)
 
 
-def _fill_article_dates(items, verify: bool = True, proxies=None) -> list:
+def _page_text(url, timeout, headers, verify, proxies, mode: str = "") -> str:
+    """按源模式取页面 HTML 文本：
+    - mode="browser"：Playwright 真实浏览器渲染（JS 站点 / TLS 指纹 / 部分 WAF）
+    - mode="impersonate"：curl_cffi 伪装 Chrome TLS 指纹（轻量）
+    - 默认：requests
+    """
+    if mode == "browser":
+        from .browser import render_html
+        proxy = ""
+        if proxies:
+            proxy = proxies.get("https") or proxies.get("http") or ""
+        return render_html(url, timeout_ms=timeout * 1000, proxy=proxy)
+    if mode == "impersonate":
+        from curl_cffi import requests as crequests
+        resp = crequests.get(url, timeout=timeout, impersonate="chrome124",
+                             verify=verify, proxies=proxies)
+        resp.raise_for_status()
+        return resp.text
+    resp = requests.get(url, timeout=timeout, headers=headers, verify=verify, proxies=proxies)
+    resp.raise_for_status()
+    return resp.text
+
+
+def _fill_article_dates(items, verify: bool = True, proxies=None, mode: str = "") -> list:
     """并行打开没有发布日期的文章页，提取发布时间（单源内 6 并发）。"""
     def _fill(it):
         if it.published:
@@ -34,10 +57,9 @@ def _fill_article_dates(items, verify: bool = True, proxies=None) -> list:
         try:
             d = from_url(it.url)
             if not d:
-                resp = requests.get(it.url, timeout=15, headers=HEADERS, verify=verify, proxies=proxies)
-                if resp.status_code == 200:
-                    soup = BeautifulSoup(resp.text, "lxml")
-                    d = _extract_page_date(soup, it.url)
+                text = _page_text(it.url, 15, HEADERS, verify, proxies, mode)
+                soup = BeautifulSoup(text, "lxml")
+                d = _extract_page_date(soup, it.url)
             if d:
                 it.published = d
         except Exception:
@@ -85,16 +107,16 @@ def fetch_html(source) -> list[FetchedItem]:
     min_link_text = int(opts.get("min_link_text", 15))  # 链接文本最短长度
     allow_parent_title = bool(opts.get("allow_parent_title", False))  # 文本短时回退父容器标题
     proxies = {"http": opts["proxy"], "https": opts["proxy"]} if opts.get("proxy") else None
+    mode = "browser" if opts.get("browser") else ("impersonate" if opts.get("impersonate") else "")
 
     try:
-        resp = requests.get(source.url, timeout=20, headers=HEADERS,
-                            verify=bool(opts.get("verify_ssl", True)), proxies=proxies)
-        resp.raise_for_status()
+        html_text = _page_text(source.url, 20, HEADERS,
+                               bool(opts.get("verify_ssl", True)), proxies, mode)
     except Exception as e:
         print(f"  [HTML 错误] {source.name}: {e}")
         return []
 
-    soup = BeautifulSoup(resp.text, "lxml")
+    soup = BeautifulSoup(html_text, "lxml")
     items = []
     seen = set()
     for a in soup.select(selector):
@@ -146,4 +168,4 @@ def fetch_html(source) -> list[FetchedItem]:
         ))
         if len(items) >= max_items:
             break
-    return _fill_article_dates(items, verify=bool(opts.get("verify_ssl", True)), proxies=proxies)
+    return _fill_article_dates(items, verify=bool(opts.get("verify_ssl", True)), proxies=proxies, mode=mode)
