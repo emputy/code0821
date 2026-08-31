@@ -399,6 +399,171 @@
         "impersonate": true,
         "max_items": 20
       }
+    },
+    {
+      "id": "cust_ppc_ro",
+      "name": "PPC Romania",
+      "name_cn": "PPC 罗马尼亚电力",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.ppcenergy.ro/media/comunicate-presa/",
+      "country": "romania",
+      "enabled": true,
+      "options": {
+        "url_contains": "/media/comunicate-de-presa/",
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_ppc_gr",
+      "name": "PPC Group",
+      "name_cn": "希腊 PPC 集团",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.ppcgroup.com/en/ppc-group/media-center/press-releases/",
+      "country": "greece",
+      "enabled": true,
+      "options": {
+        "url_contains": "/media-center/press-releases/",
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_moe",
+      "name": "MoE Iraq",
+      "name_cn": "伊拉克电力部",
+      "category": "customer",
+      "type": "html",
+      "url": "https://moelc.gov.iq",
+      "country": "iraq",
+      "enabled": true,
+      "options": {
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_mea",
+      "name": "MEA",
+      "name_cn": "泰国曼谷电力局",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.mea.or.th/public-relations/corporate-news-activities/",
+      "country": "thailand",
+      "enabled": true,
+      "options": {
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_pitc",
+      "name": "PITC",
+      "name_cn": "巴基斯坦电力信息技术公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://pitc.com.pk/index.php/tenders-procurements",
+      "country": "pakistan",
+      "enabled": true,
+      "options": {
+        "browser": true,
+        "url_exclude": "download",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_eeu",
+      "name": "EEU",
+      "name_cn": "埃塞俄比亚电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://eeu.gov.et/news",
+      "country": "ethiopia",
+      "enabled": true,
+      "options": {
+        "url_contains": "/news/detail/",
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_ende",
+      "name": "ENDE",
+      "name_cn": "安哥拉国家配电公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.ende.co.ao",
+      "country": "angola",
+      "enabled": true,
+      "options": {
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_sonelgaz",
+      "name": "Sonelgaz",
+      "name_cn": "阿尔及利亚国家电力和天然气公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.sonelgaz.dz/fr/category/actualites",
+      "country": "algeria",
+      "enabled": true,
+      "options": {
+        "url_contains": "/fr/",
+        "url_exclude": "/fr/category/|/fr/search|/fr/page|/fr/tag/|/fr/qui-sommes-nous|/fr/contact|/fr/a-propos",
+        "min_link_text": 25,
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_edm_mali",
+      "name": "EDM Mali",
+      "name_cn": "马里电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.edmsa.ml/info/actualite",
+      "country": "mali",
+      "enabled": true,
+      "options": {
+        "url_contains": "/node/",
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_delgaz",
+      "name": "Delgaz Grid",
+      "name_cn": "罗马尼亚 Delgaz 电网",
+      "category": "customer",
+      "type": "html",
+      "url": "https://delgaz.ro/serviciul-de-informare/presa",
+      "country": "romania",
+      "enabled": true,
+      "options": {
+        "url_exclude": "/serviciul-de-informare/|/energie-electrica/|/gaze-naturale/|/getattachment/|/download/|/contact|/cariere|/despre|/login|/#",
+        "min_link_text": 25,
+        "browser": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_nedc",
+      "name": "NEDC",
+      "name_cn": "阿曼 Nama 配电公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://distribution.nama.om/",
+      "country": "oman",
+      "enabled": true,
+      "options": {
+        "url_contains": "/UploadsAll/News/",
+        "browser": true,
+        "max_items": 20
+      }
     }
   ],
   "proxy": "http://127.0.0.1:7890"
