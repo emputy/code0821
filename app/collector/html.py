@@ -26,7 +26,7 @@ def _extract_page_date(soup, url: str = "") -> str:
     return from_url(url)
 
 
-def _fill_article_dates(items) -> list:
+def _fill_article_dates(items, verify: bool = True, proxies=None) -> list:
     """并行打开没有发布日期的文章页，提取发布时间（单源内 6 并发）。"""
     def _fill(it):
         if it.published:
@@ -34,7 +34,7 @@ def _fill_article_dates(items) -> list:
         try:
             d = from_url(it.url)
             if not d:
-                resp = requests.get(it.url, timeout=15, headers=HEADERS)
+                resp = requests.get(it.url, timeout=15, headers=HEADERS, verify=verify, proxies=proxies)
                 if resp.status_code == 200:
                     soup = BeautifulSoup(resp.text, "lxml")
                     d = _extract_page_date(soup, it.url)
@@ -83,9 +83,11 @@ def fetch_html(source) -> list[FetchedItem]:
     max_items = int(opts.get("max_items", 30))
     min_link_text = int(opts.get("min_link_text", 15))  # 链接文本最短长度
     allow_parent_title = bool(opts.get("allow_parent_title", False))  # 文本短时回退父容器标题
+    proxies = {"http": opts["proxy"], "https": opts["proxy"]} if opts.get("proxy") else None
 
     try:
-        resp = requests.get(source.url, timeout=20, headers=HEADERS)
+        resp = requests.get(source.url, timeout=20, headers=HEADERS,
+                            verify=bool(opts.get("verify_ssl", True)), proxies=proxies)
         resp.raise_for_status()
     except Exception as e:
         print(f"  [HTML 错误] {source.name}: {e}")
@@ -141,4 +143,4 @@ def fetch_html(source) -> list[FetchedItem]:
         ))
         if len(items) >= max_items:
             break
-    return _fill_article_dates(items)
+    return _fill_article_dates(items, verify=bool(opts.get("verify_ssl", True)), proxies=proxies)

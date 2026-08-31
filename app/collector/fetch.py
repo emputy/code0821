@@ -8,13 +8,23 @@ from .sitemap import fetch_sitemap
 
 
 def load_sources(config_path: str) -> list[Source]:
-    """从 sources.json 读取启用的数据源。"""
+    """从 sources.json 读取启用的数据源。
+
+    若顶层配置了 "proxy"（如 127.0.0.1:7890），自动注入到每个数据源的
+    options.proxy（标记 "direct": true 的源除外，它们保持直连）。
+    """
     with open(config_path, encoding="utf-8") as f:
         data = json.load(f)
+    proxy = data.get("proxy", "")
     sources = []
     for s in data.get("sources", []):
         if not s.get("enabled", True):
             continue
+        opts = dict(s.get("options") or {})
+        if proxy and not opts.get("direct"):
+            opts.setdefault("proxy", proxy)
+        s = dict(s)
+        s["options"] = opts
         sources.append(Source(**s))
     return sources
 
@@ -38,6 +48,7 @@ def fetch_all(config_path: str, on_progress=None, max_workers: int = 6) -> list:
 
     on_progress(done, total)：每完成一个源回调一次，用于界面显示进度。
     并发数默认 6，兼顾速度与对方网站反爬压力。
+    代理配置见 sources.json 顶层 "proxy"（load_sources 已按源注入）。
     """
     sources = load_sources(config_path)
     total = len(sources)

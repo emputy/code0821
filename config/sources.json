@@ -171,8 +171,8 @@
       "name": "ICASA South Africa",
       "name_cn": "南非 ICASA",
       "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ICASA%20spectrum%20OR%20frequency&hl=en-ZA",
+      "type": "html",
+      "url": "https://www.icasa.org.za/news-category/communications",
       "country": "south-africa",
       "enabled": true,
       "options": {
@@ -184,9 +184,9 @@
           "radio frequency",
           "spectrum"
         ],
-        "url_contains": "/news/202",
+        "url_contains": "/news/20",
         "allow_parent_title": true,
-        "max_items": 50
+        "max_items": 20
       }
     },
     {
@@ -194,8 +194,8 @@
       "name": "MCMC Malaysia",
       "name_cn": "马来西亚 MCMC",
       "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=MCMC%20spectrum%20OR%20spektrum&hl=en-MY",
+      "type": "html",
+      "url": "https://www.mcmc.gov.my/en/media/press-releases",
       "country": "malaysia",
       "enabled": true,
       "options": {
@@ -206,7 +206,8 @@
           "auction",
           "frequency"
         ],
-        "max_items": 50
+        "max_items": 20,
+        "url_contains": "/media/press-releases/"
       }
     },
     {
@@ -279,7 +280,7 @@
       "name_cn": "智利 SUBTEL",
       "category": "country",
       "type": "rss",
-      "url": "https://news.google.com/rss/search?q=SUBTEL%20espectro%20OR%20frecuencias&hl=es-CL",
+      "url": "https://www.subtel.gob.cl/feed/",
       "country": "chile",
       "enabled": true,
       "options": {
@@ -343,7 +344,7 @@
       "name_cn": "厄瓜多尔 ARCOTEL",
       "category": "country",
       "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ARCOTEL%20espectro%20OR%20frecuencias&hl=es-EC",
+      "url": "https://arcotel.gob.ec/feed/",
       "country": "ecuador",
       "enabled": true,
       "options": {
@@ -543,8 +544,8 @@
       "name": "ANCOM Romania",
       "name_cn": "罗马尼亚 ANCOM",
       "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=ANCOM%20spectru%20OR%20frecventa&hl=ro-RO",
+      "type": "html",
+      "url": "https://www.ancom.ro/despre-noi/media/comunicate-de-presa/",
       "country": "romania",
       "enabled": true,
       "options": {
@@ -557,7 +558,8 @@
           "telecomunicații"
         ],
         "allow_parent_title": true,
-        "max_items": 50
+        "max_items": 20,
+        "url_contains": "/comunicate-de-presa/"
       }
     },
     {
@@ -565,8 +567,8 @@
       "name": "EETT Greece",
       "name_cn": "希腊 EETT",
       "category": "country",
-      "type": "rss",
-      "url": "https://news.google.com/rss/search?q=EETT%20spectrum%20OR%20frequency&hl=el-GR",
+      "type": "html",
+      "url": "https://www.eett.gr/en/media-publications/press-releases-announcements/press-releases/",
       "country": "greece",
       "enabled": true,
       "options": {
@@ -578,7 +580,8 @@
           "ιδιωτικό δίκτυο",
           "τηλεπικοινωνίες"
         ],
-        "max_items": 50
+        "max_items": 20,
+        "url_contains": "/en/deltia_tipou/"
       }
     },
     {
@@ -690,7 +693,8 @@
           "autorisation",
           "450 MHz",
           "appel à candidatures"
-        ]
+        ],
+        "direct": true
       }
     },
     {
@@ -713,7 +717,8 @@
       "country": "global",
       "enabled": true,
       "options": {
-        "max_items": 25
+        "max_items": 25,
+        "direct": true
       }
     },
     {
@@ -725,6 +730,116 @@
       "url": "https://www.utilitydive.com/feeds/news/",
       "country": "global",
       "enabled": true
+    },
+    {
+      "id": "cust_tnb",
+      "name": "TNB (Tenaga Nasional)",
+      "name_cn": "马来西亚国家能源公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.tnb.com.my/announcements",
+      "country": "malaysia",
+      "enabled": true,
+      "options": {
+        "url_contains": "tnb.com.my/announcements/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_eskom",
+      "name": "Eskom",
+      "name_cn": "南非国家电力公司",
+      "category": "customer",
+      "type": "rss",
+      "url": "https://www.eskom.co.za/feed/",
+      "country": "south-africa",
+      "enabled": true,
+      "options": {}
+    },
+    {
+      "id": "cust_edm_moz",
+      "name": "EDM Mozambique",
+      "name_cn": "莫桑比克国家电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.edm.co.mz/noticias/inicio",
+      "country": "mozambique",
+      "enabled": true,
+      "options": {
+        "url_contains": "/noticia/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_epm",
+      "name": "EPM",
+      "name_cn": "哥伦比亚麦德林电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.epm.com.co/institucional/sala-de-prensa/",
+      "country": "colombia",
+      "enabled": true,
+      "options": {
+        "url_contains": "noticias-y-novedades",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_edg",
+      "name": "EDG",
+      "name_cn": "几内亚电力公司",
+      "category": "customer",
+      "type": "sitemap",
+      "url": "https://edg.com.gn/wp-sitemap.xml",
+      "country": "guinea",
+      "enabled": true,
+      "options": {
+        "max_items": 20,
+        "enrich_titles": 3
+      }
+    },
+    {
+      "id": "cust_cienergies",
+      "name": "CI-ENERGIES",
+      "name_cn": "科特迪瓦电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.cinergies.ci",
+      "country": "cote-divoire",
+      "enabled": true,
+      "options": {
+        "url_contains": "/20",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_eehc",
+      "name": "EEHC",
+      "name_cn": "埃及电力控股公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://eehc.gov.eg/CMSEehc/en/news-articles/",
+      "country": "egypt",
+      "enabled": true,
+      "options": {
+        "url_contains": "/CMSEehc/en/news-articles/",
+        "max_items": 20
+      }
+    },
+    {
+      "id": "cust_edf",
+      "name": "EDF",
+      "name_cn": "法国电力公司",
+      "category": "customer",
+      "type": "html",
+      "url": "https://www.edf.fr/groupe-edf/espaces-dedies/journalistes/tous-les-communiques-de-presse",
+      "country": "france",
+      "enabled": true,
+      "options": {
+        "url_contains": "/tous-les-communiques-de-presse/",
+        "max_items": 20
+      }
     }
-  ]
+  ],
+  "proxy": "http://127.0.0.1:7890"
 }

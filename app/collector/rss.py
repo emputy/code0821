@@ -24,10 +24,13 @@ def fetch_rss(source) -> list[FetchedItem]:
     """抓取一个 RSS 订阅源，返回前 50 条内容。
 
     用 requests 先取内容（带 20s 超时和浏览器 UA），再交给 feedparser 解析，
-    避免 feedparser 直连无超时导致长时间挂起。
+    避免 feedparser 直连无超时导致长时间挂起。支持按源配置代理。
     """
+    opts = source.options or {}
+    proxies = {"http": opts["proxy"], "https": opts["proxy"]} if opts.get("proxy") else None
     try:
-        resp = requests.get(source.url, timeout=20, headers=HEADERS)
+        resp = requests.get(source.url, timeout=20, headers=HEADERS,
+                            verify=bool(opts.get("verify_ssl", True)), proxies=proxies)
         resp.raise_for_status()
         feed = feedparser.parse(resp.content)
     except Exception as e:

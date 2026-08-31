@@ -17,9 +17,9 @@ DEFAULT_NOISE = [
 ]
 
 
-def _fetch_sitemap_entries(url: str) -> list[tuple[str, str]]:
+def _fetch_sitemap_entries(url: str, verify: bool = True, proxies=None) -> list[tuple[str, str]]:
     """抓取站点地图，返回 [(url, lastmod), ...]，lastmod 为空串表示没有。"""
-    resp = requests.get(url, timeout=30, headers=HEADERS)
+    resp = requests.get(url, timeout=30, headers=HEADERS, verify=verify, proxies=proxies)
     resp.raise_for_status()
     text = resp.text
     entries = []
@@ -36,7 +36,7 @@ def _fetch_sitemap_entries(url: str) -> list[tuple[str, str]]:
     if sub and len(sub) > len(entries) * 0.5:
         def _get(u):
             try:
-                return _fetch_sitemap_entries(u)
+                return _fetch_sitemap_entries(u, verify=verify, proxies=proxies)
             except Exception:
                 return []
         with ThreadPoolExecutor(max_workers=6) as ex:
@@ -53,14 +53,14 @@ def _guess_title(url: str) -> str:
     return slug.strip().capitalize() or url
 
 
-def _enrich_titles(items: list, n: int) -> list:
+def _enrich_titles(items: list, n: int, verify: bool = True, proxies=None) -> list:
     """并行抓取前 n 篇文章页面的真实标题和发布日期（单源内 6 并发）。"""
     if n <= 0:
         return items
 
     def _enrich(it):
         try:
-            resp = requests.get(it.url, timeout=20, headers=HEADERS)
+            resp = requests.get(it.url, timeout=20, headers=HEADERS, verify=verify, proxies=proxies)
             if resp.status_code == 200:
                 soup = BeautifulSoup(resp.text, "lxml")
                 t = soup.title
@@ -87,9 +87,11 @@ def fetch_sitemap(source) -> list[FetchedItem]:
     contains = opts.get("url_contains", "")
     max_items = int(opts.get("max_items", 15))
     enrich = int(opts.get("enrich_titles", 5))
+    verify = bool(opts.get("verify_ssl", True))
+    proxies = {"http": opts["proxy"], "https": opts["proxy"]} if opts.get("proxy") else None
 
     try:
-        entries = _fetch_sitemap_entries(source.url)
+        entries = _fetch_sitemap_entries(source.url, verify=verify, proxies=proxies)
     except Exception as e:
         print(f"  [SITEMAP 错误] {source.name}: {e}")
         return []
@@ -122,5 +124,5 @@ def fetch_sitemap(source) -> list[FetchedItem]:
             published=lastmod,
             country=source.country,
         ))
-    items = _enrich_titles(items, enrich)
+    items = _enrich_titles(items, enrich, verify=verify, proxies=proxies)
     return items
