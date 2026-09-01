@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from .base import FetchedItem
 from .dates import from_soup, from_url
 
+_browser_warned = False  # 浏览器不可用的降级提示只打印一次
+
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
 
 _DATE_RE = re.compile(r"(20\d{2})[-/.]?(\d{1,2})[-/.]?(\d{1,2})")
@@ -40,8 +42,11 @@ def _page_text(url, timeout, headers, verify, proxies, mode: str = "") -> str:
                 proxy = proxies.get("https") or proxies.get("http") or ""
             return render_html(url, timeout_ms=timeout * 1000, proxy=proxy)
         except Exception as e:
-            # 浏览器不可用（如受限环境无法启动子进程）时优雅回退普通请求
-            print(f"  [浏览器模式不可用，回退 requests] {type(e).__name__}: {str(e)[:70]}")
+            # 浏览器不可用（如受限环境无法启动子进程）时优雅回退普通请求；只提示一次
+            global _browser_warned
+            if not _browser_warned:
+                _browser_warned = True
+                print(f"  [浏览器模式不可用，回退 requests] {type(e).__name__}: {str(e)[:70]}")
             mode = ""
     if mode == "impersonate":
         from curl_cffi import requests as crequests
