@@ -33,11 +33,16 @@ def _page_text(url, timeout, headers, verify, proxies, mode: str = "") -> str:
     - 默认：requests
     """
     if mode == "browser":
-        from .browser import render_html
-        proxy = ""
-        if proxies:
-            proxy = proxies.get("https") or proxies.get("http") or ""
-        return render_html(url, timeout_ms=timeout * 1000, proxy=proxy)
+        try:
+            from .browser import render_html
+            proxy = ""
+            if proxies:
+                proxy = proxies.get("https") or proxies.get("http") or ""
+            return render_html(url, timeout_ms=timeout * 1000, proxy=proxy)
+        except Exception as e:
+            # 浏览器不可用（如受限环境无法启动子进程）时优雅回退普通请求
+            print(f"  [浏览器模式不可用，回退 requests] {type(e).__name__}: {str(e)[:70]}")
+            mode = ""
     if mode == "impersonate":
         from curl_cffi import requests as crequests
         resp = crequests.get(url, timeout=timeout, impersonate="chrome124",

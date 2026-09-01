@@ -8,15 +8,23 @@ import threading
 _lock = threading.Lock()
 _pw = None
 _browser = None
+_unavailable = False  # 启动失败后置位，后续调用直接抛错（避免每源反复尝试启动）
 
 
 def _get_browser():
-    global _pw, _browser
+    global _pw, _browser, _unavailable
     with _lock:
+        if _unavailable:
+            raise RuntimeError("Playwright 浏览器不可用（此前启动失败）")
         if _browser is None:
-            from playwright.sync_api import sync_playwright
-            _pw = sync_playwright().start()
-            _browser = _pw.chromium.launch(headless=True, args=["--no-sandbox", "--disable-blink-features=AutomationControlled"])
+            try:
+                from playwright.sync_api import sync_playwright
+                _pw = sync_playwright().start()
+                _browser = _pw.chromium.launch(headless=True,
+                                               args=["--no-sandbox", "--disable-blink-features=AutomationControlled"])
+            except Exception:
+                _unavailable = True
+                raise
         return _browser
 
 
