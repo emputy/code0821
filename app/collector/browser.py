@@ -3,7 +3,14 @@
 用法：sources.json 的源 options 里加 "browser": true，html 抓取器会改用
 真实 Chromium 渲染后再解析链接。
 """
+import os
 import threading
+from pathlib import Path
+
+# 把 Chromium 安装目录固定到项目 vendor/pw-browsers（避免默认 %LOCALAPPDATA% 找不到）
+_browsers_dir = Path(__file__).resolve().parents[2] / "vendor" / "pw-browsers"
+if _browsers_dir.is_dir():
+    os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(_browsers_dir))
 
 _lock = threading.Lock()
 _pw = None
