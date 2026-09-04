@@ -13,6 +13,7 @@ from qfluentwidgets import CardWidget, ComboBox, LineEdit, PushButton, Segmented
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_customer_matchers, load_customers
+from app.filter.keywords import is_strong_relevant
 from app.paths import BASE_DIR
 
 CONFIG = BASE_DIR / "config" / "sources.json"
@@ -192,6 +193,18 @@ class SourcesPage(QWidget):
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
         tb3.addWidget(self.edt_keyword)
 
+        self.chk_strong = QCheckBox("只看强相关（450MHz/电力无线专网/频谱授用）")
+        self.chk_strong.setChecked(True)
+        self.chk_strong.setToolTip(
+            "勾选：只显示与【450MHz / 电力无线专网 / 国家频谱授用】强相关的情报。\n"
+            "命中任一关键词：450MHz、LTE450、专网、无线专网、电力专网、专用网络、private network、\n"
+            "private LTE/5G、private wireless、industrial network、mission critical、critical communication、\n"
+            "频谱、频谱拍卖/分配/牌照/许可/政策、spectrum (licence/auction/allocation/policy)、\n"
+            "frequency、MHz、espectro、spektrum、spectre 等。\n"
+            "取消勾选：显示全部原始数据。"
+        )
+        self.chk_strong.toggled.connect(lambda _: self.refresh_items())
+        tb3.addWidget(self.chk_strong)
         self.chk_dated = QCheckBox("只看有发布日期")
         self.chk_dated.setChecked(False)
         self.chk_dated.toggled.connect(lambda _: self.refresh_items())
@@ -461,6 +474,8 @@ class SourcesPage(QWidget):
         custom = [k.lower() for k in _ls().get("custom_keywords", []) if k.strip()]
         if custom:
             rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
+        if getattr(self, "chk_strong", None) and self.chk_strong.isChecked():
+            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
         self.all_rows = []
         for row in rows:
             t = row[5][:10] if row[5] else "—"

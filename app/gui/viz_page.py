@@ -22,7 +22,7 @@ from app.collector.fetch import load_sources
 from app.filter.entities import (
     build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers,
 )
-from app.filter.keywords import filter_db_rows
+from app.filter.keywords import is_strong_relevant
 from app.paths import BASE_DIR
 
 CONFIG = BASE_DIR / "config" / "sources.json"
@@ -58,7 +58,8 @@ class VizPage(QWidget):
             conn.close()
         except Exception:
             rows = []
-        return filter_db_rows(rows, self.entity_re, self.source_cats)
+        # 与工作页面「数据汇总」保持一致：只统计强相关（450MHz/电力无线专网/国家频谱授用）条目
+        return [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
 
     def refresh(self):
         charts = [

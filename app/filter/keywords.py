@@ -53,6 +53,36 @@ def _has_any(text: str, terms) -> bool:
     return any(t.lower() in text for t in terms)
 
 
+# 强相关内容：450MHz / 电力无线专网 / 国家频谱授用。命中任一即视为强相关。
+STRONG_RELEVANCE = [
+    # 450MHz / 无线专网
+    "450mhz", "450 mhz", "lte450", "450m", "450 mhz band",
+    "专网", "无线专网", "电力专网", "专用网络", "专网通信", "集群通信",
+    "private network", "private networks", "private lte", "private 5g",
+    "private wireless", "enterprise private", "dedicated network",
+    "industrial network", "industrial wireless", "utility network",
+    "mission critical", "critical communication",
+    # 国家频谱授用
+    "频谱", "频谱授用", "频谱分配", "频谱拍卖", "频谱牌照", "频谱许可",
+    "频谱政策", "频谱规划", "频谱资源", "频谱管理", "无线电频谱",
+    "spectrum", "spectrum licence", "spectrum license", "spectrum licensing",
+    "spectrum auction", "spectrum allocation", "spectrum assignment",
+    "spectrum policy", "spectrum management", "spectrum band",
+    "frequency", "frequencies", "radio frequency", "frequency band", "mhz",
+    "frequency allocation", "frequency plan", "bandwidth",
+    "espectro", "frecuencia", "frecuencias", "spektrum", "frekuensi",
+    "spectre", "frequences", "frequencies", "frequency spectrum",
+]
+
+
+def is_strong_relevant(text: str) -> bool:
+    """强相关内容判定：标题+摘要（已小写）命中 450MHz/电力无线专网/国家频谱授用 任一关键词。
+
+    用于剔除监管机构/客户源里大量非频谱新闻（如教育、活动、人事等）。
+    """
+    return _has_any(text, STRONG_RELEVANCE)
+
+
 def load_keywords(config_path: str) -> list[str]:
     import json
     with open(config_path, encoding="utf-8") as f:

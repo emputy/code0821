@@ -11,6 +11,7 @@ from qfluentwidgets import CardWidget, PushButton, SubtitleLabel
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
+from app.filter.keywords import is_strong_relevant
 from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
 from app.paths import BASE_DIR
@@ -79,6 +80,18 @@ class WorkPage(QWidget):
         lay.addWidget(card, 1)
 
         btns = QHBoxLayout()
+        self.chk_strong = QCheckBox("只看强相关（450MHz/电力无线专网/频谱授用）")
+        self.chk_strong.setChecked(True)
+        self.chk_strong.setToolTip(
+            "勾选：只显示与【450MHz / 电力无线专网 / 国家频谱授用】强相关的情报。\n"
+            "命中任一关键词：450MHz、LTE450、专网、无线专网、电力专网、专用网络、private network、\n"
+            "private LTE/5G、private wireless、industrial network、mission critical、critical communication、\n"
+            "频谱、频谱拍卖/分配/牌照/许可/政策、spectrum (licence/auction/allocation/policy)、\n"
+            "frequency、MHz、espectro、spektrum、spectre 等。\n"
+            "取消勾选：显示全部原始数据。"
+        )
+        self.chk_strong.toggled.connect(lambda _: self.show_raw())
+        btns.addWidget(self.chk_strong)
         self.btn_raw = PushButton("数据汇总")
         self.btn_raw.setMinimumHeight(34)
         self.btn_raw.clicked.connect(self.show_raw)
@@ -143,6 +156,9 @@ class WorkPage(QWidget):
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。")
             return
+        # 勾选则只显示强相关（450MHz/电力无线专网/频谱授用）；取消勾选显示全部原始
+        if self.chk_strong.isChecked():
+            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():
@@ -198,6 +214,8 @@ class WorkPage(QWidget):
         if not self._date_range_ok():
             return
         rows = self._load_rows()
+        if self.chk_strong.isChecked():
+            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():
