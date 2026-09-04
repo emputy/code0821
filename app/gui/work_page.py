@@ -1,4 +1,5 @@
 import html as html_mod
+import re
 import sqlite3
 
 from PySide6.QtCore import QDate
@@ -19,6 +20,15 @@ CONFIG = BASE_DIR / "config" / "sources.json"
 CUSTOMERS = BASE_DIR / "config" / "customers.json"
 DB = BASE_DIR / "data" / "intel.db"
 EXPORTS = BASE_DIR / "data" / "exports"
+
+_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _strip_html(text: str) -> str:
+    """剥掉标题/摘要里的 HTML 标记（Google News 等源标题常含 <a>/<font> 标签）。"""
+    if not text:
+        return ""
+    return html_mod.unescape(_TAG_RE.sub(" ", text)).strip()
 
 
 class WorkPage(QWidget):
@@ -162,9 +172,9 @@ class WorkPage(QWidget):
             else:
                 time_str = ""
             src_cn = html_mod.escape(cn_map.get(src, src))
-            t_title = html_mod.escape(title)
+            t_title = html_mod.escape(_strip_html(title))
             t_url = html_mod.escape(url)
-            t_sum = html_mod.escape(summary)
+            t_sum = html_mod.escape(_strip_html(summary))
             body = (
                 f"<span style='background:#ececec;color:#444444;border-radius:4px;"
                 f"padding:2px 8px;font-size:12px;'>{src_cn}</span> "
