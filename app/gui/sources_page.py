@@ -277,11 +277,11 @@ class SourcesPage(QWidget):
         self.edt_utility.setPlaceholderText("客户名称，如：Eskom / PLN")
         self.edt_utility.setFixedWidth(220)
         row1.addWidget(self.edt_utility)
-        self.cmb_stage = ComboBox()
+        self.cmb_cust_stage = ComboBox()
         for i in range(1, 6):
-            self.cmb_stage.addItem("阶段 " + str(i), None, i)
-        self.cmb_stage.setFixedWidth(110)
-        row1.addWidget(self.cmb_stage)
+            self.cmb_cust_stage.addItem("阶段 " + str(i), None, i)
+        self.cmb_cust_stage.setFixedWidth(110)
+        row1.addWidget(self.cmb_cust_stage)
         self.cmb_country = ComboBox()
         for code, cn, en, reg in COUNTRY_LIST:
             self.cmb_country.addItem(cn + "（" + en + "）", None, code)
@@ -330,7 +330,7 @@ class SourcesPage(QWidget):
 
     def _add_customer_impl(self):
         name = self.edt_utility.text().strip()
-        stage = int(self.cmb_stage.currentData() or 1)
+        stage = int(self.cmb_cust_stage.currentData() or 1)
         code = self.cmb_country.currentData()
         if not name:
             QMessageBox.warning(self, "添加客户", "请填写客户名称")
