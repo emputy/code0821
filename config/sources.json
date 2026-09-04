@@ -142,7 +142,7 @@
       "category": "country",
       "type": "html",
       "url": "https://www.icasa.org.za/news-category/communications",
-      "country": "south-africa",
+      "country": "South Africa",
       "enabled": true,
       "options": {
         "url_contains": "/news/20",
@@ -157,7 +157,7 @@
       "category": "country",
       "type": "html",
       "url": "https://www.mcmc.gov.my/en/media/press-releases",
-      "country": "malaysia",
+      "country": "Malaysia",
       "enabled": true,
       "options": {
         "url_contains": "/media/press-releases/",
@@ -171,7 +171,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://www.subtel.gob.cl/feed/",
-      "country": "chile",
+      "country": "Chile",
       "enabled": true,
       "options": {}
     },
@@ -182,7 +182,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://arcotel.gob.ec/feed/",
-      "country": "ecuador",
+      "country": "Ecuador",
       "enabled": true,
       "options": {}
     },
@@ -193,7 +193,7 @@
       "category": "country",
       "type": "html",
       "url": "https://www.ancom.ro/despre-noi/media/comunicate-de-presa/",
-      "country": "romania",
+      "country": "Romania",
       "enabled": true,
       "options": {
         "url_contains": "/comunicate-de-presa/",
@@ -207,7 +207,7 @@
       "category": "country",
       "type": "html",
       "url": "https://www.eett.gr/en/media-publications/press-releases-announcements/press-releases/",
-      "country": "greece",
+      "country": "Greece",
       "enabled": true,
       "options": {
         "url_contains": "/en/deltia_tipou/",
@@ -221,7 +221,7 @@
       "category": "country",
       "type": "html",
       "url": "https://www.tra.gov.eg/en/media-center/news/",
-      "country": "egypt",
+      "country": "Egypt",
       "enabled": true,
       "options": {
         "url_contains": "/en/",
@@ -235,7 +235,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=TRA%20Oman%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "oman",
+      "country": "Oman",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -248,7 +248,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Oman%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "oman",
+      "country": "Oman",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -261,7 +261,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=PTA%20Pakistan%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "pakistan",
+      "country": "Pakistan",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -274,7 +274,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Pakistan%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "pakistan",
+      "country": "Pakistan",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -287,7 +287,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ARCEP%20France%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "france",
+      "country": "France",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -300,7 +300,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=France%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "france",
+      "country": "France",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -339,7 +339,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Ethiopia%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "ethiopia",
+      "country": "Ethiopia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -352,7 +352,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Ethiopia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "ethiopia",
+      "country": "Ethiopia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -365,7 +365,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ARPCE%20Algeria%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "algeria",
+      "country": "Algeria",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -378,7 +378,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Algeria%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "algeria",
+      "country": "Algeria",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -391,7 +391,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ANRT%20Morocco%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "morocco",
+      "country": "Morocco",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -404,7 +404,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Morocco%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "morocco",
+      "country": "Morocco",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -417,7 +417,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Cameroon%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "cameroon",
+      "country": "Cameroon",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -430,7 +430,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Cameroon%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "cameroon",
+      "country": "Cameroon",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -443,7 +443,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=NCC%20Nigeria%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "nigeria",
+      "country": "Nigeria",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -456,7 +456,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Nigeria%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "nigeria",
+      "country": "Nigeria",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -469,7 +469,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Angola%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "angola",
+      "country": "Angola",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -482,7 +482,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Angola%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "angola",
+      "country": "Angola",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -495,7 +495,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=CA%20Kenya%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "kenya",
+      "country": "Kenya",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -508,7 +508,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Kenya%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "kenya",
+      "country": "Kenya",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -547,7 +547,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Mali%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "mali",
+      "country": "Mali",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -560,7 +560,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Mali%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "mali",
+      "country": "Mali",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -599,7 +599,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=TDRA%20UAE%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "uae",
+      "country": "UAE",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -612,7 +612,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=UAE%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "uae",
+      "country": "UAE",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -625,7 +625,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=NBTC%20Thailand%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "thailand",
+      "country": "Thailand",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -638,7 +638,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Thailand%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "thailand",
+      "country": "Thailand",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -651,7 +651,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=CRC%20Colombia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "colombia",
+      "country": "Colombia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -664,7 +664,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Colombia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "colombia",
+      "country": "Colombia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -677,7 +677,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Kominfo%20Indonesia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "indonesia",
+      "country": "Indonesia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -690,7 +690,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Indonesia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "indonesia",
+      "country": "Indonesia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -703,7 +703,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Slovakia%20UREK%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "slovakia",
+      "country": "Slovakia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -716,7 +716,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Slovakia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "slovakia",
+      "country": "Slovakia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -729,7 +729,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Mozambique%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "mozambique",
+      "country": "Mozambique",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -742,7 +742,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Mozambique%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "mozambique",
+      "country": "Mozambique",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -755,7 +755,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Guinea%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "guinea",
+      "country": "Guinea",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -768,7 +768,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Guinea%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "guinea",
+      "country": "Guinea",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -781,7 +781,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Iraq%20Ministry%20of%20Electricity%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "iraq",
+      "country": "Iraq",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -794,7 +794,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Iraq%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "iraq",
+      "country": "Iraq",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -807,7 +807,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ICASA%20South%20Africa%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "southafrica",
+      "country": "South Africa",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -820,7 +820,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=South%20Africa%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "southafrica",
+      "country": "South Africa",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -833,7 +833,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=MCMC%20Malaysia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "malaysia",
+      "country": "Malaysia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -846,7 +846,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Malaysia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "malaysia",
+      "country": "Malaysia",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -859,7 +859,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=SUBTEL%20Chile%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "chile",
+      "country": "Chile",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -872,7 +872,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Chile%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "chile",
+      "country": "Chile",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -885,7 +885,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ARCOTEL%20Ecuador%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "ecuador",
+      "country": "Ecuador",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -898,7 +898,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Ecuador%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "ecuador",
+      "country": "Ecuador",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -911,7 +911,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=ANCOM%20Romania%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "romania",
+      "country": "Romania",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -924,7 +924,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Romania%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "romania",
+      "country": "Romania",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -937,7 +937,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=EETT%20Greece%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "greece",
+      "country": "Greece",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -950,7 +950,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Greece%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "greece",
+      "country": "Greece",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -963,7 +963,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=NTRA%20Egypt%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
-      "country": "egypt",
+      "country": "Egypt",
       "enabled": true,
       "options": {
         "max_items": 50
@@ -976,7 +976,7 @@
       "category": "country",
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=Egypt%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
-      "country": "egypt",
+      "country": "Egypt",
       "enabled": true,
       "options": {
         "max_items": 50
