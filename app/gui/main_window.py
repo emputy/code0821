@@ -48,6 +48,8 @@ class MainWindow(FluentWindow):
         self.settings_page.run_collect.connect(self.start_collect)
         self.sources_page.collect_requested.connect(self.start_collect)
         self.sources_page.customers_changed.connect(self._customers_changed)
+        # 数据源页时间范围联动到工作页面
+        self.sources_page.date_range_changed.connect(self.work_page.set_date_range)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._check_schedule)

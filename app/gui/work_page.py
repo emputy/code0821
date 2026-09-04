@@ -116,6 +116,14 @@ class WorkPage(QWidget):
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
 
+    def set_date_range(self, start, end):
+        """外部（数据源页）联动设置时间范围，点击「数据汇总」生效。"""
+        try:
+            self.dt_start.setDate(start)
+            self.dt_end.setDate(end)
+        except Exception:
+            pass
+
     def _bubble(self, title, body_html, _color=None):
         """结构化展示：标题粗体、正文卡片、浅色分隔线；错误用红色提示。"""
         h = ""

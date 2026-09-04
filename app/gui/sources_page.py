@@ -127,6 +127,7 @@ COUNTRY_LIST = _load_countries() or [
 class SourcesPage(QWidget):
     collect_requested = Signal()
     customers_changed = Signal()
+    date_range_changed = Signal(object, object)  # (起, 止) QDate，用于联动工作页面时间
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -218,14 +219,14 @@ class SourcesPage(QWidget):
         self.dt_start.setCalendarPopup(True)
         self.dt_start.setDate(QDate(2025, 1, 1))
         self.dt_start.setFixedWidth(110)
-        self.dt_start.dateChanged.connect(lambda _: self.refresh_items())
+        self.dt_start.dateChanged.connect(lambda _: (self.refresh_items(), self._emit_date_range()))
         tb2.addWidget(self.dt_start)
         tb2.addWidget(QLabel("至"))
         self.dt_end = QDateEdit()
         self.dt_end.setCalendarPopup(True)
         self.dt_end.setDate(QDate.currentDate())
         self.dt_end.setFixedWidth(110)
-        self.dt_end.dateChanged.connect(lambda _: self.refresh_items())
+        self.dt_end.dateChanged.connect(lambda _: (self.refresh_items(), self._emit_date_range()))
         tb2.addWidget(self.dt_end)
         tb2.addStretch(1)
         lay.addLayout(tb2)
@@ -499,6 +500,13 @@ class SourcesPage(QWidget):
         self.cmb_stage.setCurrentIndex(0)
         self.cmb_stage.blockSignals(False)
         self.apply_filter()
+
+    def _emit_date_range(self):
+        """把当前时间范围发给工作页面（联动）。"""
+        try:
+            self.date_range_changed.emit(self.dt_start.date(), self.dt_end.date())
+        except Exception:
+            pass
 
     def _match_item(self, text, src_name, src_country="", summary=""):
         """给条目打阶段标签：客户实体（标题/摘要）-> 来源国家对应客户 -> 联盟/友商 -> 未匹配。"""
