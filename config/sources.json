@@ -136,433 +136,850 @@
       }
     },
     {
-      "id": "cust_tnb",
-      "name": "TNB (Tenaga Nasional)",
-      "name_cn": "马来西亚国家能源公司",
-      "category": "customer",
+      "id": "reg_icasa",
+      "name": "ICASA South Africa",
+      "name_cn": "南非电信监管局",
+      "category": "country",
       "type": "html",
-      "url": "https://www.tnb.com.my/announcements",
+      "url": "https://www.icasa.org.za/news-category/communications",
+      "country": "south-africa",
+      "enabled": true,
+      "options": {
+        "url_contains": "/news/20",
+        "allow_parent_title": true,
+        "max_items": 20
+      }
+    },
+    {
+      "id": "reg_mcmc",
+      "name": "MCMC Malaysia",
+      "name_cn": "马来西亚通信与多媒体委员会",
+      "category": "country",
+      "type": "html",
+      "url": "https://www.mcmc.gov.my/en/media/press-releases",
       "country": "malaysia",
       "enabled": true,
       "options": {
-        "url_contains": "tnb.com.my/announcements/",
+        "url_contains": "/media/press-releases/",
         "max_items": 20
       }
     },
     {
-      "id": "cust_eskom",
-      "name": "Eskom",
-      "name_cn": "南非国家电力公司",
-      "category": "customer",
+      "id": "reg_subtel",
+      "name": "SUBTEL Chile",
+      "name_cn": "智利电信副秘书处",
+      "category": "country",
       "type": "rss",
-      "url": "https://www.eskom.co.za/feed/",
-      "country": "south-africa",
-      "enabled": true,
-      "options": {}
-    },
-    {
-      "id": "cust_edm_moz",
-      "name": "EDM Mozambique",
-      "name_cn": "莫桑比克国家电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.edm.co.mz/noticias/inicio",
-      "country": "mozambique",
-      "enabled": true,
-      "options": {
-        "url_contains": "/noticia/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_epm",
-      "name": "EPM",
-      "name_cn": "哥伦比亚麦德林电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.epm.com.co/institucional/sala-de-prensa/",
-      "country": "colombia",
-      "enabled": true,
-      "options": {
-        "url_contains": "noticias-y-novedades",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_edg",
-      "name": "EDG",
-      "name_cn": "几内亚电力公司",
-      "category": "customer",
-      "type": "sitemap",
-      "url": "https://edg.com.gn/wp-sitemap.xml",
-      "country": "guinea",
-      "enabled": true,
-      "options": {
-        "max_items": 20,
-        "enrich_titles": 3
-      }
-    },
-    {
-      "id": "cust_cienergies",
-      "name": "CI-ENERGIES",
-      "name_cn": "科特迪瓦电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.cinergies.ci",
-      "country": "cote-divoire",
-      "enabled": true,
-      "options": {
-        "url_contains": "/20",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_eehc",
-      "name": "EEHC",
-      "name_cn": "埃及电力控股公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://eehc.gov.eg/CMSEehc/en/news-articles/",
-      "country": "egypt",
-      "enabled": true,
-      "options": {
-        "url_contains": "/CMSEehc/en/news-articles/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_edf",
-      "name": "EDF",
-      "name_cn": "法国电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.edf.fr/groupe-edf/espaces-dedies/journalistes/tous-les-communiques-de-presse",
-      "country": "france",
-      "enabled": true,
-      "options": {
-        "url_contains": "/tous-les-communiques-de-presse/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_cge",
-      "name": "CGE Chile",
-      "name_cn": "智利 CGE 电力公司",
-      "category": "customer",
-      "type": "rss",
-      "url": "https://www.cge.cl/category/prensa/feed/",
+      "url": "https://www.subtel.gob.cl/feed/",
       "country": "chile",
       "enabled": true,
       "options": {}
     },
     {
-      "id": "cust_nigeria",
-      "name": "NERC Nigeria",
-      "name_cn": "尼日利亚电力监管委员会",
-      "category": "customer",
-      "type": "html",
-      "url": "https://nerc.gov.ng/media/",
-      "country": "nigeria",
-      "enabled": true,
-      "options": {
-        "url_contains": "nerc.gov.ng/media/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_kplc",
-      "name": "Kenya Power",
-      "name_cn": "肯尼亚电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://newsroom.kplc.co.ke",
-      "country": "kenya",
-      "enabled": true,
-      "options": {
-        "url_contains": "newsroom.kplc.co.ke/articles/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_onee",
-      "name": "ONEE",
-      "name_cn": "摩洛哥水电局",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.one.ma/fr/pages/actua.asp?esp=2&id1=8&id2=70&t1=1&t2=1",
-      "country": "morocco",
-      "enabled": true,
-      "options": {
-        "verify_ssl": false,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_pln",
-      "name": "PLN",
-      "name_cn": "印尼国家电力公司（安塔拉通讯社）",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.antaranews.com/tag/pt-perusahaan-listrik-negara-pln",
-      "country": "indonesia",
-      "enabled": true,
-      "options": {
-        "url_contains": "/berita/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_snel",
-      "name": "SNEL",
-      "name_cn": "刚果金国家电力公司（ACP通讯社）",
-      "category": "customer",
-      "type": "html",
-      "url": "https://acp.cd/?s=snel",
-      "country": "dr-congo",
-      "enabled": true,
-      "options": {
-        "url_contains": "snel",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_sonabel",
-      "name": "Sonabel",
-      "name_cn": "布基纳法索国家电力公司（Burkina24）",
-      "category": "customer",
-      "type": "html",
-      "url": "https://burkina24.com/tag/sonabel/",
-      "country": "burkina-faso",
-      "enabled": true,
-      "options": {
-        "url_contains": "sonabel",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_cnel",
-      "name": "CNEL EP",
-      "name_cn": "厄瓜多尔国家电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.cnelep.gob.ec/category/noticias/",
+      "id": "reg_arcotel",
+      "name": "ARCOTEL Ecuador",
+      "name_cn": "厄瓜多尔电信监管局",
+      "category": "country",
+      "type": "rss",
+      "url": "https://arcotel.gob.ec/feed/",
       "country": "ecuador",
       "enabled": true,
-      "options": {
-        "link_selector": "article h2 a, h2.entry-title a",
-        "min_link_text": 25,
-        "url_exclude": "/category/|/noticias_un_|/noticias/page/|/page/|/wp-content/|/wp-json|/feed/|/#",
-        "max_items": 20
-      }
+      "options": {}
     },
     {
-      "id": "cust_edenor",
-      "name": "Edenor",
-      "name_cn": "阿根廷 Edenor 电力公司",
-      "category": "customer",
+      "id": "reg_ancom",
+      "name": "ANCOM Romania",
+      "name_cn": "罗马尼亚国家通信管理局",
+      "category": "country",
       "type": "html",
-      "url": "https://www.edenor.com/noticias/",
-      "country": "argentina",
-      "enabled": true,
-      "options": {
-        "url_contains": "/noticias/",
-        "url_exclude": "/institucional/|/files/|/inversores/|/centro-ayuda/|/sites/",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_eneo",
-      "name": "ENEO",
-      "name_cn": "喀麦隆 ENEO 电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://eneocameroon.cm/index.php/fr/actualite-communiques/communiques-communiques-de-presse",
-      "country": "cameroon",
-      "enabled": true,
-      "options": {
-        "url_contains": "/actualite-communiques/",
-        "url_exclude": "&start=|?itemid=|?tmpl=component|&print=1|&layout=|#",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_dewa",
-      "name": "DEWA",
-      "name_cn": "迪拜水电局",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.dewa.gov.ae/en/about-us/media-publications/latest-news",
-      "country": "uae",
-      "enabled": true,
-      "options": {
-        "url_contains": "latest-news",
-        "impersonate": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_ppc_ro",
-      "name": "PPC Romania",
-      "name_cn": "PPC 罗马尼亚电力",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.ppcenergy.ro/media/comunicate-presa/",
+      "url": "https://www.ancom.ro/despre-noi/media/comunicate-de-presa/",
       "country": "romania",
       "enabled": true,
       "options": {
-        "url_contains": "/media/comunicate-de-presa/",
-        "browser": true,
+        "url_contains": "/comunicate-de-presa/",
         "max_items": 20
       }
     },
     {
-      "id": "cust_ppc_gr",
-      "name": "PPC Group",
-      "name_cn": "希腊 PPC 集团",
-      "category": "customer",
+      "id": "reg_eett",
+      "name": "EETT Greece",
+      "name_cn": "希腊国家电信邮政委员会",
+      "category": "country",
       "type": "html",
-      "url": "https://www.ppcgroup.com/en/ppc-group/media-center/press-releases/",
+      "url": "https://www.eett.gr/en/media-publications/press-releases-announcements/press-releases/",
       "country": "greece",
       "enabled": true,
       "options": {
-        "url_contains": "/media-center/press-releases/",
-        "browser": true,
+        "url_contains": "/en/deltia_tipou/",
         "max_items": 20
       }
     },
     {
-      "id": "cust_moe",
-      "name": "MoE Iraq",
-      "name_cn": "伊拉克电力部",
-      "category": "customer",
+      "id": "reg_ntra",
+      "name": "NTRA Egypt",
+      "name_cn": "埃及国家电信管理局",
+      "category": "country",
       "type": "html",
-      "url": "https://moelc.gov.iq",
-      "country": "iraq",
+      "url": "https://www.tra.gov.eg/en/media-center/news/",
+      "country": "egypt",
       "enabled": true,
       "options": {
-        "browser": true,
+        "url_contains": "/en/",
         "max_items": 20
       }
     },
     {
-      "id": "cust_mea",
-      "name": "MEA",
-      "name_cn": "泰国曼谷电力局",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.mea.or.th/public-relations/corporate-news-activities/",
-      "country": "thailand",
-      "enabled": true,
-      "options": {
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_pitc",
-      "name": "PITC",
-      "name_cn": "巴基斯坦电力信息技术公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://pitc.com.pk/index.php/tenders-procurements",
-      "country": "pakistan",
-      "enabled": true,
-      "options": {
-        "browser": true,
-        "url_exclude": "download",
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_eeu",
-      "name": "EEU",
-      "name_cn": "埃塞俄比亚电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://eeu.gov.et/news",
-      "country": "ethiopia",
-      "enabled": true,
-      "options": {
-        "url_contains": "/news/detail/",
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_ende",
-      "name": "ENDE",
-      "name_cn": "安哥拉国家配电公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.ende.co.ao",
-      "country": "angola",
-      "enabled": true,
-      "options": {
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_sonelgaz",
-      "name": "Sonelgaz",
-      "name_cn": "阿尔及利亚国家电力和天然气公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.sonelgaz.dz/fr/category/actualites",
-      "country": "algeria",
-      "enabled": true,
-      "options": {
-        "url_contains": "/fr/",
-        "url_exclude": "/fr/category/|/fr/search|/fr/page|/fr/tag/|/fr/qui-sommes-nous|/fr/contact|/fr/a-propos",
-        "min_link_text": 25,
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_edm_mali",
-      "name": "EDM Mali",
-      "name_cn": "马里电力公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://www.edmsa.ml/info/actualite",
-      "country": "mali",
-      "enabled": true,
-      "options": {
-        "url_contains": "/node/",
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_delgaz",
-      "name": "Delgaz Grid",
-      "name_cn": "罗马尼亚 Delgaz 电网",
-      "category": "customer",
-      "type": "html",
-      "url": "https://delgaz.ro/serviciul-de-informare/presa",
-      "country": "romania",
-      "enabled": true,
-      "options": {
-        "url_exclude": "/serviciul-de-informare/|/energie-electrica/|/gaze-naturale/|/getattachment/|/download/|/contact|/cariere|/despre|/login|/#",
-        "min_link_text": 25,
-        "browser": true,
-        "max_items": 20
-      }
-    },
-    {
-      "id": "cust_nedc",
-      "name": "NEDC",
-      "name_cn": "阿曼 Nama 配电公司",
-      "category": "customer",
-      "type": "html",
-      "url": "https://distribution.nama.om/",
+      "id": "gn_oman_1",
+      "name": "GN Oman #1",
+      "name_cn": "阿曼（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=TRA%20Oman%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
       "country": "oman",
       "enabled": true,
       "options": {
-        "url_contains": "/UploadsAll/News/",
-        "browser": true,
-        "max_items": 20
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_oman_2",
+      "name": "GN Oman #2",
+      "name_cn": "阿曼（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Oman%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "oman",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_pakistan_1",
+      "name": "GN Pakistan #1",
+      "name_cn": "巴基斯坦（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=PTA%20Pakistan%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "pakistan",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_pakistan_2",
+      "name": "GN Pakistan #2",
+      "name_cn": "巴基斯坦（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Pakistan%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "pakistan",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_france_1",
+      "name": "GN France #1",
+      "name_cn": "法国（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ARCEP%20France%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "france",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_france_2",
+      "name": "GN France #2",
+      "name_cn": "法国（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=France%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "france",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_drc_1",
+      "name": "GN DR Congo #1",
+      "name_cn": "刚果金（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Congo%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "drc",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_drc_2",
+      "name": "GN DR Congo #2",
+      "name_cn": "刚果金（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=DR%20Congo%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "drc",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_ethiopia_1",
+      "name": "GN Ethiopia #1",
+      "name_cn": "埃塞俄比亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Ethiopia%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "ethiopia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_ethiopia_2",
+      "name": "GN Ethiopia #2",
+      "name_cn": "埃塞俄比亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Ethiopia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "ethiopia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_algeria_1",
+      "name": "GN Algeria #1",
+      "name_cn": "阿尔及利亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ARPCE%20Algeria%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "algeria",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_algeria_2",
+      "name": "GN Algeria #2",
+      "name_cn": "阿尔及利亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Algeria%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "algeria",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_morocco_1",
+      "name": "GN Morocco #1",
+      "name_cn": "摩洛哥（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ANRT%20Morocco%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "morocco",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_morocco_2",
+      "name": "GN Morocco #2",
+      "name_cn": "摩洛哥（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Morocco%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "morocco",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_cameroon_1",
+      "name": "GN Cameroon #1",
+      "name_cn": "喀麦隆（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Cameroon%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "cameroon",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_cameroon_2",
+      "name": "GN Cameroon #2",
+      "name_cn": "喀麦隆（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Cameroon%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "cameroon",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_nigeria_1",
+      "name": "GN Nigeria #1",
+      "name_cn": "尼日利亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NCC%20Nigeria%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "nigeria",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_nigeria_2",
+      "name": "GN Nigeria #2",
+      "name_cn": "尼日利亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Nigeria%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "nigeria",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_angola_1",
+      "name": "GN Angola #1",
+      "name_cn": "安哥拉（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Angola%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "angola",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_angola_2",
+      "name": "GN Angola #2",
+      "name_cn": "安哥拉（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Angola%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "angola",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_kenya_1",
+      "name": "GN Kenya #1",
+      "name_cn": "肯尼亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=CA%20Kenya%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "kenya",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_kenya_2",
+      "name": "GN Kenya #2",
+      "name_cn": "肯尼亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Kenya%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "kenya",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_burkina_1",
+      "name": "GN Burkina Faso #1",
+      "name_cn": "布基纳法索（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Burkina%20Faso%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "burkina",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_burkina_2",
+      "name": "GN Burkina Faso #2",
+      "name_cn": "布基纳法索（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Burkina%20Faso%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "burkina",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_mali_1",
+      "name": "GN Mali #1",
+      "name_cn": "马里（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Mali%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "mali",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_mali_2",
+      "name": "GN Mali #2",
+      "name_cn": "马里（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Mali%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "mali",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_coteivoire_1",
+      "name": "GN Cote d'Ivoire #1",
+      "name_cn": "科特迪瓦（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Cote%20d%27Ivoire%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "coteivoire",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_coteivoire_2",
+      "name": "GN Cote d'Ivoire #2",
+      "name_cn": "科特迪瓦（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Cote%20d%27Ivoire%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "coteivoire",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_uae_1",
+      "name": "GN UAE #1",
+      "name_cn": "阿联酋（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=TDRA%20UAE%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "uae",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_uae_2",
+      "name": "GN UAE #2",
+      "name_cn": "阿联酋（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=UAE%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "uae",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_thailand_1",
+      "name": "GN Thailand #1",
+      "name_cn": "泰国（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NBTC%20Thailand%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "thailand",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_thailand_2",
+      "name": "GN Thailand #2",
+      "name_cn": "泰国（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Thailand%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "thailand",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_colombia_1",
+      "name": "GN Colombia #1",
+      "name_cn": "哥伦比亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=CRC%20Colombia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "colombia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_colombia_2",
+      "name": "GN Colombia #2",
+      "name_cn": "哥伦比亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Colombia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "colombia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_indonesia_1",
+      "name": "GN Indonesia #1",
+      "name_cn": "印尼（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Kominfo%20Indonesia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "indonesia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_indonesia_2",
+      "name": "GN Indonesia #2",
+      "name_cn": "印尼（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Indonesia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "indonesia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_slovakia_1",
+      "name": "GN Slovakia #1",
+      "name_cn": "斯洛伐克（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Slovakia%20UREK%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "slovakia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_slovakia_2",
+      "name": "GN Slovakia #2",
+      "name_cn": "斯洛伐克（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Slovakia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "slovakia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_mozambique_1",
+      "name": "GN Mozambique #1",
+      "name_cn": "莫桑比克（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Mozambique%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "mozambique",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_mozambique_2",
+      "name": "GN Mozambique #2",
+      "name_cn": "莫桑比克（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Mozambique%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "mozambique",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_guinea_1",
+      "name": "GN Guinea #1",
+      "name_cn": "几内亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Guinea%20telecom%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "guinea",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_guinea_2",
+      "name": "GN Guinea #2",
+      "name_cn": "几内亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Guinea%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "guinea",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_iraq_1",
+      "name": "GN Iraq #1",
+      "name_cn": "伊拉克（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Iraq%20Ministry%20of%20Electricity%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "iraq",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_iraq_2",
+      "name": "GN Iraq #2",
+      "name_cn": "伊拉克（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Iraq%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "iraq",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_southafrica_1",
+      "name": "GN South Africa #1",
+      "name_cn": "南非（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ICASA%20South%20Africa%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "southafrica",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_southafrica_2",
+      "name": "GN South Africa #2",
+      "name_cn": "南非（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=South%20Africa%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "southafrica",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_malaysia_1",
+      "name": "GN Malaysia #1",
+      "name_cn": "马来西亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=MCMC%20Malaysia%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "malaysia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_malaysia_2",
+      "name": "GN Malaysia #2",
+      "name_cn": "马来西亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Malaysia%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "malaysia",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_chile_1",
+      "name": "GN Chile #1",
+      "name_cn": "智利（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=SUBTEL%20Chile%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "chile",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_chile_2",
+      "name": "GN Chile #2",
+      "name_cn": "智利（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Chile%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "chile",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_ecuador_1",
+      "name": "GN Ecuador #1",
+      "name_cn": "厄瓜多尔（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ARCOTEL%20Ecuador%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "ecuador",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_ecuador_2",
+      "name": "GN Ecuador #2",
+      "name_cn": "厄瓜多尔（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Ecuador%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "ecuador",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_romania_1",
+      "name": "GN Romania #1",
+      "name_cn": "罗马尼亚（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=ANCOM%20Romania%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "romania",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_romania_2",
+      "name": "GN Romania #2",
+      "name_cn": "罗马尼亚（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Romania%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "romania",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_greece_1",
+      "name": "GN Greece #1",
+      "name_cn": "希腊（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=EETT%20Greece%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "greece",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_greece_2",
+      "name": "GN Greece #2",
+      "name_cn": "希腊（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Greece%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "greece",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_egypt_1",
+      "name": "GN Egypt #1",
+      "name_cn": "埃及（频谱/450MHz #1）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=NTRA%20Egypt%20spectrum%20OR%20frequency%20OR%20450MHz%20OR%20private%20network&hl=en",
+      "country": "egypt",
+      "enabled": true,
+      "options": {
+        "max_items": 50
+      }
+    },
+    {
+      "id": "gn_egypt_2",
+      "name": "GN Egypt #2",
+      "name_cn": "埃及（频谱/450MHz #2）",
+      "category": "country",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=Egypt%20450MHz%20OR%20private%20wireless%20OR%20private%205G%20OR%20spectrum%20authority%20OR%20licence&hl=en",
+      "country": "egypt",
+      "enabled": true,
+      "options": {
+        "max_items": 50
       }
     }
   ],

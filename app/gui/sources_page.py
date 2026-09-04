@@ -138,7 +138,7 @@ class SourcesPage(QWidget):
         self.stack = QStackedWidget(self)
         self.pivot.addItem("k1", "情报列表", lambda: self.stack.setCurrentIndex(0))
         self.pivot.addItem("k2", "客户全景", lambda: self.stack.setCurrentIndex(1))
-        self.pivot.addItem("k3", "数据源管理", lambda: self.stack.setCurrentIndex(2))
+        self.pivot.addItem("k3", "数据源管理", lambda: (self.stack.setCurrentIndex(2), self.refresh_sources_table()))
         self.stack.addWidget(self._build_list_tab())
         self.stack.addWidget(self._build_customers_tab())
         self.stack.addWidget(self._build_sources_tab())
