@@ -155,27 +155,40 @@ class WorkPage(QWidget):
             return False
         return True
 
+    def get_visible_rows(self):
+        """返回当前可见的数据行（强相关/时间范围/自定义关键词均按界面状态过滤）。
+
+        供「数据汇总」展示与可视化页联动使用；无数据显示空列表。
+        """
+        try:
+            rows = self._load_rows()
+        except Exception:
+            return []
+        if not rows:
+            return []
+        if self.chk_strong.isChecked():
+            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
+        if self._date_range_ok():
+            start_s = self.dt_start.date().toString("yyyy-MM-dd")
+            end_s = self.dt_end.date().toString("yyyy-MM-dd")
+            if self.chk_dated.isChecked():
+                rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
+            else:
+                rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
+        custom = [k.lower() for k in load_settings().get("custom_keywords", []) if k.strip()]
+        if custom:
+            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
+        return rows
+
     def show_raw(self):
         """数据汇总：直接呈现原文，不分析不删减。"""
         self.chat.clear()
         if not self._date_range_ok():
             return
-        rows = self._load_rows()
+        rows = self.get_visible_rows()
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。")
             return
-        # 勾选则只显示强相关（450MHz/电力无线专网/频谱授用）；取消勾选显示全部原始
-        if self.chk_strong.isChecked():
-            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
-        start_s = self.dt_start.date().toString("yyyy-MM-dd")
-        end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        if self.chk_dated.isChecked():
-            rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
-        else:
-            rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
-        custom = [k.lower() for k in load_settings().get("custom_keywords", []) if k.strip()]
-        if custom:
-            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         self._bubble("", f"共 {len(rows)} 条数据（原文未删减）：")
         for row in rows[:100]:
@@ -221,18 +234,7 @@ class WorkPage(QWidget):
             return
         if not self._date_range_ok():
             return
-        rows = self._load_rows()
-        if self.chk_strong.isChecked():
-            rows = [r for r in rows if is_strong_relevant((r[3] or "") + " " + (r[6] or ""))]
-        start_s = self.dt_start.date().toString("yyyy-MM-dd")
-        end_s = self.dt_end.date().toString("yyyy-MM-dd")
-        if self.chk_dated.isChecked():
-            rows = [r for r in rows if r[5] and start_s <= r[5][:10] <= end_s]
-        else:
-            rows = [r for r in rows if (not r[5]) or (start_s <= r[5][:10] <= end_s)]
-        custom = [k.lower() for k in load_settings().get("custom_keywords", []) if k.strip()]
-        if custom:
-            rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
+        rows = self.get_visible_rows()
         if not rows:
             self._bubble("", "当前条件下没有可分析的数据（可调整时间范围或关键词）。")
             return

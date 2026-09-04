@@ -50,6 +50,12 @@ class VizPage(QWidget):
         self.refresh()
 
     def _relevant_rows(self):
+        """与工作页面「数据汇总」一致：复用其当前可见数据行；无数据则空。"""
+        if getattr(self, "work_page", None) is not None:
+            try:
+                return self.work_page.get_visible_rows()
+            except Exception:
+                return []
         try:
             conn = sqlite3.connect(str(DB))
             rows = conn.execute(
@@ -124,9 +130,21 @@ class VizPage(QWidget):
         """饼图视图：图上不画标签；每个扇区用差异明显的颜色区分，
         图下方批注卡片每行带对应色块 + 名称/数量/占比。"""
         from PySide6.QtGui import QCursor
-        from PySide6.QtWidgets import QToolTip
+        from PySide6.QtWidgets import QLabel, QToolTip
 
         slices = series.slices()
+        total = sum(s.value() for s in slices)
+        if not slices or total == 0:
+            # 无数据：显示占位提示，而非空图
+            w = QWidget()
+            lay = QVBoxLayout(w)
+            lay.setContentsMargins(0, 0, 0, 0)
+            lab = QLabel("暂无数据（请先抓取，或工作页面当前无满足条件的数据）")
+            lab.setAlignment(Qt.AlignCenter)
+            lab.setStyleSheet("color:#999999; font-size:14px; border:1px dashed #dcdcdc; border-radius:8px;")
+            lay.addWidget(lab)
+            return w
+
         for i, s in enumerate(slices):
             s.setLabelVisible(False)  # 图上不标注，杜绝重叠
             color = PIE_COLORS[i % len(PIE_COLORS)]

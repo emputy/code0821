@@ -51,6 +51,12 @@ class MainWindow(FluentWindow):
         # 数据源页时间范围联动到工作页面
         self.sources_page.date_range_changed.connect(self.work_page.set_date_range)
 
+        # 可视化与工作页面数据联动：可视化复用工作页的可见数据，实时刷新
+        self.viz_page.work_page = self.work_page
+        self.work_page.chk_strong.toggled.connect(lambda _: self.viz_page.refresh())
+        self.work_page.dt_start.dateChanged.connect(lambda _: self.viz_page.refresh())
+        self.work_page.dt_end.dateChanged.connect(lambda _: self.viz_page.refresh())
+
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._check_schedule)
         self.timer.start(60000)
