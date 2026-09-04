@@ -11,7 +11,6 @@ from qfluentwidgets import CardWidget, PushButton, SubtitleLabel
 
 from app.collector.fetch import load_sources
 from app.filter.entities import build_entity_matcher, build_entity_terms, load_customers
-from app.filter.keywords import filter_db_rows, load_keywords
 from app.gui.settings_store import load_settings
 from app.gui.workers import DeepSeekWorker
 from app.paths import BASE_DIR
@@ -38,7 +37,6 @@ class WorkPage(QWidget):
         self.customers = load_customers(str(CUSTOMERS))
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
-        self.config_keywords = load_keywords(str(CONFIG))
         self._build_ui()
         self.refresh_buttons()
 
@@ -81,11 +79,6 @@ class WorkPage(QWidget):
         lay.addWidget(card, 1)
 
         btns = QHBoxLayout()
-        self.chk_filter = QCheckBox("只看相关（关键词实时过滤）")
-        self.chk_filter.setChecked(True)
-        self.chk_filter.setToolTip("勾选后只显示与【电力无线专网/450MHz/频谱/客户】相关的情报：\n命中客户名称或英文国名，或频谱关键词，或电力+专网/通信关键词")
-        self.chk_filter.toggled.connect(lambda _: self.show_raw())
-        btns.addWidget(self.chk_filter)
         self.btn_raw = PushButton("数据汇总")
         self.btn_raw.setMinimumHeight(34)
         self.btn_raw.clicked.connect(self.show_raw)
@@ -109,7 +102,6 @@ class WorkPage(QWidget):
         self.customers = load_customers(str(CUSTOMERS))
         self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
         self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
-        self.config_keywords = load_keywords(str(CONFIG))
 
     def _bubble(self, title, body_html, _color=None):
         """结构化展示：标题粗体、正文卡片、浅色分隔线；错误用红色提示。"""
@@ -151,8 +143,6 @@ class WorkPage(QWidget):
         if not rows:
             self._bubble("", "数据库暂无数据，请先到「数据源」模块点击「立即抓取」。")
             return
-        if self.chk_filter.isChecked():
-            rows = filter_db_rows(rows, self.entity_re, self.source_cats, self.config_keywords)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():
@@ -163,8 +153,7 @@ class WorkPage(QWidget):
         if custom:
             rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
-        mode = "相关" if self.chk_filter.isChecked() else "全部原始"
-        self._bubble("", f"共 {len(rows)} 条{mode}数据（原文未删减，关键词实时过滤）：")
+        self._bubble("", f"共 {len(rows)} 条数据（原文未删减）：")
         for row in rows[:100]:
             src, title, url, summary = row[2], row[3], row[4], row[6]
             if row[5]:
@@ -209,8 +198,6 @@ class WorkPage(QWidget):
         if not self._date_range_ok():
             return
         rows = self._load_rows()
-        if self.chk_filter.isChecked():
-            rows = filter_db_rows(rows, self.entity_re, self.source_cats, self.config_keywords)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():
@@ -221,7 +208,7 @@ class WorkPage(QWidget):
         if custom:
             rows = [r for r in rows if any(k in (r[3] or "").lower() or k in (r[6] or "").lower() for k in custom)]
         if not rows:
-            self._bubble("", "当前条件下没有可分析的数据（可调整时间范围、关键词或『只看相关』）。")
+            self._bubble("", "当前条件下没有可分析的数据（可调整时间范围或关键词）。")
             return
         # 先把当前筛选的情报汇总显示出来，让用户清楚分析的对象
         self.show_raw()

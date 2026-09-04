@@ -12,8 +12,7 @@ from PySide6.QtWidgets import (
 from qfluentwidgets import CardWidget, ComboBox, LineEdit, PushButton, SegmentedWidget, TableWidget
 
 from app.collector.fetch import load_sources
-from app.filter.entities import build_customer_matchers, build_entity_matcher, build_entity_terms, load_customers
-from app.filter.keywords import filter_db_rows, load_keywords
+from app.filter.entities import build_customer_matchers, load_customers
 from app.paths import BASE_DIR
 
 CONFIG = BASE_DIR / "config" / "sources.json"
@@ -132,9 +131,6 @@ class SourcesPage(QWidget):
         super().__init__(parent)
         self.customers = load_customers(str(CUSTOMERS))
         self.matchers = build_customer_matchers(self.customers)
-        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
-        self.source_cats = {s.id: s.category for s in load_sources(str(CONFIG))}
-        self.config_keywords = load_keywords(str(CONFIG))
         self.src_info = {s.name: (s.category, s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         self.all_rows = []
 
@@ -196,11 +192,6 @@ class SourcesPage(QWidget):
         self.edt_keyword.textChanged.connect(lambda _: self.apply_filter())
         tb3.addWidget(self.edt_keyword)
 
-        self.chk_relevant = QCheckBox("只看相关")
-        self.chk_relevant.setChecked(True)
-        self.chk_relevant.setToolTip("勾选后只显示与【电力无线专网/450MHz/频谱/客户】相关的情报：\n命中客户名称或英文国名，或频谱关键词，或电力+专网/通信关键词")
-        self.chk_relevant.toggled.connect(lambda _: self.refresh_items())
-        tb3.addWidget(self.chk_relevant)
         self.chk_dated = QCheckBox("只看有发布日期")
         self.chk_dated.setChecked(False)
         self.chk_dated.toggled.connect(lambda _: self.refresh_items())
@@ -350,8 +341,6 @@ class SourcesPage(QWidget):
         # 刷新本页与下游模块
         self.customers = load_customers(str(CUSTOMERS))
         self.matchers = build_customer_matchers(self.customers)
-        self.entity_re = build_entity_matcher(build_entity_terms(self.customers))
-        self.config_keywords = load_keywords(str(CONFIG))
         self._fill_customers_tree()
         self.customers_changed.emit()
         extra = (" " + "；".join(msgs)) if msgs else ""
@@ -462,8 +451,6 @@ class SourcesPage(QWidget):
             conn.close()
         except Exception:
             rows = []
-        if self.chk_relevant.isChecked():
-            rows = filter_db_rows(rows, self.entity_re, self.source_cats, self.config_keywords)
         start_s = self.dt_start.date().toString("yyyy-MM-dd")
         end_s = self.dt_end.date().toString("yyyy-MM-dd")
         if self.chk_dated.isChecked():
@@ -559,5 +546,5 @@ class SourcesPage(QWidget):
                 else:
                     item.setToolTip(str(val))
                 self.table.setItem(i, j, item)
-        mode = "相关情报" if self.chk_relevant.isChecked() else "全部情报"
+        mode = "全部情报"
         self.lbl_progress.setText(f"显示 {len(rows)} / {len(self.all_rows)} 条{mode}")
