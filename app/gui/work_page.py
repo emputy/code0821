@@ -240,10 +240,33 @@ class WorkPage(QWidget):
             return
         # 先把当前筛选的情报汇总显示出来，让用户清楚分析的对象
         self.show_raw()
-        self._bubble("", "以上共 " + str(len(rows)) + " 条为分析对象（最多取前 30 条送入 AI）。正在生成分析，请稍候……")
+        BATCH = 50
+        total = len(rows)
+        batches = (total + BATCH - 1) // BATCH
+        self._analyze_rows = rows
+        self._analyze_batch_size = BATCH
+        self._analyze_total = batches
+        self._analyze_idx = 0
+        self._bubble("", f"以上共 {total} 条为分析对象，将按每批 {BATCH} 条分 {batches} 批自动连续分析。")
+        self.btn_analyze.setEnabled(False)
+        self.btn_analyze.setText("分析中…")
+        self._run_analysis_batch(s)
+
+    def _run_analysis_batch(self, s):
+        """处理当前批；完成后若还有下一批则自动继续。"""
+        idx = self._analyze_idx
+        rows = self._analyze_rows
+        BATCH = self._analyze_batch_size
+        start = idx * BATCH
+        chunk = rows[start:start + BATCH]
+        if not chunk:
+            self._bubble("", "✅ 全部分批分析完成。")
+            self.btn_analyze.setEnabled(True)
+            self.btn_analyze.setText("分析信息数据")
+            return
         cn_map = {s.name: (s.name_cn or s.name) for s in load_sources(str(CONFIG))}
         lines = []
-        for row in rows[:30]:
+        for row in chunk:
             src_cn = cn_map.get(row[2], row[2])
             lines.append(f"- [{src_cn}] {row[3]} | {row[4]}")
         text = "\n".join(lines)
@@ -251,19 +274,26 @@ class WorkPage(QWidget):
             {"role": "system", "content": "你是电力行业无线专网情报分析师。基于下面提供的情报条目（每条含来源/标题/链接），产出一份简洁专业的中文情报简报。要求：1) 只基于实际提供的情报，不臆造不扩展；2) 结构为：核心要点 → 逐条分析（引用对应条目） → 趋势研判 → 行动建议；3) 明确标注与电力无线专网、450MHz、频谱、客户进展的直接关联程度；4) 篇幅精炼，可用 Markdown 表格对比。"},
             {"role": "user", "content": text},
         ]
-        self._bubble("", "正在生成分析（基于以上汇总数据），请稍候……")
-        self.btn_analyze.setEnabled(False)
-        self.btn_analyze.setText("分析中…")
+        self._bubble("", f"正在分析第 {idx + 1}/{self._analyze_total} 批（{len(chunk)} 条）……")
 
-        def _finish(*_a):
+        def _on_done(content):
+            self._show_analysis(content)
+            self._analyze_idx += 1
+            if self._analyze_idx < self._analyze_total:
+                self._run_analysis_batch(s)
+            else:
+                self._bubble("", "✅ 全部分批分析完成。")
+                self.btn_analyze.setEnabled(True)
+                self.btn_analyze.setText("分析信息数据")
+
+        def _on_fail(e):
+            self._bubble("分析失败", html_mod.escape(str(e)))
             self.btn_analyze.setEnabled(True)
             self.btn_analyze.setText("分析信息数据")
 
         self.worker = DeepSeekWorker(s["api_key"], s.get("model", "deepseek-chat"), messages, self)
-        self.worker.done.connect(self._show_analysis)
-        self.worker.done.connect(_finish)
-        self.worker.failed.connect(lambda e: self._bubble("分析失败", html_mod.escape(str(e))))
-        self.worker.failed.connect(_finish)
+        self.worker.done.connect(_on_done)
+        self.worker.failed.connect(_on_fail)
         self.worker.start()
 
     def _show_analysis(self, content):
